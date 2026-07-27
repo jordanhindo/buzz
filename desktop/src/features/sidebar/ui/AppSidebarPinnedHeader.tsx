@@ -1,4 +1,12 @@
-import { Activity, Bot, FolderGit2, Inbox, Zap } from "lucide-react";
+import {
+  Activity,
+  Bot,
+  FolderGit2,
+  Inbox,
+  Layers,
+  Waypoints,
+  Zap,
+} from "lucide-react";
 
 import { TopbarSearch } from "@/features/search/ui/TopbarSearch";
 import { FeatureGate } from "@/shared/features";
@@ -19,7 +27,9 @@ type SidebarSelectedView =
   | "agents"
   | "workflows"
   | "pulse"
-  | "projects";
+  | "projects"
+  | "work"
+  | "map";
 
 type AppSidebarPinnedHeaderProps = {
   channelLabels: Record<string, string>;
@@ -41,6 +51,8 @@ type AppSidebarPrimaryMenuProps = {
   onSelectHome: () => void;
   onSelectProjects: () => void;
   onSelectPulse: () => void;
+  onSelectWork: () => void;
+  onSelectMap: () => void;
   onSelectWorkflows: () => void;
   selectedView: SidebarSelectedView;
 };
@@ -86,6 +98,8 @@ export function AppSidebarPrimaryMenu({
   onSelectHome,
   onSelectProjects,
   onSelectPulse,
+  onSelectWork,
+  onSelectMap,
   onSelectWorkflows,
   selectedView,
 }: AppSidebarPrimaryMenuProps) {
@@ -115,6 +129,34 @@ export function AppSidebarPrimaryMenu({
             </SidebarMenuBadge>
           ) : null}
         </SidebarMenuItem>
+        <FeatureGate feature="work">
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              data-testid="open-work-view"
+              isActive={selectedView === "work"}
+              onClick={onSelectWork}
+              tooltip="Work"
+              type="button"
+            >
+              <Layers className="h-4 w-4" />
+              <SidebarMenuLabel>Work</SidebarMenuLabel>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </FeatureGate>
+        <FeatureGate feature="work">
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              data-testid="open-map-view"
+              isActive={selectedView === "map"}
+              onClick={onSelectMap}
+              tooltip="Map"
+              type="button"
+            >
+              <Waypoints className="h-4 w-4" />
+              <SidebarMenuLabel>Map</SidebarMenuLabel>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </FeatureGate>
         <FeatureGate feature="pulse">
           <SidebarMenuItem>
             <SidebarMenuButton

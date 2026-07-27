@@ -1,0 +1,461 @@
+{
+  "workstream": {
+    "acceptedFindings": [],
+    "artifactReceipts": [],
+    "artifactTransitionDigest": "sha256:6f1d93f0af3554953381402e5226042ed4735c73913123e5894e3ae5035b0f36",
+    "cargoChildrenProgram": null,
+    "currentTruth": "Ticket 1 memory gate and rejection corpus is proven, independently reviewed, merged, and system-smoke-tested; Ticket 2 is the ready frontier.",
+    "exactNextAction": "Demand-sweep runtime + Market-Hard sweep definition",
+    "id": "demand-loop",
+    "kind": "program",
+    "lifecycleState": "active",
+    "loopCanaryProgram": null,
+    "objective": "Attach demand sweeps, the decision-memory gate, and rejection learning to the existing company-intake machinery so the OS generates its own demand instead of Jordan being the only source.",
+    "origin": {
+      "acceptedAt": "2026-07-20",
+      "evidence": [
+        {
+          "sourceReferenceId": "dashboard-state",
+          "sourceVersion": "hq-workstream-v1:demand-loop:sha256:6f1d93f0af3554953381402e5226042ed4735c73913123e5894e3ae5035b0f36"
+        }
+      ],
+      "kind": "human-directive",
+      "reference": "Jordan's verdict closing the 2026-07-20 realignment grill: spec everything for Codex to incorporate"
+    },
+    "outcomes": [
+      {
+        "contextLinks": [],
+        "dependencies": [],
+        "executionContract": {
+          "admissionContexts": [
+            {
+              "allowedLifecycleStates": [
+                "active",
+                "waiting",
+                "completed",
+                "failed"
+              ],
+              "id": "implementer",
+              "leaseIntent": "writer",
+              "outcomeId": "demand-loop-ticket-1",
+              "role": "implementer"
+            },
+            {
+              "allowedLifecycleStates": ["active", "completed"],
+              "id": "reviewer",
+              "leaseIntent": "inspect",
+              "outcomeId": "demand-loop-ticket-1",
+              "role": "reviewer"
+            }
+          ],
+          "authorityGrants": [
+            {
+              "expiresAt": null,
+              "externalEffectsAllowed": false,
+              "id": "demand-loop-grant",
+              "kind": "workstream",
+              "scopes": [
+                "hq:local-reversible-implementation",
+                "source:read",
+                "proof:local"
+              ]
+            }
+          ],
+          "decomposition": {
+            "boundedResult": "Ticket 1 objective",
+            "inheritedSource": null,
+            "kind": "vertical-business-outcome",
+            "parentOutcomeId": null,
+            "valueKind": "business"
+          },
+          "defaultAdmissionContextId": "implementer",
+          "deliverables": [
+            "gate enforcement in the intake gateway",
+            "rejection corpus store + lifecycle writebacks",
+            "shared memory-check helper",
+            "fixture suite incl. the free-trial regression fixture"
+          ],
+          "dependencies": [],
+          "forbiddenActions": [
+            "No new kernel lifecycle states or founder surfaces",
+            "No product telemetry work (release-train concern)",
+            "No automatic merge",
+            "No live money, DNS, signing, identity enrollment, named-relationship contact, or public launch",
+            "No copied source truth, full transcript, reusable credential, or raw provider record"
+          ],
+          "outcome": "Memory gate + rejection corpus proven at the company-intake public seam per Ticket 1 acceptance criteria in docs/specs/2026-07-20-demand-loop-execution-tickets.md",
+          "ownership": [
+            "Sole assigned implementer owns the complete vertical ticket outcome",
+            "Main orchestrator alone adjudicates review and merge"
+          ],
+          "proofGate": {
+            "commands": [
+              "npm --prefix control-plane run typecheck",
+              "npm --prefix control-plane test"
+            ],
+            "completionAuthority": "Independent whole-outcome reviewer and main-orchestrator adjudication",
+            "publicSeam": "company-intake public seam (hq intake record / POST /v1/intake)",
+            "requiredEvidence": [
+              "passing proof-command transcripts",
+              "fixture scenarios from the canonical ticket acceptance criteria"
+            ]
+          },
+          "publicSeams": [
+            "company-intake public seam (hq intake record / POST /v1/intake)"
+          ],
+          "recovery": [
+            "Keep useful work committed and pushed on the assigned branch",
+            "Refresh canonical sources after restart or conflict",
+            "Fail closed on stale mutation version or writer fence"
+          ],
+          "repositories": ["jordanhindo/latent-sea-hq"],
+          "resourceEnvelope": {
+            "activeMinutes": 480,
+            "attempts": 2,
+            "concurrentRuns": 1,
+            "externalActions": 0,
+            "moneyUsd": 0,
+            "stopConditions": [
+              "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+              "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+              "Source-version conflict or stale writer fence"
+            ],
+            "storageBytes": 1073741824
+          },
+          "sourceItem": {
+            "evidence": "HQ Outcome demand-loop-ticket-1 from outcome-local dashboard source lineage",
+            "freshness": "current",
+            "id": "dashboard-outcome:demand-loop-ticket-1",
+            "system": "hq",
+            "uri": "/Users/jordanhindo/latent-sea-hq/dashboard/state.json",
+            "version": "hq-outcome-v1:demand-loop:demand-loop-ticket-1:sha256:655b7d4e5726ed52c302491212b5652eccd97e6f8110c7b470e488614dd7f2f3"
+          }
+        },
+        "executionIssueReference": "github:jordanhindo/latent-sea-hq#6",
+        "id": "demand-loop-ticket-1",
+        "intake": {
+          "admittedClass": "agent-specification",
+          "consequentialMeaning": false,
+          "fullySpecified": true,
+          "humanAuthorityRequired": false,
+          "requestedClass": "agent-specification",
+          "reversible": false
+        },
+        "lifecycleFacts": {
+          "dependencyEdges": [],
+          "park": null,
+          "schema": "outcome-lifecycle-facts-v1",
+          "wake": null
+        },
+        "objective": "Company intake refuses proposals lacking a decision-memory-check pin; collisions become recorded-no-action with citation; rejection corpus + shared memory-check helper exist and are queried identically to ADRs.",
+        "state": "completed",
+        "title": "Memory gate + rejection corpus at the company-intake seam"
+      },
+      {
+        "contextLinks": [],
+        "dependencies": ["demand-loop-ticket-1"],
+        "executionContract": {
+          "admissionContexts": [
+            {
+              "allowedLifecycleStates": [
+                "active",
+                "waiting",
+                "completed",
+                "failed"
+              ],
+              "id": "implementer",
+              "leaseIntent": "writer",
+              "outcomeId": "demand-loop-ticket-2",
+              "role": "implementer"
+            },
+            {
+              "allowedLifecycleStates": ["active", "completed"],
+              "id": "reviewer",
+              "leaseIntent": "inspect",
+              "outcomeId": "demand-loop-ticket-2",
+              "role": "reviewer"
+            }
+          ],
+          "authorityGrants": [
+            {
+              "expiresAt": null,
+              "externalEffectsAllowed": false,
+              "id": "demand-loop-grant",
+              "kind": "workstream",
+              "scopes": [
+                "hq:local-reversible-implementation",
+                "source:read",
+                "proof:local"
+              ]
+            }
+          ],
+          "decomposition": {
+            "boundedResult": "Ticket 2 objective",
+            "inheritedSource": null,
+            "kind": "vertical-business-outcome",
+            "parentOutcomeId": null,
+            "valueKind": "business"
+          },
+          "defaultAdmissionContextId": "implementer",
+          "deliverables": [
+            "sweep definition format in pack source",
+            "Market-Hard sweep definition",
+            "sweep method skill",
+            "fixture corpus + dense-list regression fixture"
+          ],
+          "dependencies": ["demand-loop-ticket-1"],
+          "forbiddenActions": [
+            "No new kernel lifecycle states or founder surfaces",
+            "No product telemetry work (release-train concern)",
+            "No automatic merge",
+            "No live money, DNS, signing, identity enrollment, named-relationship contact, or public launch",
+            "No copied source truth, full transcript, reusable credential, or raw provider record"
+          ],
+          "outcome": "Demand-sweep runtime and Market-Hard sweep definition proven with a fixture corpus per Ticket 2 acceptance criteria in docs/specs/2026-07-20-demand-loop-execution-tickets.md",
+          "ownership": [
+            "Sole assigned implementer owns the complete vertical ticket outcome",
+            "Main orchestrator alone adjudicates review and merge"
+          ],
+          "proofGate": {
+            "commands": [
+              "npm --prefix control-plane run typecheck",
+              "npm --prefix control-plane test"
+            ],
+            "completionAuthority": "Independent whole-outcome reviewer and main-orchestrator adjudication",
+            "publicSeam": "source reconciliation + company-intake public seams",
+            "requiredEvidence": [
+              "passing proof-command transcripts",
+              "fixture scenarios from the canonical ticket acceptance criteria"
+            ]
+          },
+          "publicSeams": [
+            "source reconciliation + company-intake public seams"
+          ],
+          "recovery": [
+            "Keep useful work committed and pushed on the assigned branch",
+            "Refresh canonical sources after restart or conflict",
+            "Fail closed on stale mutation version or writer fence"
+          ],
+          "repositories": ["jordanhindo/latent-sea-hq"],
+          "resourceEnvelope": {
+            "activeMinutes": 480,
+            "attempts": 2,
+            "concurrentRuns": 1,
+            "externalActions": 0,
+            "moneyUsd": 0,
+            "stopConditions": [
+              "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+              "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+              "Source-version conflict or stale writer fence"
+            ],
+            "storageBytes": 1073741824
+          },
+          "sourceItem": {
+            "evidence": "HQ Outcome demand-loop-ticket-2 from outcome-local dashboard source lineage",
+            "freshness": "current",
+            "id": "dashboard-outcome:demand-loop-ticket-2",
+            "system": "hq",
+            "uri": "/Users/jordanhindo/latent-sea-hq/dashboard/state.json",
+            "version": "hq-outcome-v1:demand-loop:demand-loop-ticket-2:sha256:eac545e7fa1bb6c34b09f4f804adfd52f291dda81bd650d3150aaba12a0d76cd"
+          }
+        },
+        "executionIssueReference": "github:jordanhindo/latent-sea-hq#7",
+        "id": "demand-loop-ticket-2",
+        "intake": {
+          "admittedClass": "agent-specification",
+          "consequentialMeaning": false,
+          "fullySpecified": true,
+          "humanAuthorityRequired": false,
+          "requestedClass": "agent-specification",
+          "reversible": false
+        },
+        "lifecycleFacts": {
+          "dependencyEdges": [
+            {
+              "kind": "requires-outcome",
+              "schema": "outcome-dependency-edge-v1",
+              "targetId": "demand-loop-ticket-1"
+            }
+          ],
+          "park": null,
+          "schema": "outcome-lifecycle-facts-v1",
+          "wake": null
+        },
+        "objective": "Sweep definition format + first (Market-Hard external) sweep definition + sweep method skill; fixture-proven filing through the gate; self-observation sweep plug-in point documented for the separately assigned Codex work.",
+        "state": "ready",
+        "title": "Demand-sweep runtime + Market-Hard sweep definition"
+      },
+      {
+        "contextLinks": [],
+        "dependencies": ["demand-loop-ticket-1"],
+        "executionContract": {
+          "admissionContexts": [
+            {
+              "allowedLifecycleStates": [
+                "active",
+                "waiting",
+                "completed",
+                "failed"
+              ],
+              "id": "implementer",
+              "leaseIntent": "writer",
+              "outcomeId": "demand-loop-ticket-3",
+              "role": "implementer"
+            },
+            {
+              "allowedLifecycleStates": ["active", "completed"],
+              "id": "reviewer",
+              "leaseIntent": "inspect",
+              "outcomeId": "demand-loop-ticket-3",
+              "role": "reviewer"
+            }
+          ],
+          "authorityGrants": [
+            {
+              "expiresAt": null,
+              "externalEffectsAllowed": false,
+              "id": "demand-loop-grant",
+              "kind": "workstream",
+              "scopes": [
+                "hq:local-reversible-implementation",
+                "source:read",
+                "proof:local"
+              ]
+            }
+          ],
+          "decomposition": {
+            "boundedResult": "Ticket 3 objective",
+            "inheritedSource": null,
+            "kind": "vertical-business-outcome",
+            "parentOutcomeId": null,
+            "valueKind": "business"
+          },
+          "defaultAdmissionContextId": "implementer",
+          "deliverables": [
+            "stage-tag + wake-condition data shape on proposals",
+            "typed release timing relationships: before release, after release shipped, and unlocked by a proven release item",
+            "reconciliation wake transitions",
+            "fixture suite incl. the FL-Studio regression fixture"
+          ],
+          "dependencies": ["demand-loop-ticket-1"],
+          "forbiddenActions": [
+            "No new kernel lifecycle states or founder surfaces",
+            "No product telemetry work (release-train concern)",
+            "No automatic merge",
+            "No live money, DNS, signing, identity enrollment, named-relationship contact, or public launch",
+            "No copied source truth, full transcript, reusable credential, or raw provider record"
+          ],
+          "outcome": "Stage tags and wake conditions proven through reconciliation per Ticket 3 acceptance criteria in docs/specs/2026-07-20-demand-loop-execution-tickets.md",
+          "ownership": [
+            "Sole assigned implementer owns the complete vertical ticket outcome",
+            "Main orchestrator alone adjudicates review and merge"
+          ],
+          "proofGate": {
+            "commands": [
+              "npm --prefix control-plane run typecheck",
+              "npm --prefix control-plane test"
+            ],
+            "completionAuthority": "Independent whole-outcome reviewer and main-orchestrator adjudication",
+            "publicSeam": "source reconciliation public seam",
+            "requiredEvidence": [
+              "passing proof-command transcripts",
+              "fixture scenarios from the canonical ticket acceptance criteria"
+            ]
+          },
+          "publicSeams": ["source reconciliation public seam"],
+          "recovery": [
+            "Keep useful work committed and pushed on the assigned branch",
+            "Refresh canonical sources after restart or conflict",
+            "Fail closed on stale mutation version or writer fence"
+          ],
+          "repositories": ["jordanhindo/latent-sea-hq"],
+          "resourceEnvelope": {
+            "activeMinutes": 480,
+            "attempts": 2,
+            "concurrentRuns": 1,
+            "externalActions": 0,
+            "moneyUsd": 0,
+            "stopConditions": [
+              "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+              "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+              "Source-version conflict or stale writer fence"
+            ],
+            "storageBytes": 1073741824
+          },
+          "sourceItem": {
+            "evidence": "HQ Outcome demand-loop-ticket-3 from outcome-local dashboard source lineage",
+            "freshness": "current",
+            "id": "dashboard-outcome:demand-loop-ticket-3",
+            "system": "hq",
+            "uri": "/Users/jordanhindo/latent-sea-hq/dashboard/state.json",
+            "version": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1"
+          }
+        },
+        "executionIssueReference": "github:jordanhindo/latent-sea-hq#8",
+        "id": "demand-loop-ticket-3",
+        "intake": {
+          "admittedClass": "agent-specification",
+          "consequentialMeaning": false,
+          "fullySpecified": true,
+          "humanAuthorityRequired": false,
+          "requestedClass": "agent-specification",
+          "reversible": false
+        },
+        "lifecycleFacts": {
+          "dependencyEdges": [
+            {
+              "kind": "requires-outcome",
+              "schema": "outcome-dependency-edge-v1",
+              "targetId": "demand-loop-ticket-1"
+            }
+          ],
+          "park": null,
+          "schema": "outcome-lifecycle-facts-v1",
+          "wake": null
+        },
+        "objective": "Proposals carry launch-ladder stage tags; not-now proposals park in existing states with source-declared wake conditions that reconciliation fires; parked items never reach founder routes early.",
+        "state": "ready",
+        "title": "Stage tags + wake conditions for parked proposals"
+      }
+    ],
+    "prototypePackagePins": [],
+    "reviewTriggers": [],
+    "sourceReferences": [
+      {
+        "evidence": "HQ Workstream demand-loop from dashboard revision-independent source lineage",
+        "freshness": "current",
+        "id": "dashboard-state",
+        "system": "hq",
+        "uri": "/Users/jordanhindo/latent-sea-hq/dashboard/state.json",
+        "version": "hq-workstream-v1:demand-loop:sha256:6f1d93f0af3554953381402e5226042ed4735c73913123e5894e3ae5035b0f36"
+      },
+      {
+        "evidence": "HQ Outcome demand-loop-ticket-1 from outcome-local dashboard source lineage",
+        "freshness": "current",
+        "id": "dashboard-outcome:demand-loop-ticket-1",
+        "system": "hq",
+        "uri": "/Users/jordanhindo/latent-sea-hq/dashboard/state.json",
+        "version": "hq-outcome-v1:demand-loop:demand-loop-ticket-1:sha256:655b7d4e5726ed52c302491212b5652eccd97e6f8110c7b470e488614dd7f2f3"
+      },
+      {
+        "evidence": "HQ Outcome demand-loop-ticket-2 from outcome-local dashboard source lineage",
+        "freshness": "current",
+        "id": "dashboard-outcome:demand-loop-ticket-2",
+        "system": "hq",
+        "uri": "/Users/jordanhindo/latent-sea-hq/dashboard/state.json",
+        "version": "hq-outcome-v1:demand-loop:demand-loop-ticket-2:sha256:eac545e7fa1bb6c34b09f4f804adfd52f291dda81bd650d3150aaba12a0d76cd"
+      },
+      {
+        "evidence": "HQ Outcome demand-loop-ticket-3 from outcome-local dashboard source lineage",
+        "freshness": "current",
+        "id": "dashboard-outcome:demand-loop-ticket-3",
+        "system": "hq",
+        "uri": "/Users/jordanhindo/latent-sea-hq/dashboard/state.json",
+        "version": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1"
+      }
+    ],
+    "terminalDisposition": null,
+    "title": "Demand Loop completion",
+    "unresolvedRisks": []
+  }
+}

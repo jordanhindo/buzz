@@ -1,0 +1,2890 @@
+{
+  "schema": "portfolio-frontier-v1",
+  "observedAt": "2026-07-26T20:18:23.100Z",
+  "sourceStatuses": [
+    {
+      "system": "hq",
+      "freshness": "current",
+      "version": "hq-gateway-git-v1:r9:sha256:faddb2d6c4ca1e9fcce953bcc92486f803acd6410b61142e7c47bc545bf38c8f"
+    },
+    {
+      "system": "release-train",
+      "freshness": "current",
+      "version": "sha256:098269dcd718105f49d64b49119deb08fa59966566b6f27d2b79e148426aafaf"
+    }
+  ],
+  "strandedWorkstreams": [],
+  "counts": {
+    "ready": 1,
+    "running": 8,
+    "verifying": 1,
+    "needsContract": 9,
+    "toGrill": 15,
+    "needsJordan": 3,
+    "waiting": 23,
+    "research": 89,
+    "blocked": 9
+  },
+  "groups": {
+    "ready": [
+      {
+        "source": "hq",
+        "workstreamId": "loop-closure-canary",
+        "outcomeId": "loop-closure-canary:probe:2026-07-26T20:00:00.000Z",
+        "workstreamTitle": "Loop Closure spine canary",
+        "title": "Loop canary probe 2026-07-26T20:00:00.000Z",
+        "state": "ready",
+        "releaseTiming": null,
+        "blockers": [],
+        "runtimeStatus": [],
+        "enter": "hq enter loop-closure-canary"
+      }
+    ],
+    "running": [
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-5-dogfood:non-frontend",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Cargo: generic non-frontend continuation",
+        "state": "running",
+        "releaseTiming": null,
+        "blockers": ["runtime:active-outcome-lock"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-5-dogfood:interrupted-resume",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Cargo: interrupted cross-harness resume",
+        "state": "running",
+        "releaseTiming": null,
+        "blockers": ["runtime:active-outcome-lock"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "commerce-legal",
+        "outcomeId": "commerce-legal:current-outcome",
+        "workstreamTitle": "Commerce, refunds, and legal trust",
+        "title": "Write and dry-run the refund and chargeback operating runbook, finish the obligations and first-order economics, then prove the Stripe-to-HQ event and one live paid purchase and refund at the release gate.",
+        "state": "running",
+        "releaseTiming": null,
+        "blockers": [
+          "state:running",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter commerce-legal"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "demand-loop",
+        "outcomeId": "demand-loop-ticket-3",
+        "workstreamTitle": "Demand Loop completion",
+        "title": "Stage tags + wake conditions for parked proposals",
+        "state": "running",
+        "releaseTiming": null,
+        "blockers": ["runtime:active-outcome-lock"],
+        "runtimeStatus": [],
+        "enter": "hq enter demand-loop"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "distribution",
+        "outcomeId": "distribution:current-outcome",
+        "workstreamTitle": "Plugin stores and resellers",
+        "title": "Turn the research into a reseller listing-packet requirement and direct-versus-reseller economics worksheet. Defer submission until the signed parity build, current media, support docs, and reseller license and refund path are testable.",
+        "state": "running",
+        "releaseTiming": null,
+        "blockers": [
+          "state:running",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter distribution"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "launch-site",
+        "outcomeId": "launch-site:current-outcome",
+        "workstreamTitle": "Website and purchase surface",
+        "title": "Use the audited live and source truth to design the launch architecture. Preserve the working account, checkout, email, and legal bones while replacing stale claims and adding the flagship campaign proof.",
+        "state": "running",
+        "releaseTiming": null,
+        "blockers": [
+          "state:running",
+          "work-genesis:missing-or-ineligible-origin",
+          "dependency:brand-system",
+          "dependency:flagship-assets",
+          "dependency:commerce-legal",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter launch-site"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "product-release",
+        "outcomeId": "product-release:current-outcome",
+        "workstreamTitle": "Product and release readiness",
+        "title": "Keep 1.0 work and every launch claim pinned to the canonical release train. Surface only the sealed capabilities that marketing may use.",
+        "state": "running",
+        "releaseTiming": null,
+        "blockers": [
+          "state:running",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter product-release"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "support",
+        "outcomeId": "support:current-outcome",
+        "workstreamTitle": "Customer support",
+        "title": "Keep sweeping inbound. When Jordan approves the plan, add Vercel DNS records, verify the domain, and prove one inbound-to-branded-reply loop.",
+        "state": "running",
+        "releaseTiming": null,
+        "blockers": [
+          "state:running",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter support"
+      }
+    ],
+    "verifying": [
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:finish-the-release-acceleration-system-and-canonical-operating-record",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Finish the release acceleration system and canonical operating record",
+        "state": "verifying",
+        "releaseTiming": null,
+        "blockers": ["state:verifying"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      }
+    ],
+    "needsContract": [
+      {
+        "source": "hq",
+        "workstreamId": "affiliates",
+        "outcomeId": "affiliates:current-outcome",
+        "workstreamTitle": "Affiliate program",
+        "title": "Wait for direct conversion, more than one worthwhile offer, and two clean manual ledger cycles.",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "dependency:commerce-legal",
+          "dependency:email-lifecycle",
+          "dependency:creator-reviewer",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter affiliates"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "brand-system",
+        "outcomeId": "brand-system:current-outcome",
+        "workstreamTitle": "Brand system",
+        "title": "Audit the current app, live site, wordmark, screenshots, and launch competitors together. Produce a small taste packet with three grounded public directions and one recommendation.",
+        "state": "ready",
+        "releaseTiming": null,
+        "blockers": [
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter brand-system"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "community",
+        "outcomeId": "community:current-outcome",
+        "workstreamTitle": "Customer community",
+        "title": "Wait until at least ten active users create a real recurring conversation need, then recommend the smallest shared room.",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "dependency:customer-proof",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter community"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "creator-reviewer",
+        "outcomeId": "creator-reviewer:current-outcome",
+        "workstreamTitle": "Creators, reviewers, and press",
+        "title": "Research five creator prospects and later a small reviewer list. Cite real workflow fit and draft one personal hook each.",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "work-genesis:missing-or-ineligible-origin",
+          "dependency:flagship-assets",
+          "dependency:product-release",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter creator-reviewer"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "email-lifecycle",
+        "outcomeId": "email-lifecycle:current-outcome",
+        "workstreamTitle": "Email and owned audience",
+        "title": "After the flagship mini-pack exists, build capture, delivery, and the five-message sequence with campaign attribution.",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:degraded",
+          "dependency:flagship-assets",
+          "dependency:launch-site",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter email-lifecycle"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "flagship-assets",
+        "outcomeId": "flagship-assets:current-outcome",
+        "workstreamTitle": "Launch campaign kit",
+        "title": "Define and generate the flagship sound-world candidates while the video agent proves the studio. Then surface one small sound taste packet to Jordan.",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "dependency:brand-system",
+          "dependency:video-studio",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter flagship-assets"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "paid-ads",
+        "outcomeId": "paid-ads:current-outcome",
+        "workstreamTitle": "Paid acquisition",
+        "title": "Wait for refund-cleared organic conversion, a maximum CAC, attribution, privacy permission, and a proven creative hypothesis.",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "dependency:commerce-legal",
+          "dependency:launch-site",
+          "dependency:email-lifecycle",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter paid-ads"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:ai-edit-long-source-duration-fix-stereo-preservation-proof",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "AI-edit long-source duration fix + stereo preservation proof",
+        "state": "ready",
+        "releaseTiming": null,
+        "blockers": ["contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "video-studio",
+        "outcomeId": "video-studio:current-outcome",
+        "workstreamTitle": "Video production system",
+        "title": "Produce the Phase 0 taste packet: a Remotion assembly proof, a recorder recommendation, three branded stills, and the plain-language pipeline. Surface only the stack/taste verdict to Jordan.",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "dependency:brand-system",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter video-studio"
+      }
+    ],
+    "toGrill": [
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-4-salience-verification",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Salience visual proof adapter",
+        "state": "needs-replan",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation:loop-closure-spec-package",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Loop Closure seam specifications and acceptance contract",
+        "state": "needs-replan",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation:specification:416d8b2c04e9",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Specification: Batch / queued generation",
+        "state": "needs-replan",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation:cross-harness-resume",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Cross-Harness Resume",
+        "state": "needs-replan",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "founder-correction:66a918f361540534f56b3d31",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Revise founder package for Attention 839bf24a-a6bb-41c8-b6c2-91832775b52a",
+        "state": "needs-replan",
+        "releaseTiming": null,
+        "blockers": ["runtime:branch-needs-replan"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "demand-loop",
+        "outcomeId": "demand-loop-ticket-2",
+        "workstreamTitle": "Demand Loop completion",
+        "title": "Demand-sweep runtime + Market-Hard sweep definition",
+        "state": "needs-replan",
+        "releaseTiming": null,
+        "blockers": ["runtime:branch-needs-replan"],
+        "runtimeStatus": [],
+        "enter": "hq enter demand-loop"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "hq-gateway:intake:26b83792d97c3f275c5134a",
+        "outcomeId": "hq-gateway:intake:26b83792d97c3f275c5134a:proposal",
+        "workstreamTitle": "Grill the complete HQ self-improvement runtime: Workflow Signal triage, candidate formation, Golden Incident replay, shadow evaluation, low-risk canary, promotion and rollback, constitutional founder gates, and proof that the implicated component cannot approve itself.",
+        "title": "Grill the complete HQ self-improvement runtime: Workflow Signal triage, candidate formation, Golden Incident replay, shadow evaluation, low-risk canary, promotion and rollback, constitutional founder gates, and proof that the implicated component cannot approve itself.",
+        "state": "to-grill",
+        "releaseTiming": null,
+        "blockers": [
+          "state:to-grill",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter hq-gateway:intake:26b83792d97c3f275c5134a"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "hq-gateway:intake:547b094c13304fb49fa0678",
+        "outcomeId": "hq-gateway:intake:547b094c13304fb49fa0678:proposal",
+        "workstreamTitle": "Ratify the grill-vs-no-grill routing into one canonical table: the four no-grill exemptions (mechanical / obvious-reversible / already-decided / support-promoted) currently scattered across four docs. See ledger Part 4 #3.",
+        "title": "Ratify the grill-vs-no-grill routing into one canonical table: the four no-grill exemptions (mechanical / obvious-reversible / already-decided / support-promoted) currently scattered across four docs. See ledger Part 4 #3.",
+        "state": "to-grill",
+        "releaseTiming": null,
+        "blockers": [
+          "state:to-grill",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter hq-gateway:intake:547b094c13304fb49fa0678"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "hq-gateway:intake:813c4ac27b9e6d3a5ca95b5",
+        "outcomeId": "hq-gateway:intake:813c4ac27b9e6d3a5ca95b5:proposal",
+        "workstreamTitle": "Grill the urgent-incident notification policy (cadence/authority), explicitly still-to-be-grilled per founder-attention.md L148. See ledger Part 4 #4.",
+        "title": "Grill the urgent-incident notification policy (cadence/authority), explicitly still-to-be-grilled per founder-attention.md L148. See ledger Part 4 #4.",
+        "state": "to-grill",
+        "releaseTiming": null,
+        "blockers": [
+          "state:to-grill",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter hq-gateway:intake:813c4ac27b9e6d3a5ca95b5"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "hq-gateway:intake:97fc22a9cc790ace054e8af",
+        "outcomeId": "hq-gateway:intake:97fc22a9cc790ace054e8af:proposal",
+        "workstreamTitle": "Grill the frontend cockpit UX direction — the open second permanent founder gate (frontend-interaction-contract.md, UX intentionally undecided). See ledger Part 4 #5.",
+        "title": "Grill the frontend cockpit UX direction — the open second permanent founder gate (frontend-interaction-contract.md, UX intentionally undecided). See ledger Part 4 #5.",
+        "state": "to-grill",
+        "releaseTiming": null,
+        "blockers": [
+          "state:to-grill",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter hq-gateway:intake:97fc22a9cc790ace054e8af"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "hq-gateway:intake:b23da64eb1ecf8e6234fb56",
+        "outcomeId": "hq-gateway:intake:b23da64eb1ecf8e6234fb56:proposal",
+        "workstreamTitle": "Grill the support escalation ladder: promoted-answer (no agent) → bounded support agent → founder floor, and when support becomes a standing Workstream. Governed by ADR direction; ladder unbuilt. See ledger Part 4 #2 and gap-audit Axis 5.",
+        "title": "Grill the support escalation ladder: promoted-answer (no agent) → bounded support agent → founder floor, and when support becomes a standing Workstream. Governed by ADR direction; ladder unbuilt. See ledger Part 4 #2 and gap-audit Axis 5.",
+        "state": "to-grill",
+        "releaseTiming": null,
+        "blockers": [
+          "state:to-grill",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter hq-gateway:intake:b23da64eb1ecf8e6234fb56"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mrtt6hvh",
+        "outcomeId": "signal:signal-mrtt6hvh:proposal",
+        "workstreamTitle": "Model routing and execution profiles need a configurable substrate",
+        "title": "Model routing and execution profiles need a configurable substrate",
+        "state": "to-grill",
+        "releaseTiming": null,
+        "blockers": [
+          "state:to-grill",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mrtt6hvh"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mrv7wbep",
+        "outcomeId": "signal:signal-mrv7wbep:proposal",
+        "workstreamTitle": "Pack Genesis for Ableton Extensions",
+        "title": "Pack Genesis for Ableton Extensions",
+        "state": "to-grill",
+        "releaseTiming": null,
+        "blockers": [
+          "state:to-grill",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mrv7wbep"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mrv8252x",
+        "outcomeId": "signal:signal-mrv8252x:proposal",
+        "workstreamTitle": "Governing context must travel with every autonomous Outcome",
+        "title": "Governing context must travel with every autonomous Outcome",
+        "state": "to-grill",
+        "releaseTiming": null,
+        "blockers": [
+          "state:to-grill",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mrv8252x"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mrv88c1e",
+        "outcomeId": "signal:signal-mrv88c1e:proposal",
+        "workstreamTitle": "Typed append-only annotations for Workstreams and Outcomes",
+        "title": "Typed append-only annotations for Workstreams and Outcomes",
+        "state": "to-grill",
+        "releaseTiming": null,
+        "blockers": [
+          "state:to-grill",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mrv88c1e"
+      }
+    ],
+    "needsJordan": [
+      {
+        "source": "hq",
+        "workstreamId": "anthony",
+        "outcomeId": "anthony:current-outcome",
+        "workstreamTitle": "Anthony partnership",
+        "title": "The partnership agent keeps the conversation packet ready. Jordan has the real conversation when natural, then reports which lane is genuinely interesting.",
+        "state": "needs-jordan",
+        "releaseTiming": null,
+        "blockers": [
+          "state:needs-jordan",
+          "work-genesis:missing-or-ineligible-origin",
+          "dependency:flagship-assets",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter anthony"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation:batch-generation-interface:prototype-preparation",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Prototype Preparation: Batch Generation governed interface delivery",
+        "state": "needs-jordan",
+        "releaseTiming": null,
+        "blockers": ["state:needs-jordan"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:batch-queued-generation",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Batch/queued generation",
+        "state": "needs-jordan",
+        "releaseTiming": null,
+        "blockers": ["state:needs-jordan", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      }
+    ],
+    "waiting": [
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-2",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Approved Grill to executable program",
+        "state": "checkpointed",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-6",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Execution Reality Reconciliation",
+        "state": "checkpointed",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation:controller-continuation-safety",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Controller Continuation Safety",
+        "state": "checkpointed",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation:continuation-engine-terminal-truth",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Artifact Continuation Engine and Terminal Truth",
+        "state": "checkpointed",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation:work-genesis",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "WorkGenesis",
+        "state": "checkpointed",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "control-plane-v1",
+        "outcomeId": "control-plane-v1:ticket-3",
+        "workstreamTitle": "Control Plane v1 non-frontend foundation",
+        "title": "Return founder intent to safe autonomous motion",
+        "state": "checkpointed",
+        "releaseTiming": null,
+        "blockers": ["source:workstream-terminal", "source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter control-plane-v1"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "customer-proof",
+        "outcomeId": "customer-proof:current-outcome",
+        "workstreamTitle": "Cohort proof",
+        "title": "As replies arrive, record the source, update the scorecard, classify product failures, and create release-train work when needed.",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter customer-proof"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "demand-loop",
+        "outcomeId": "demand-loop-ticket-1",
+        "workstreamTitle": "Demand Loop completion",
+        "title": "Memory gate + rejection corpus at the company-intake seam",
+        "state": "checkpointed",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter demand-loop"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:batch-presets-saving-multiple-generations-to-send-off-again-at-one-time",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Batch presets (\"saving multiple generations to send off again at one time\")",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": ["state:waiting-external", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:customer-cohort-evidence-complete",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Customer cohort evidence complete",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:brand-system-approved-and-reusable",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Brand system approved and reusable",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:video-production-system-launch-ready",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Video production system launch-ready",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:flagship-campaign-proof-packet-complete",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Flagship campaign proof packet complete",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:launch-site-truth-and-purchase-path-ready",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Launch site truth and purchase path ready",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:customer-documentation-and-ai-support-corpus-ready",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Customer documentation and AI support corpus ready",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:owned-email-lifecycle-ready",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Owned email lifecycle ready",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:commerce-legal-money-identity-and-live-paid-refund-path-ready",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Commerce, legal, money, identity, and live paid/refund path ready",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:l1",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "L1",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:l2",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "L2",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:l3",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "L3",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:l5",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "L5",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gate:l6",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "L6",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:gate:invitation-only-first-party-affiliate-pilot-ready",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Invitation-only first-party affiliate pilot ready",
+        "state": "waiting-external",
+        "releaseTiming": null,
+        "blockers": [
+          "state:waiting-external",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      }
+    ],
+    "research": [
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:account-first-welcome-and-license-recovery-on-first-launch",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Account-first welcome and license recovery on first launch",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:first-run-and-model-setup-experience-redesign",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "First-run and model-setup experience redesign",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:branding-swap",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Branding swap",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:what-s-new-changelog-panel",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "\"What's new\" changelog panel",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:rate-limiter-fail-open-for-license-activate-recheck",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Rate-limiter fail-open for license activate/recheck",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:idle-soak-gate-in-the-release-dod",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Idle soak gate in the release DoD",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:std-async-lifetime-audit",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "std::async lifetime audit",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:crash-evidence-built-in",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Crash evidence built-in",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:four-part-version-comparison-verified-end-to-end-updater-comparator-publish-monotonicity-guard-c",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Four-part version comparison verified end-to-end (updater comparator, publish monotonicity guard, CMake stamping)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:wire-release-lint-into-release-sh-candidate-preflight",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Wire release_lint into release.sh candidate preflight",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:reconcile-github-execution-issues-with-the-release-train-and-install-issue-lifecycle-garbage-col",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Reconcile GitHub execution issues with the Release Train and install issue lifecycle garbage collection",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:ship-the-chosen-candidate-b-bass-lora",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Ship the chosen candidate-B bass LoRA",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:feedback-signal-reader-reads-stale-prefix",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Feedback/signal reader reads stale prefix",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:0.2.10",
+        "outcomeId": "release-train:0.2.10:settings-models-choose-folder-never-implemented",
+        "workstreamTitle": "Salience release 0.2.10",
+        "title": "Settings→Models \"Choose Folder\" never implemented",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": ["state:research", "contract:missing"],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:0.2.10"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:mac-vst3-auto-update",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Mac VST3 auto-update",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:packaging-trust",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Packaging trust",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:deploy-worker-price-authority-account-checkout-gate-before-opening-sales",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "DEPLOY worker (price authority + account-checkout gate) before opening sales",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:refund-playable-av-002-build",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Refund = playable / AV-002 build",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:curated-marketplace-price-ownership-surface",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Curated marketplace price/ownership surface",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:rate-limiter-fail-policy",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Rate-limiter fail policy",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:revoke-other-sessions-on-password-change-email-007",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Revoke other sessions on password change (EMAIL-007)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:verify-account-delete-purge-is-complete-honest-email-008",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Verify account-delete purge is complete + honest (EMAIL-008)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:waitlist-consent-capture-email-003",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Waitlist consent capture (EMAIL-003)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:paid-mac-release-lane-dev-id-notarization-paid-public-seal",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Paid Mac release lane: Dev ID + notarization + paid/public seal",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:ship-to-paid-mac",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Ship to paid Mac",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:paid-styles-live",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Paid Styles live",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:1-0-ships-mac-windows-parity",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "1.0 ships (Mac + Windows parity)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:first-party-activation-event-contract",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "First-party activation event contract",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:h1-rt-safety-lock-full-decode-on-the-audio-thread",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "H1 RT-safety: lock + full-decode on the audio thread",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:h2-model-download-dies-when-editor-window-closes",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "H2 Model download dies when editor window closes",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:h3-telemetry-crash-reporting-inert-in-production",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "H3 Telemetry/crash reporting inert in production",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:h4-marketplace-audition-audio-is-a-placeholder-synth-not-the-real-style",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "H4 Marketplace audition audio is a placeholder synth, not the real Style",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:h5-standalone-has-no-audio-device-settings",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "H5 Standalone has no audio-device settings",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:h6-manage-machines-wrong-error-copy",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "H6 \"Manage machines\" wrong error copy",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:h7-storefront-visual-polish-trust-pass",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "H7 Storefront visual-polish trust pass",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:h8-copy-is-bot-talk-needs-voice-rewrite",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "H8 Copy is bot-talk, needs voice rewrite",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m1-always-on-tanh-colors-all-output-confirmed-padplaybackengine-cpp-80",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M1 always-on tanh colors all output (confirmed PadPlaybackEngine.cpp:80)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m2-block-quantized-midi-timing-velocity-ignored-unverified",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M2 block-quantized MIDI timing/velocity ignored (unverified)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m3-absolute-paths-in-session-state-no-relink",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M3 absolute paths in session state, no relink",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m4-license-gate-has-no-purchase-path-unverified",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M4 license gate has no purchase path (unverified)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m5-no-offline-first-activation-decision-owed-jordan",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M5 no offline first-activation (decision owed: Jordan)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m7-uninstall-leaves-10gb-no-mac-uninstaller",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M7 uninstall leaves ~10GB, no Mac uninstaller",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m8-no-rate-limiting-on-auth-license-routes-re-verify-worker-consolidated",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M8 no rate limiting on auth/license routes (re-verify, worker consolidated)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m9-key-possession-full-machine-control-accept-or-bind-decision-owed",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M9 key possession = full machine control (accept-or-bind decision owed)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m10-salsty-lacks-license-notice-carrier-stability-pass-through-obligation",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M10 .salsty lacks license/notice carrier (Stability pass-through obligation)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m11-library-ships-dead-import-search-affordances-confirmed-librarypanel-cpp-194-259",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M11 Library ships dead Import/Search affordances (confirmed LibraryPanel.cpp:194-259)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m12-drag-out-to-daw-only-from-pads",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M12 drag-out to DAW only from pads",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m13-editor-min-1180x760-too-big-for-small-laptops-confirmed-plugineditor-cpp-226",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M13 editor min 1180x760 too big for small laptops (confirmed PluginEditor.cpp:226)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m14-generated-takes-never-garbage-collected",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M14 generated takes never garbage-collected",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m16-windows-ps1-scripts-still-say-local-ai-sampler-confirmed",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M16 Windows PS1 scripts still say \"Local AI Sampler\" (confirmed)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:m17-dead-test-only-base64-fallback-on-license-verify-unverified-file-moved",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "M17 dead test-only base64 fallback on license verify (unverified, file moved)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:native-dialog-family-decision-23-alertwindow-sites",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Native dialog family decision (23 AlertWindow sites)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:shared-themed-dropdown-helper-none-exists",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Shared themed-dropdown helper (none exists)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:modalcard-overlay-base-with-esc-outside-click-8-surfaces-only-feedbackpanel-has-it",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "ModalCard/overlay base with Esc+outside-click (~8 surfaces, only FeedbackPanel has it)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:verify-sh-visual-regression-spine-blessed-baselines-token-copy-lint",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "verify.sh visual-regression spine (blessed baselines + token/copy lint)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:copy-table-protocol-copy-inventory-docs-neither-exists",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Copy-table protocol + copy-inventory docs (neither exists)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:re-stamp-compatibility-matrix-past-0-2-1",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Re-stamp compatibility matrix past 0.2.1",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:re-verify-known-issue-1-macos-vst3-swap-evidence-was-windows-only",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Re-verify known-issue #1 macOS VST3-swap (evidence was Windows-only)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:document-terms-after-update-re-download-fix",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Document terms-after-update re-download fix",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:restore-hotfix-runbook-md-to-main-orphaned-in-sealed-0-2-4-worktree",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Restore HOTFIX-RUNBOOK.md to main (orphaned in sealed 0.2.4 worktree)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:build-real-customer-export-support-bundle",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Build real customer Export Support Bundle",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:close-macos-intel-real-hardware-smoke-test",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Close macOS Intel real-hardware smoke test",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:dated-ableton-vst3-host-load-proof-at-current-version",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Dated Ableton+VST3 host-load proof at current version",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:vst-008-reaper-closeout-proof",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "VST-008 REAPER closeout proof",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:daw-stability-perf-matrix-buffer-idle-cpu-distinct-from-l1",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "DAW stability/perf matrix (buffer/idle CPU, distinct from L1)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:gh-82-gen-run-009-ableton-vst3-rescan-proof-reconcile-with-r10-uninstall",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "gh#82 GEN-RUN-009 Ableton VST3 rescan proof reconcile with R10 uninstall",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.0",
+        "outcomeId": "release-train:1.0:per-style-fast-quality-style-builds-loras-incl-core-flagship-style",
+        "workstreamTitle": "Salience release 1.0",
+        "title": "Per-Style Fast + Quality Style Builds (LoRAs), incl. core/flagship Style",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.0"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:windows-stylize-omni-port",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Windows Stylize/Omni port",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:batch-presets",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Batch presets",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:runtime-path-consolidation",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Runtime path consolidation",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:ci-repair-runner-hygiene-agent-feedback-loop",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "CI repair: runner hygiene + agent feedback loop",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:acct-exact-sha-broad-arbiter-in-ci",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "ACCT exact-SHA broad arbiter in CI",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:windows-build-observability-reliability",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Windows build observability + reliability",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:mac-install-first-use-canary",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Mac install/first-use canary",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:lighter-windows-install-launch-vm-canary-install-only-mode",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Lighter Windows install+launch VM canary (install-only mode)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:build-speed-investigation-candidate-20-30min",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Build-speed investigation (candidate 20-30min → ?)",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:full-library-search",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Full Library search",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:pad-velocity-scale-randomization",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Pad velocity scale + randomization",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:midi-controller-workflow",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "MIDI/controller workflow",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "release-train",
+        "workstreamId": "release-train:1.1",
+        "outcomeId": "release-train:1.1:engine-two",
+        "workstreamTitle": "Salience release 1.1",
+        "title": "Engine Two",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "workstream:blocked",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter release-train:1.1"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mrsr0bi0",
+        "outcomeId": "signal:signal-mrsr0bi0:proposal",
+        "workstreamTitle": "Future calendar connector for deadlines, commitments, and scheduling",
+        "title": "Future calendar connector for deadlines, commitments, and scheduling",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mrsr0bi0"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mrtzo19x",
+        "outcomeId": "signal:signal-mrtzo19x:proposal",
+        "workstreamTitle": "Company-OS ADR still marked DRAFT after Jordan's recorded acceptance",
+        "title": "Company-OS ADR still marked DRAFT after Jordan's recorded acceptance",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mrtzo19x"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mrtzo1bt",
+        "outcomeId": "signal:signal-mrtzo1bt:proposal",
+        "workstreamTitle": "Checkout MoR ADR body still documents dead Paddle decision; Stripe banner uncommitted",
+        "title": "Checkout MoR ADR body still documents dead Paddle decision; Stripe banner uncommitted",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mrtzo1bt"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mru16d3v",
+        "outcomeId": "signal:signal-mru16d3v:proposal",
+        "workstreamTitle": "Continuity gaps: no Jordan-absence protocol; license-record store lacks second-location backup; obligations register named in charter but file missing; tax-reserve duty unowned",
+        "title": "Continuity gaps: no Jordan-absence protocol; license-record store lacks second-location backup; obligations register named in charter but file missing; tax-reserve duty unowned",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mru16d3v"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mru16d72",
+        "outcomeId": "signal:signal-mru16d72:proposal",
+        "workstreamTitle": "Company-story channel unowned: build journal (588 lines, aimed at YouTube) accretes with no distribution path",
+        "title": "Company-story channel unowned: build journal (588 lines, aimed at YouTube) accretes with no distribution path",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mru16d72"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mru16da0",
+        "outcomeId": "signal:signal-mru16da0:proposal",
+        "workstreamTitle": "Subscription-quota contention proven: verifier agent died mid-run on session limit while Control Plane dispatches on same quota",
+        "title": "Subscription-quota contention proven: verifier agent died mid-run on session limit while Control Plane dispatches on same quota",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mru16da0"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mru16ddh",
+        "outcomeId": "signal:signal-mru16ddh:proposal",
+        "workstreamTitle": "Orphaned pre-HQ gates: counsel gate (Q-009) lived only in a product-repo doc predating HQ — closed-loop blindness",
+        "title": "Orphaned pre-HQ gates: counsel gate (Q-009) lived only in a product-repo doc predating HQ — closed-loop blindness",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mru16ddh"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-mruz7jl0",
+        "outcomeId": "signal:signal-mruz7jl0:proposal",
+        "workstreamTitle": "Founder Attention projection omitted canonical Q-008 while queue.md and dashboard/state.json still showed the decision open",
+        "title": "Founder Attention projection omitted canonical Q-008 while queue.md and dashboard/state.json still showed the decision open",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-mruz7jl0"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "signal:signal-unknown-duty",
+        "outcomeId": "signal:signal-unknown-duty:proposal",
+        "workstreamTitle": "Unknown future duties route to Intelligence",
+        "title": "Unknown future duties route to Intelligence",
+        "state": "research",
+        "releaseTiming": null,
+        "blockers": [
+          "state:research",
+          "work-genesis:missing-or-ineligible-origin",
+          "contract:missing"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter signal:signal-unknown-duty"
+      }
+    ],
+    "blocked": [
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-4",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Frontend Visual Contract continuation",
+        "state": "circuit-open",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-5-dogfood-bootstrap",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Attach the accepted Batch Generation decision",
+        "state": "circuit-open",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-5-dogfood",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Integrated Loop Closure proofs",
+        "state": "ready",
+        "releaseTiming": {
+          "relation": "release-independent",
+          "schema": "release-timing-v1"
+        },
+        "blockers": [
+          "cargo:children-dispatch-authority",
+          "cargo:aggregate-incomplete"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-7-release-train-skill",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Release Train agent application finalization",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "dependency:artifact-continuation-5-dogfood"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-7",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Whole-Pack cohesion and skill finalization",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "dependency:artifact-continuation-5-dogfood",
+          "dependency:artifact-continuation-7-release-train-skill"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation:integration-worktree-dependency-readiness",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Integration worktree dependency readiness",
+        "state": "circuit-open",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation:batch-generation-interface",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Batch Generation governed interface delivery",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "dependency:artifact-continuation:batch-generation-interface:prototype-preparation",
+          "dependency:founder-correction:66a918f361540534f56b3d31"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation:scheduling-policies-improvement",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Scheduling Policies and Improvement Adoption",
+        "state": "circuit-open",
+        "releaseTiming": null,
+        "blockers": ["source:outcome-terminal"],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      },
+      {
+        "source": "hq",
+        "workstreamId": "artifact-continuation",
+        "outcomeId": "artifact-continuation-5-dogfood:batch",
+        "workstreamTitle": "Artifact-driven autonomous continuation",
+        "title": "Cargo: Batch Generation loop closure",
+        "state": "blocked",
+        "releaseTiming": null,
+        "blockers": [
+          "state:blocked",
+          "dependency:artifact-continuation:batch-generation-interface:prototype-preparation",
+          "cargo:t3-cutover-receipt"
+        ],
+        "runtimeStatus": [],
+        "enter": "hq enter artifact-continuation"
+      }
+    ]
+  },
+  "resume": [
+    {
+      "schema": "interrupted-work-projection-result-v1",
+      "outcomeId": "artifact-continuation-5-dogfood",
+      "workstreamId": "artifact-continuation",
+      "kind": "replace-worker-attempt",
+      "authorizing": false,
+      "authority": {
+        "outcomeId": "artifact-continuation-5-dogfood",
+        "workstreamId": "artifact-continuation",
+        "sourceSystem": "hq",
+        "sourceVersion": "hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "runId": "a79fd5c1-1451-4216-8c4d-3f5d33bdbe63",
+        "admissionId": "a98e9bd7-4b11-421e-81f1-92aa931dc21d",
+        "outcomeFence": 19,
+        "workstreamFence": 542,
+        "branch": "codex/autonomous-artifact-continuation-5-dogfood-21eaa59e",
+        "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/artifact-continuation-5-dogfood-21eaa59e",
+        "commitSha": null,
+        "checkpointDigest": "sha256:7f9b7a1f583603f010052c1b7e7c1247daac64ff696a8bd1cbe7f8b09dcf579f",
+        "lastDurableTransition": "interrupted-worker-attempt-retired"
+      },
+      "evidenceDigest": "sha256:babf26de1663fd2f26aa046f6f587fadc74f4f05bb8ca17ca3f62a0866901236",
+      "observationEpoch": "2026-07-26T20:16:37.570Z",
+      "processTreeRetirementAllowed": true,
+      "replacementAllowed": true,
+      "operatorCommand": {
+        "kind": "hq-run-resume",
+        "command": "hq run resume a79fd5c1-1451-4216-8c4d-3f5d33bdbe63",
+        "grantsAuthority": false
+      },
+      "conflictingEvidence": [],
+      "retainedContext": [
+        "outcome:artifact-continuation-5-dogfood",
+        "source:hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "run:a79fd5c1-1451-4216-8c4d-3f5d33bdbe63",
+        "checkpoint:sha256:7f9b7a1f583603f010052c1b7e7c1247daac64ff696a8bd1cbe7f8b09dcf579f",
+        "session-checkpoint:interrupted-worker-attempt-retired"
+      ],
+      "wakeHandoff": null,
+      "workerAttemptStop": {
+        "kind": "attempt",
+        "detail": "interrupted-worker-attempt-retired "
+      },
+      "reconcilePlan": null,
+      "planDigest": "sha256:a7b2ee737dcfc63f8f922f5b5620dd415b956268b2e16539de322a7de0fca7fc"
+    },
+    {
+      "schema": "interrupted-work-projection-result-v1",
+      "outcomeId": "artifact-continuation:batch-generation-interface:prototype-preparation",
+      "workstreamId": "artifact-continuation",
+      "kind": "to-grill",
+      "authorizing": false,
+      "authority": {
+        "outcomeId": "artifact-continuation:batch-generation-interface:prototype-preparation",
+        "workstreamId": "artifact-continuation",
+        "sourceSystem": "hq",
+        "sourceVersion": "hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "runId": "fe80f4c9-0646-455e-b892-38f8ddd2a8e0",
+        "admissionId": "e0d642cc-4abf-4746-ba21-519c589096bd",
+        "outcomeFence": 36,
+        "workstreamFence": 299,
+        "branch": "codex/finish-line-t5-producer-fe80f4c9",
+        "worktree": "/Users/jordanhindo/local-ai-sampler-workstation",
+        "commitSha": null,
+        "checkpointDigest": "sha256:61c069352b4d96f2123d44f1867abd3e4ec02cf1dfdf866281b4d4eb51caf152",
+        "lastDurableTransition": "outcome-lease-expired"
+      },
+      "evidenceDigest": "sha256:ad04a9089cbccdeab7a209fcce497f5dd3844476a15fc747fbbd3cde36fde03f",
+      "observationEpoch": "2026-07-26T20:16:37.570Z",
+      "processTreeRetirementAllowed": true,
+      "replacementAllowed": false,
+      "operatorCommand": {
+        "kind": "hq-enter",
+        "command": "hq enter artifact-continuation",
+        "grantsAuthority": false
+      },
+      "conflictingEvidence": [],
+      "retainedContext": [
+        "outcome:artifact-continuation:batch-generation-interface:prototype-preparation",
+        "source:hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "run:fe80f4c9-0646-455e-b892-38f8ddd2a8e0",
+        "checkpoint:sha256:61c069352b4d96f2123d44f1867abd3e4ec02cf1dfdf866281b4d4eb51caf152",
+        "session-checkpoint:outcome-lease-expired"
+      ],
+      "wakeHandoff": null,
+      "workerAttemptStop": null,
+      "reconcilePlan": null,
+      "planDigest": "sha256:4cc822b31017abc3a8f172a441ff6855cfbe50394b1fa8ece38cae34e7e597f6"
+    },
+    {
+      "schema": "interrupted-work-projection-result-v1",
+      "outcomeId": "founder-correction:66a918f361540534f56b3d31",
+      "workstreamId": "artifact-continuation",
+      "kind": "replace-worker-attempt",
+      "authorizing": false,
+      "authority": {
+        "outcomeId": "founder-correction:66a918f361540534f56b3d31",
+        "workstreamId": "artifact-continuation",
+        "sourceSystem": "hq",
+        "sourceVersion": "hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "runId": "018a5e0c-517b-41e7-9efe-118184712a70",
+        "admissionId": "22571d06-6ef1-4c31-aa92-a71f83fee418",
+        "outcomeFence": 37,
+        "workstreamFence": 1115,
+        "branch": "codex/autonomous-founder-correction-66a918f361540534f56b3d31-253ec9f5",
+        "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/founder-correction-66a918f361540534f56b3d31-253ec9f5",
+        "commitSha": null,
+        "checkpointDigest": "sha256:3e8b89c570fb1d291eff5e9c27106073974b98fc5bf5f840b028fa3790530fa1",
+        "lastDurableTransition": "interrupted-worker-attempt-retired"
+      },
+      "evidenceDigest": "sha256:dfcb93e49201b4bfedfc399d13a4ad8e52054d26bce045160777d10eb1053cc8",
+      "observationEpoch": "2026-07-26T20:16:37.570Z",
+      "processTreeRetirementAllowed": true,
+      "replacementAllowed": true,
+      "operatorCommand": {
+        "kind": "hq-run-resume",
+        "command": "hq run resume 018a5e0c-517b-41e7-9efe-118184712a70",
+        "grantsAuthority": false
+      },
+      "conflictingEvidence": [],
+      "retainedContext": [
+        "outcome:founder-correction:66a918f361540534f56b3d31",
+        "source:hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "run:018a5e0c-517b-41e7-9efe-118184712a70",
+        "checkpoint:sha256:3e8b89c570fb1d291eff5e9c27106073974b98fc5bf5f840b028fa3790530fa1",
+        "session-checkpoint:interrupted-worker-attempt-retired"
+      ],
+      "wakeHandoff": null,
+      "workerAttemptStop": {
+        "kind": "attempt",
+        "detail": "interrupted-worker-attempt-retired "
+      },
+      "reconcilePlan": null,
+      "planDigest": "sha256:4aaf95b1854c5db58cc4ff0dff1c753361b8211d71ab0f7b4ba00b617c30de4c"
+    },
+    {
+      "schema": "interrupted-work-projection-result-v1",
+      "outcomeId": "artifact-continuation-5-dogfood:batch",
+      "workstreamId": "artifact-continuation",
+      "kind": "resume-current-run",
+      "authorizing": false,
+      "authority": {
+        "outcomeId": "artifact-continuation-5-dogfood:batch",
+        "workstreamId": "artifact-continuation",
+        "sourceSystem": "hq",
+        "sourceVersion": "hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "runId": "dbccbd26-109a-4848-a349-cb2a9141d9e7",
+        "admissionId": "35ce31ba-f39b-49ce-b729-386c3b203211",
+        "outcomeFence": 3,
+        "workstreamFence": 112,
+        "branch": "codex/autonomous-artifact-continuation-5-dogfood-4deab9d8",
+        "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/artifact-continuation-5-dogfood-4deab9d8",
+        "commitSha": null,
+        "checkpointDigest": "sha256:21f82804247f490598aead70f131f1329ca5ca3f8b98f11ccce7b49b909e9ca7",
+        "lastDurableTransition": "hard-resource-stop"
+      },
+      "evidenceDigest": "sha256:192b719f769003c0ddcc54cf6bc3166ab0538f0d8074ba8fa4929ac2c816c294",
+      "observationEpoch": "2026-07-26T20:16:37.570Z",
+      "processTreeRetirementAllowed": false,
+      "replacementAllowed": false,
+      "operatorCommand": {
+        "kind": "hq-run-resume",
+        "command": "hq run resume dbccbd26-109a-4848-a349-cb2a9141d9e7",
+        "grantsAuthority": false
+      },
+      "conflictingEvidence": [],
+      "retainedContext": [
+        "outcome:artifact-continuation-5-dogfood:batch",
+        "source:hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "run:dbccbd26-109a-4848-a349-cb2a9141d9e7",
+        "checkpoint:sha256:21f82804247f490598aead70f131f1329ca5ca3f8b98f11ccce7b49b909e9ca7",
+        "session-checkpoint:hard-resource-stop"
+      ],
+      "wakeHandoff": null,
+      "workerAttemptStop": null,
+      "reconcilePlan": null,
+      "planDigest": "sha256:9edb6b90122e41d03ad104101876f17c96cd8b49250b4a8018057ead1deb0275"
+    },
+    {
+      "schema": "interrupted-work-projection-result-v1",
+      "outcomeId": "artifact-continuation-5-dogfood:non-frontend",
+      "workstreamId": "artifact-continuation",
+      "kind": "ambiguity-quarantine",
+      "authorizing": false,
+      "authority": {
+        "outcomeId": "artifact-continuation-5-dogfood:non-frontend",
+        "workstreamId": "artifact-continuation",
+        "sourceSystem": "hq",
+        "sourceVersion": "hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "runId": "9be22fe4-899a-4f9e-b01a-20589cc8b2e3",
+        "admissionId": "22571d06-6ef1-4c31-aa92-a71f83fee418",
+        "outcomeFence": 58,
+        "workstreamFence": 1150,
+        "branch": "codex/autonomous-artifact-continuation-5-dogfood-non-frontend-d8fef4f5",
+        "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/artifact-continuation-5-dogfood-non-frontend-d8fef4f5",
+        "commitSha": null,
+        "checkpointDigest": "sha256:9b88fa2862c5d436873364446146a8a41db7c285cccdfc1b6026e41d397db4b3",
+        "lastDurableTransition": "identity-preserving-worker-attempt-resume"
+      },
+      "evidenceDigest": "sha256:17be3e86f8fca3b253b444880d580c8efa5b5fb005f5257f1affcd07e3e53d28",
+      "observationEpoch": "2026-07-26T20:16:37.570Z",
+      "processTreeRetirementAllowed": false,
+      "replacementAllowed": false,
+      "operatorCommand": {
+        "kind": "quarantine",
+        "command": "hq enter artifact-continuation",
+        "grantsAuthority": false
+      },
+      "conflictingEvidence": [
+        "false-termination: descendants remain alive after claimed process-tree confirmation",
+        "descendant-alive:30974",
+        "descendant-alive:31695",
+        "descendant-alive:31723"
+      ],
+      "retainedContext": [
+        "outcome:artifact-continuation-5-dogfood:non-frontend",
+        "source:hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "run:9be22fe4-899a-4f9e-b01a-20589cc8b2e3",
+        "checkpoint:sha256:9b88fa2862c5d436873364446146a8a41db7c285cccdfc1b6026e41d397db4b3",
+        "session-checkpoint:identity-preserving-worker-attempt-resume"
+      ],
+      "wakeHandoff": null,
+      "workerAttemptStop": null,
+      "reconcilePlan": null,
+      "planDigest": "sha256:1e9d37515014b66c21650a78e0547fc52e0fbb18fdd58e41dabae2972a0852c3"
+    },
+    {
+      "schema": "interrupted-work-projection-result-v1",
+      "outcomeId": "artifact-continuation-5-dogfood:interrupted-resume",
+      "workstreamId": "artifact-continuation",
+      "kind": "ambiguity-quarantine",
+      "authorizing": false,
+      "authority": {
+        "outcomeId": "artifact-continuation-5-dogfood:interrupted-resume",
+        "workstreamId": "artifact-continuation",
+        "sourceSystem": "hq",
+        "sourceVersion": "hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "runId": "edba8fcc-c21d-472a-a4b9-b94fabfbfe04",
+        "admissionId": "22571d06-6ef1-4c31-aa92-a71f83fee418",
+        "outcomeFence": 50,
+        "workstreamFence": 1150,
+        "branch": "codex/autonomous-artifact-continuation-5-dogfood-interrupted-resume-0400a869",
+        "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/artifact-continuation-5-dogfood-interrupted-resume-0400a869",
+        "commitSha": null,
+        "checkpointDigest": "sha256:de412fbda076d694bc7c19ce172b5d8d9e0fb264695afddc85a431633fe592ac",
+        "lastDurableTransition": "identity-preserving-worker-attempt-resume"
+      },
+      "evidenceDigest": "sha256:04799fb4408629cf41d89a53324380e56d3915c06b6f03cbf69c4e596f4d4ef1",
+      "observationEpoch": "2026-07-26T20:16:37.570Z",
+      "processTreeRetirementAllowed": false,
+      "replacementAllowed": false,
+      "operatorCommand": {
+        "kind": "quarantine",
+        "command": "hq enter artifact-continuation",
+        "grantsAuthority": false
+      },
+      "conflictingEvidence": [
+        "false-termination: descendants remain alive after claimed process-tree confirmation",
+        "descendant-alive:35194",
+        "descendant-alive:35780",
+        "descendant-alive:35848"
+      ],
+      "retainedContext": [
+        "outcome:artifact-continuation-5-dogfood:interrupted-resume",
+        "source:hq-workstream-v1:artifact-continuation:sha256:3df1b1bb69e81a037537feacf589fe96deb2db73fd8ebcca41460b74cbc5ee0f",
+        "run:edba8fcc-c21d-472a-a4b9-b94fabfbfe04",
+        "checkpoint:sha256:de412fbda076d694bc7c19ce172b5d8d9e0fb264695afddc85a431633fe592ac",
+        "session-checkpoint:identity-preserving-worker-attempt-resume"
+      ],
+      "wakeHandoff": null,
+      "workerAttemptStop": null,
+      "reconcilePlan": null,
+      "planDigest": "sha256:2b5dd4a8ac3fb5516c216a85c16e17480815cbd42ae990695ac5347615071856"
+    },
+    {
+      "schema": "interrupted-work-projection-result-v1",
+      "outcomeId": "demand-loop-ticket-2",
+      "workstreamId": "demand-loop",
+      "kind": "hold-terminal",
+      "authorizing": false,
+      "authority": {
+        "outcomeId": "demand-loop-ticket-2",
+        "workstreamId": "demand-loop",
+        "sourceSystem": "hq",
+        "sourceVersion": "hq-workstream-v1:demand-loop:sha256:6f1d93f0af3554953381402e5226042ed4735c73913123e5894e3ae5035b0f36",
+        "runId": "9e5a86d5-7f36-4627-b5c3-4d6948b89aa4",
+        "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+        "outcomeFence": 95,
+        "workstreamFence": 331,
+        "branch": "codex/autonomous-demand-loop-ticket-2-38c31263",
+        "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-2-38c31263",
+        "commitSha": "2b0d4330da250129815b1bf6dc817e676bc9ae5e",
+        "checkpointDigest": "sha256:22d4c4982f81401434342cf00c508b0485802471646a49ab3aded3b2756b420f",
+        "lastDurableTransition": "controller-integration-refused"
+      },
+      "evidenceDigest": "sha256:8f1a5c9f18cc137f76da6cc879a12d99fabf2f57338e8290bfb2c7b9f47cfbe6",
+      "observationEpoch": "2026-07-26T20:16:37.570Z",
+      "processTreeRetirementAllowed": true,
+      "replacementAllowed": false,
+      "operatorCommand": {
+        "kind": "hq-enter",
+        "command": "hq enter demand-loop",
+        "grantsAuthority": false
+      },
+      "conflictingEvidence": [
+        "typed-terminal:repair-version-terminal:needs-replan:controller-integration-refused"
+      ],
+      "retainedContext": [
+        "outcome:demand-loop-ticket-2",
+        "source:hq-workstream-v1:demand-loop:sha256:6f1d93f0af3554953381402e5226042ed4735c73913123e5894e3ae5035b0f36",
+        "run:9e5a86d5-7f36-4627-b5c3-4d6948b89aa4",
+        "checkpoint:sha256:22d4c4982f81401434342cf00c508b0485802471646a49ab3aded3b2756b420f",
+        "pushed:2b0d4330da250129815b1bf6dc817e676bc9ae5e",
+        "session-checkpoint:controller-integration-refused"
+      ],
+      "wakeHandoff": null,
+      "workerAttemptStop": null,
+      "reconcilePlan": null,
+      "planDigest": "sha256:2ad0a1a2180cb6db5e434be95ee8e3afcb81625e72f378a899bb727f657e2ae1"
+    },
+    {
+      "schema": "interrupted-work-projection-result-v1",
+      "outcomeId": "demand-loop-ticket-3",
+      "workstreamId": "demand-loop",
+      "kind": "ambiguity-quarantine",
+      "authorizing": false,
+      "authority": {
+        "outcomeId": "demand-loop-ticket-3",
+        "workstreamId": "demand-loop",
+        "sourceSystem": "hq",
+        "sourceVersion": "hq-workstream-v1:demand-loop:sha256:6f1d93f0af3554953381402e5226042ed4735c73913123e5894e3ae5035b0f36",
+        "runId": "fe2511e9-10cc-4c6f-b687-3d5baaa65c20",
+        "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+        "outcomeFence": 45,
+        "workstreamFence": 368,
+        "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+        "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+        "commitSha": null,
+        "checkpointDigest": "sha256:ba2a19658fec3b74d58cfa247004d8be98d8ec74fa4bd47a75394733c8510fbc",
+        "lastDurableTransition": "identity-preserving-worker-attempt-resume"
+      },
+      "evidenceDigest": "sha256:b4bb6fd925ddfc18fca2dc52194a4e9970c3f950caeff064d6c3e15625e67c65",
+      "observationEpoch": "2026-07-26T20:16:37.570Z",
+      "processTreeRetirementAllowed": false,
+      "replacementAllowed": false,
+      "operatorCommand": {
+        "kind": "quarantine",
+        "command": "hq enter demand-loop",
+        "grantsAuthority": false
+      },
+      "conflictingEvidence": [
+        "false-termination: descendants remain alive after claimed process-tree confirmation",
+        "descendant-alive:1998",
+        "descendant-alive:2236",
+        "descendant-alive:2254"
+      ],
+      "retainedContext": [
+        "outcome:demand-loop-ticket-3",
+        "source:hq-workstream-v1:demand-loop:sha256:6f1d93f0af3554953381402e5226042ed4735c73913123e5894e3ae5035b0f36",
+        "run:fe2511e9-10cc-4c6f-b687-3d5baaa65c20",
+        "checkpoint:sha256:ba2a19658fec3b74d58cfa247004d8be98d8ec74fa4bd47a75394733c8510fbc",
+        "session-checkpoint:identity-preserving-worker-attempt-resume"
+      ],
+      "wakeHandoff": null,
+      "workerAttemptStop": null,
+      "reconcilePlan": null,
+      "planDigest": "sha256:75ffb09233a3e51380aa02890ffbbc9775fcbea8cc814f6770ef7764e6a69543"
+    }
+  ]
+}

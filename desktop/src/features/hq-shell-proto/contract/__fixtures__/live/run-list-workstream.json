@@ -1,0 +1,3414 @@
+{
+  "runs": [
+    {
+      "id": "bd4b59fe-61a0-42e1-a106-1964cc6d0930",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "running",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "codex",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:0107bfcffb92b932e04f8ae18039857329090cad7e580fd2610536c03179f163",
+      "mutationVersion": "mv1:4527006edff9e45a2019cb975fa3673de9cfd838d382ac2d6d8cbf11bda375f2",
+      "workstreamFence": 378,
+      "outcomeFence": 52,
+      "resourceEnvelope": {
+        "activeMinutes": 479.9906,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-27T06:54:17.199Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 8,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073740380
+      },
+      "resourceUse": {
+        "activeMs": 402,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 0
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "codex",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "gpt-5.6-sol",
+        "modelRoute": "route:3cd7a68b0f6215ca4",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "openai:chatgpt",
+        "runner": "sandcastle-codex@0.12.0+hq-safe-host-codex-v7",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 1,
+      "failureClass": null,
+      "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+      "circuitReason": null,
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "checkpointIdentity": "sha256:ccb1ad4e659a91e05f45eba107d582f5f58f9c002bbac87113d31a078b781630",
+        "effectIdentity": "outcome:demand-loop-ticket-3",
+        "evidence": [
+          "interrupted-work-plan:sha256:66f940ff0b2527020532ea2d95951fcf5452f0a7febdfdc94d7f1afdf98a6122",
+          "interrupted-work-evidence:sha256:2b18061d39818f37fa8d7ae239503ca51bf02198ecf875ff04fefef0a6c61cbc"
+        ],
+        "priorCheckpoint": {
+          "evidence": [
+            "interrupted-work-plan:sha256:66f940ff0b2527020532ea2d95951fcf5452f0a7febdfdc94d7f1afdf98a6122",
+            "interrupted-work-evidence:sha256:2b18061d39818f37fa8d7ae239503ca51bf02198ecf875ff04fefef0a6c61cbc"
+          ],
+          "priorCheckpoint": {
+            "priorCheckpoint": {
+              "checkpointIdentity": "sha256:b727b701295f479a700125ab0d3a37dda17b963af753c698b64bc6cfbd9795aa",
+              "dimension": "active-time",
+              "effectIdentity": "outcome:demand-loop-ticket-3",
+              "envelope": {
+                "activeMinutes": 449.88145000000003,
+                "attempts": 2,
+                "concurrentRuns": 1,
+                "cost": {
+                  "kind": "not-metered-subscription-quota",
+                  "liveSpendAuthorizedUsd": 0,
+                  "usd": null
+                },
+                "deadline": "2026-07-26T22:32:24.479Z",
+                "externalActions": 0,
+                "machines": ["local"],
+                "modelInvocations": 4,
+                "moneyUsd": 0,
+                "stopConditions": [
+                  "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                  "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                  "Source-version conflict or stale writer fence"
+                ],
+                "storageBytes": 1073740380
+              },
+              "observed": {
+                "activeMs": 1795572,
+                "attempts": 1,
+                "costKind": "not-metered-subscription-quota",
+                "externalActions": 0,
+                "liveSpendAuthorizedUsd": 0,
+                "modelInvocations": 1,
+                "moneyUsd": null,
+                "storageBytes": 0,
+                "toolCalls": 15
+              },
+              "outcomeTerminal": false,
+              "priorCheckpoint": {
+                "continuationDisposition": "replace-worker-attempt",
+                "dimension": "active-time",
+                "envelope": {
+                  "activeMinutes": 449.88145000000003,
+                  "attempts": 2,
+                  "concurrentRuns": 1,
+                  "cost": {
+                    "kind": "not-metered-subscription-quota",
+                    "liveSpendAuthorizedUsd": 0,
+                    "usd": null
+                  },
+                  "deadline": "2026-07-26T22:32:24.479Z",
+                  "externalActions": 0,
+                  "machines": ["local"],
+                  "modelInvocations": 4,
+                  "moneyUsd": 0,
+                  "stopConditions": [
+                    "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                    "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                    "Source-version conflict or stale writer fence"
+                  ],
+                  "storageBytes": 1073740380
+                },
+                "observed": {
+                  "activeMs": 1795572,
+                  "attempts": 1,
+                  "costKind": "not-metered-subscription-quota",
+                  "externalActions": 0,
+                  "liveSpendAuthorizedUsd": 0,
+                  "modelInvocations": 1,
+                  "moneyUsd": null,
+                  "storageBytes": 0,
+                  "toolCalls": 15
+                },
+                "outcomeTerminal": false,
+                "reason": "telemetry-exhaustion-replace-worker-attempt",
+                "resumable": true
+              },
+              "reason": "identity-preserving-worker-attempt-resume",
+              "resumable": true,
+              "routeIdempotencyKey": "route:264e51954c6c1c8bf"
+            },
+            "priorState": "running",
+            "processTreeTerminationConfirmed": true,
+            "reason": "service-shutdown",
+            "resumable": true
+          },
+          "priorOutcomeFence": 51,
+          "priorState": "checkpointed",
+          "reason": "interrupted-worker-attempt-retired",
+          "resumable": true
+        },
+        "priorOutcomeFence": 51,
+        "priorState": "checkpointed",
+        "reason": "identity-preserving-worker-attempt-resume",
+        "resumable": true,
+        "routeIdempotencyKey": "route:4accca6d39205066e"
+      },
+      "createdAt": "2026-07-26T22:54:25.957Z",
+      "updatedAt": "2026-07-26T22:54:26.417Z",
+      "completedAt": null
+    },
+    {
+      "id": "73418d55-0c79-462d-ba5d-5e71d09a5df2",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "codex",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:f00a8310e42ed985fc95d0dfb92f96642b46074883fa068770cd62066368b250",
+      "mutationVersion": "mv1:eb0ff1fec4db3ca625a4baac4572da05623e141c77b0e48dec1ae15a8c9316c9",
+      "workstreamFence": 377,
+      "outcomeFence": 51,
+      "resourceEnvelope": {
+        "activeMinutes": 480,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T23:03:16.055Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 9,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073740380
+      },
+      "resourceUse": {
+        "activeMs": 564,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 0
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "codex",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "gpt-5.6-sol",
+        "modelRoute": "route:d1f7f322508904b39",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "openai:chatgpt",
+        "runner": "sandcastle-codex@0.12.0+hq-safe-host-codex-v7",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 1,
+      "failureClass": null,
+      "failureFingerprint": "sha256:1c0f5c5c82310b18de9d395f8b9e439402aa3571c9ffd9493be40e554fd53795",
+      "circuitReason": null,
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:66f940ff0b2527020532ea2d95951fcf5452f0a7febdfdc94d7f1afdf98a6122",
+          "interrupted-work-evidence:sha256:2b18061d39818f37fa8d7ae239503ca51bf02198ecf875ff04fefef0a6c61cbc"
+        ],
+        "priorCheckpoint": {
+          "priorCheckpoint": {
+            "checkpointIdentity": "sha256:b727b701295f479a700125ab0d3a37dda17b963af753c698b64bc6cfbd9795aa",
+            "dimension": "active-time",
+            "effectIdentity": "outcome:demand-loop-ticket-3",
+            "envelope": {
+              "activeMinutes": 449.88145000000003,
+              "attempts": 2,
+              "concurrentRuns": 1,
+              "cost": {
+                "kind": "not-metered-subscription-quota",
+                "liveSpendAuthorizedUsd": 0,
+                "usd": null
+              },
+              "deadline": "2026-07-26T22:32:24.479Z",
+              "externalActions": 0,
+              "machines": ["local"],
+              "modelInvocations": 4,
+              "moneyUsd": 0,
+              "stopConditions": [
+                "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                "Source-version conflict or stale writer fence"
+              ],
+              "storageBytes": 1073740380
+            },
+            "observed": {
+              "activeMs": 1795572,
+              "attempts": 1,
+              "costKind": "not-metered-subscription-quota",
+              "externalActions": 0,
+              "liveSpendAuthorizedUsd": 0,
+              "modelInvocations": 1,
+              "moneyUsd": null,
+              "storageBytes": 0,
+              "toolCalls": 15
+            },
+            "outcomeTerminal": false,
+            "priorCheckpoint": {
+              "continuationDisposition": "replace-worker-attempt",
+              "dimension": "active-time",
+              "envelope": {
+                "activeMinutes": 449.88145000000003,
+                "attempts": 2,
+                "concurrentRuns": 1,
+                "cost": {
+                  "kind": "not-metered-subscription-quota",
+                  "liveSpendAuthorizedUsd": 0,
+                  "usd": null
+                },
+                "deadline": "2026-07-26T22:32:24.479Z",
+                "externalActions": 0,
+                "machines": ["local"],
+                "modelInvocations": 4,
+                "moneyUsd": 0,
+                "stopConditions": [
+                  "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                  "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                  "Source-version conflict or stale writer fence"
+                ],
+                "storageBytes": 1073740380
+              },
+              "observed": {
+                "activeMs": 1795572,
+                "attempts": 1,
+                "costKind": "not-metered-subscription-quota",
+                "externalActions": 0,
+                "liveSpendAuthorizedUsd": 0,
+                "modelInvocations": 1,
+                "moneyUsd": null,
+                "storageBytes": 0,
+                "toolCalls": 15
+              },
+              "outcomeTerminal": false,
+              "reason": "telemetry-exhaustion-replace-worker-attempt",
+              "resumable": true
+            },
+            "reason": "identity-preserving-worker-attempt-resume",
+            "resumable": true,
+            "routeIdempotencyKey": "route:264e51954c6c1c8bf"
+          },
+          "priorState": "running",
+          "processTreeTerminationConfirmed": true,
+          "reason": "service-shutdown",
+          "resumable": true
+        },
+        "priorOutcomeFence": 51,
+        "priorState": "checkpointed",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T22:33:23.501Z",
+      "updatedAt": "2026-07-26T22:54:16.346Z",
+      "completedAt": null
+    },
+    {
+      "id": "99ce2ce2-1aca-46a1-a540-50f23b31e98b",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "codex",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:ff3f1723f7d983b48e71830c91a47f194f2e23d5564e16902c4f7fd8c6aa28eb",
+      "mutationVersion": "mv1:01aa9a024bd304228353388dea28bc258f3edfa1439386039ce2e976bc815de0",
+      "workstreamFence": 376,
+      "outcomeFence": 50,
+      "resourceEnvelope": {
+        "activeMinutes": 449.88145000000003,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T22:32:24.479Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 4,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073740380
+      },
+      "resourceUse": {
+        "activeMs": 1795572,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 15
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "codex",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "gpt-5.6-sol",
+        "modelRoute": "route:4142c71d4055f0a78",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "openai:chatgpt",
+        "runner": "sandcastle-codex@0.12.0+hq-safe-host-codex-v7",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 1,
+      "failureClass": "insufficient-evidence",
+      "failureFingerprint": "sha256:0c9941da8de178a8df5e2fee6a7be05491e950398d500af7b3b2ecd372670665",
+      "circuitReason": null,
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:795fa463d3a11a8c4ab54de035f70795185fd63f641ea4514589e0edf64bc1cc",
+          "interrupted-work-evidence:sha256:0901a5d5e893cb54389d5db6651271cc4ff7e737392b9020f54944dd4636f080"
+        ],
+        "priorCheckpoint": {
+          "continuationDisposition": "replace-worker-attempt",
+          "dimension": "active-time",
+          "envelope": {
+            "activeMinutes": 449.88145000000003,
+            "attempts": 2,
+            "concurrentRuns": 1,
+            "cost": {
+              "kind": "not-metered-subscription-quota",
+              "liveSpendAuthorizedUsd": 0,
+              "usd": null
+            },
+            "deadline": "2026-07-26T22:32:24.479Z",
+            "externalActions": 0,
+            "machines": ["local"],
+            "modelInvocations": 4,
+            "moneyUsd": 0,
+            "stopConditions": [
+              "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+              "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+              "Source-version conflict or stale writer fence"
+            ],
+            "storageBytes": 1073740380
+          },
+          "observed": {
+            "activeMs": 1795572,
+            "attempts": 1,
+            "costKind": "not-metered-subscription-quota",
+            "externalActions": 0,
+            "liveSpendAuthorizedUsd": 0,
+            "modelInvocations": 1,
+            "moneyUsd": null,
+            "storageBytes": 0,
+            "toolCalls": 15
+          },
+          "outcomeTerminal": false,
+          "reason": "telemetry-exhaustion-replace-worker-attempt",
+          "resumable": true
+        },
+        "priorOutcomeFence": 50,
+        "priorState": "checkpointed",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T22:02:28.965Z",
+      "updatedAt": "2026-07-26T22:33:13.749Z",
+      "completedAt": null
+    },
+    {
+      "id": "18d9c4d0-a0f0-44a6-b42b-2ad37ad938a4",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "codex",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:b2d1978b96ca41fc4c314c96a3975d60292d09cc8d50150b6a011e36c3c66637",
+      "mutationVersion": "mv1:f7f3b992a628af8d75678c4153c1e2798b26a51c5d228dc8bd998ae7de5544ac",
+      "workstreamFence": 374,
+      "outcomeFence": 49,
+      "resourceEnvelope": {
+        "activeMinutes": 449.88615000000004,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T22:05:09.684Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 5,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073740380
+      },
+      "resourceUse": {
+        "activeMs": 282,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 0
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "codex",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "gpt-5.6-sol",
+        "modelRoute": "route:5c6fe68fda2aa011e",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "openai:chatgpt",
+        "runner": "sandcastle-codex@0.12.0+hq-safe-host-codex-v7",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 2,
+      "failureClass": "insufficient-evidence",
+      "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+      "circuitReason": "two-equivalent-interrupted-worker-attempt-retirements",
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:188bc1894bd60cafe586f26a6f3c22a5964fddd764994c377ce361c5f1cd9ec8",
+          "interrupted-work-evidence:sha256:1d143dcc8c80db515097476b375ca1d2284bc4e00d90eaffa2442e299faf95a2"
+        ],
+        "priorCheckpoint": {
+          "equivalentFailureCount": 2,
+          "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+          "outcomeTerminal": false,
+          "priorCheckpoint": {
+            "evidence": [
+              "interrupted-work-plan:sha256:2ad2cc58b3e10956cce1655dfe6ca4f1b5c85aa11f5d564d9b9d066606b6e48b",
+              "interrupted-work-evidence:sha256:ff9698176516ef80dfcbf34c23b9b8d350ff290a124bce24b94c82b604a56780"
+            ],
+            "priorCheckpoint": {
+              "priorCheckpoint": {
+                "checkpointIdentity": "sha256:a9d2f63c9572e3403f649faaa869552892c1f4bb73c1783821fd674a1b357da1",
+                "effectIdentity": "outcome:demand-loop-ticket-3",
+                "evidence": [
+                  "interrupted-work-plan:sha256:f78b6c32bea52b1582fa55a64bef5624e149be363f5585b3df914480c900ae92",
+                  "interrupted-work-evidence:sha256:4358dca2f684b46fee09ac2d9b62e51dc62e5dd85c1f0f7836957ec22218a02b"
+                ],
+                "priorCheckpoint": {
+                  "evidence": [
+                    "interrupted-work-plan:sha256:f78b6c32bea52b1582fa55a64bef5624e149be363f5585b3df914480c900ae92",
+                    "interrupted-work-evidence:sha256:4358dca2f684b46fee09ac2d9b62e51dc62e5dd85c1f0f7836957ec22218a02b"
+                  ],
+                  "priorCheckpoint": {
+                    "priorCheckpoint": {
+                      "checkpointIdentity": "sha256:93d7b2dba0e29691d56f050e967236fd7ef50b353f013bf83fd7fd415742db16",
+                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                      "evidence": [
+                        "interrupted-work-plan:sha256:d18d36f324f78b2a4ca76a3004e6919ee4153a1008afe4efa54121666519208b",
+                        "interrupted-work-evidence:sha256:13d7c438a564753dc64225f2cc2e4f5c0d3e3a14b54d89791d4b65a8528eb56a"
+                      ],
+                      "priorCheckpoint": {
+                        "evidence": [
+                          "interrupted-work-plan:sha256:d18d36f324f78b2a4ca76a3004e6919ee4153a1008afe4efa54121666519208b",
+                          "interrupted-work-evidence:sha256:13d7c438a564753dc64225f2cc2e4f5c0d3e3a14b54d89791d4b65a8528eb56a"
+                        ],
+                        "priorCheckpoint": {
+                          "equivalentFailureCount": 2,
+                          "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+                          "interruptedReconcileRetiredAt": "2026-07-26T21:13:39.791Z",
+                          "interruptedReconcileRetiredEvidence": [
+                            "dirty-or-unowned-worktree:/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+                            "worktree-conflict:dirty-or-unowned-worktree:/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42"
+                          ],
+                          "outcomeTerminal": false,
+                          "priorCheckpoint": {
+                            "evidence": [
+                              "interrupted-work-plan:sha256:9cc149c672451e19a888a76d986398b909a50241e51f791f8defc379c19cf3d8",
+                              "interrupted-work-evidence:sha256:f3ad456704f0366201c5f0e41d67658f81a4182b796ac01086cffd8e986cfb23"
+                            ],
+                            "priorCheckpoint": {
+                              "priorCheckpoint": {
+                                "checkpointIdentity": "sha256:dc0516689714278ed5f212d088d46095569fa7c1ba45a5e542a148d3f7f3e59a",
+                                "effectIdentity": "outcome:demand-loop-ticket-3",
+                                "evidence": [
+                                  "interrupted-work-plan:sha256:fcd0612940b52ecbb84ac2c6307b63840b59f471f96afc958c20f5fca7a972f1",
+                                  "interrupted-work-evidence:sha256:e6fa57c99e0fc86e248b211027727eaba5434e82b41aff3c253ac1d8498aa7f1"
+                                ],
+                                "priorCheckpoint": {
+                                  "evidence": [
+                                    "interrupted-work-plan:sha256:fcd0612940b52ecbb84ac2c6307b63840b59f471f96afc958c20f5fca7a972f1",
+                                    "interrupted-work-evidence:sha256:e6fa57c99e0fc86e248b211027727eaba5434e82b41aff3c253ac1d8498aa7f1"
+                                  ],
+                                  "priorCheckpoint": {
+                                    "priorCheckpoint": {
+                                      "checkpointIdentity": "sha256:2714580c75e6660717b3308ac8a7811a4621d46dfe827cda9f17d0bed7df68db",
+                                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                                      "evidence": [
+                                        "interrupted-work-plan:sha256:9a842ff56a5a67751567abf6daaef75af88c3109df182b1f9891605af0822035",
+                                        "interrupted-work-evidence:sha256:44703b471cd66ed3eddd004d4c71fcad0b8ff4d1c71e63f3ab57c696746031f1"
+                                      ],
+                                      "priorCheckpoint": {
+                                        "evidence": [
+                                          "interrupted-work-plan:sha256:9a842ff56a5a67751567abf6daaef75af88c3109df182b1f9891605af0822035",
+                                          "interrupted-work-evidence:sha256:44703b471cd66ed3eddd004d4c71fcad0b8ff4d1c71e63f3ab57c696746031f1"
+                                        ],
+                                        "priorCheckpoint": {
+                                          "equivalentFailureCount": 2,
+                                          "failureFingerprint": "sha256:1c0f5c5c82310b18de9d395f8b9e439402aa3571c9ffd9493be40e554fd53795",
+                                          "outcomeTerminal": false,
+                                          "priorCheckpoint": {
+                                            "evidence": [
+                                              "interrupted-work-plan:sha256:88c8ff46a79b9f24cb435c6c4f2ced30bf9eaff00c84894b27cb42fba9a4d5c9",
+                                              "interrupted-work-evidence:sha256:9fb0441968b0bb1218311a6d6cf32e717031752ab691d08973c4a015c44a4dfc"
+                                            ],
+                                            "priorCheckpoint": {
+                                              "continuationDisposition": "replace-worker-attempt",
+                                              "dimension": "active-time",
+                                              "envelope": {
+                                                "activeMinutes": 480,
+                                                "attempts": 2,
+                                                "concurrentRuns": 1,
+                                                "cost": {
+                                                  "kind": "not-metered-subscription-quota",
+                                                  "liveSpendAuthorizedUsd": 0,
+                                                  "usd": null
+                                                },
+                                                "deadline": "2026-07-26T20:19:14.683Z",
+                                                "externalActions": 0,
+                                                "machines": ["local"],
+                                                "modelInvocations": 9,
+                                                "moneyUsd": 0,
+                                                "stopConditions": [
+                                                  "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                                  "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                                  "Source-version conflict or stale writer fence"
+                                                ],
+                                                "storageBytes": 1073740927
+                                              },
+                                              "observed": {
+                                                "activeMs": 1797214,
+                                                "attempts": 1,
+                                                "costKind": "not-metered-subscription-quota",
+                                                "externalActions": 0,
+                                                "liveSpendAuthorizedUsd": 0,
+                                                "modelInvocations": 1,
+                                                "moneyUsd": null,
+                                                "storageBytes": 547,
+                                                "toolCalls": 54
+                                              },
+                                              "outcomeTerminal": false,
+                                              "reason": "telemetry-exhaustion-replace-worker-attempt",
+                                              "resumable": true
+                                            },
+                                            "priorOutcomeFence": 45,
+                                            "priorState": "checkpointed",
+                                            "reason": "interrupted-worker-attempt-retired",
+                                            "resumable": true
+                                          },
+                                          "reason": "equivalent-interrupted-worker-attempt-circuit",
+                                          "resumable": true
+                                        },
+                                        "priorOutcomeFence": 45,
+                                        "priorState": "circuit-open",
+                                        "reason": "interrupted-worker-attempt-retired",
+                                        "resumable": true
+                                      },
+                                      "priorOutcomeFence": 45,
+                                      "priorState": "circuit-open",
+                                      "reason": "identity-preserving-worker-attempt-resume",
+                                      "resumable": true,
+                                      "routeIdempotencyKey": "route:7abdfcfa6e2ccb611"
+                                    },
+                                    "priorState": "running",
+                                    "processTreeTerminationConfirmed": true,
+                                    "reason": "service-shutdown",
+                                    "resumable": true
+                                  },
+                                  "priorOutcomeFence": 46,
+                                  "priorState": "checkpointed",
+                                  "reason": "interrupted-worker-attempt-retired",
+                                  "resumable": true
+                                },
+                                "priorOutcomeFence": 46,
+                                "priorState": "checkpointed",
+                                "reason": "identity-preserving-worker-attempt-resume",
+                                "resumable": true,
+                                "routeIdempotencyKey": "route:0cc31c7190a494b20"
+                              },
+                              "priorState": "running",
+                              "processTreeTerminationConfirmed": true,
+                              "reason": "service-shutdown",
+                              "resumable": true
+                            },
+                            "priorOutcomeFence": 47,
+                            "priorState": "checkpointed",
+                            "reason": "interrupted-worker-attempt-retired",
+                            "resumable": true
+                          },
+                          "reason": "equivalent-interrupted-worker-attempt-circuit",
+                          "resumable": true
+                        },
+                        "priorOutcomeFence": 47,
+                        "priorState": "circuit-open",
+                        "reason": "interrupted-worker-attempt-retired",
+                        "resumable": true
+                      },
+                      "priorOutcomeFence": 47,
+                      "priorState": "circuit-open",
+                      "reason": "identity-preserving-worker-attempt-resume",
+                      "resumable": true,
+                      "routeIdempotencyKey": "route:e4ae5629cdeb3a6ff"
+                    },
+                    "priorState": "running",
+                    "processTreeTerminationConfirmed": true,
+                    "reason": "service-shutdown",
+                    "resumable": true
+                  },
+                  "priorOutcomeFence": 48,
+                  "priorState": "checkpointed",
+                  "reason": "interrupted-worker-attempt-retired",
+                  "resumable": true
+                },
+                "priorOutcomeFence": 48,
+                "priorState": "checkpointed",
+                "reason": "identity-preserving-worker-attempt-resume",
+                "resumable": true,
+                "routeIdempotencyKey": "route:5c9cd5dd53f7657ef"
+              },
+              "priorState": "running",
+              "processTreeTerminationConfirmed": true,
+              "reason": "service-shutdown",
+              "resumable": true
+            },
+            "priorOutcomeFence": 49,
+            "priorState": "checkpointed",
+            "reason": "interrupted-worker-attempt-retired",
+            "resumable": true
+          },
+          "reason": "equivalent-interrupted-worker-attempt-circuit",
+          "resumable": true
+        },
+        "priorOutcomeFence": 49,
+        "priorState": "circuit-open",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T21:35:14.683Z",
+      "updatedAt": "2026-07-26T22:02:23.118Z",
+      "completedAt": null
+    },
+    {
+      "id": "ec31794f-cbe8-45e0-be18-8d57df9e8135",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "codex",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:7379fb32c96b51ef54f6f9febf65a7ced2a722bc6c9adaaadd6c49a02e624834",
+      "mutationVersion": "mv1:f2204ec10d338d13d9b28aaf013baea17d84cd2dd69197a1625ef1411df53385",
+      "workstreamFence": 373,
+      "outcomeFence": 48,
+      "resourceEnvelope": {
+        "activeMinutes": 449.89055,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T21:44:10.612Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 6,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073740380
+      },
+      "resourceUse": {
+        "activeMs": 264,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 0
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "codex",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "gpt-5.6-sol",
+        "modelRoute": "route:93b7d1ac36445853d",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "openai:chatgpt",
+        "runner": "sandcastle-codex@0.12.0+hq-safe-host-codex-v7",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 1,
+      "failureClass": null,
+      "failureFingerprint": "sha256:0c9941da8de178a8df5e2fee6a7be05491e950398d500af7b3b2ecd372670665",
+      "circuitReason": null,
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:f78b6c32bea52b1582fa55a64bef5624e149be363f5585b3df914480c900ae92",
+          "interrupted-work-evidence:sha256:4358dca2f684b46fee09ac2d9b62e51dc62e5dd85c1f0f7836957ec22218a02b"
+        ],
+        "priorCheckpoint": {
+          "priorCheckpoint": {
+            "checkpointIdentity": "sha256:93d7b2dba0e29691d56f050e967236fd7ef50b353f013bf83fd7fd415742db16",
+            "effectIdentity": "outcome:demand-loop-ticket-3",
+            "evidence": [
+              "interrupted-work-plan:sha256:d18d36f324f78b2a4ca76a3004e6919ee4153a1008afe4efa54121666519208b",
+              "interrupted-work-evidence:sha256:13d7c438a564753dc64225f2cc2e4f5c0d3e3a14b54d89791d4b65a8528eb56a"
+            ],
+            "priorCheckpoint": {
+              "evidence": [
+                "interrupted-work-plan:sha256:d18d36f324f78b2a4ca76a3004e6919ee4153a1008afe4efa54121666519208b",
+                "interrupted-work-evidence:sha256:13d7c438a564753dc64225f2cc2e4f5c0d3e3a14b54d89791d4b65a8528eb56a"
+              ],
+              "priorCheckpoint": {
+                "equivalentFailureCount": 2,
+                "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+                "interruptedReconcileRetiredAt": "2026-07-26T21:13:39.791Z",
+                "interruptedReconcileRetiredEvidence": [
+                  "dirty-or-unowned-worktree:/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+                  "worktree-conflict:dirty-or-unowned-worktree:/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42"
+                ],
+                "outcomeTerminal": false,
+                "priorCheckpoint": {
+                  "evidence": [
+                    "interrupted-work-plan:sha256:9cc149c672451e19a888a76d986398b909a50241e51f791f8defc379c19cf3d8",
+                    "interrupted-work-evidence:sha256:f3ad456704f0366201c5f0e41d67658f81a4182b796ac01086cffd8e986cfb23"
+                  ],
+                  "priorCheckpoint": {
+                    "priorCheckpoint": {
+                      "checkpointIdentity": "sha256:dc0516689714278ed5f212d088d46095569fa7c1ba45a5e542a148d3f7f3e59a",
+                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                      "evidence": [
+                        "interrupted-work-plan:sha256:fcd0612940b52ecbb84ac2c6307b63840b59f471f96afc958c20f5fca7a972f1",
+                        "interrupted-work-evidence:sha256:e6fa57c99e0fc86e248b211027727eaba5434e82b41aff3c253ac1d8498aa7f1"
+                      ],
+                      "priorCheckpoint": {
+                        "evidence": [
+                          "interrupted-work-plan:sha256:fcd0612940b52ecbb84ac2c6307b63840b59f471f96afc958c20f5fca7a972f1",
+                          "interrupted-work-evidence:sha256:e6fa57c99e0fc86e248b211027727eaba5434e82b41aff3c253ac1d8498aa7f1"
+                        ],
+                        "priorCheckpoint": {
+                          "priorCheckpoint": {
+                            "checkpointIdentity": "sha256:2714580c75e6660717b3308ac8a7811a4621d46dfe827cda9f17d0bed7df68db",
+                            "effectIdentity": "outcome:demand-loop-ticket-3",
+                            "evidence": [
+                              "interrupted-work-plan:sha256:9a842ff56a5a67751567abf6daaef75af88c3109df182b1f9891605af0822035",
+                              "interrupted-work-evidence:sha256:44703b471cd66ed3eddd004d4c71fcad0b8ff4d1c71e63f3ab57c696746031f1"
+                            ],
+                            "priorCheckpoint": {
+                              "evidence": [
+                                "interrupted-work-plan:sha256:9a842ff56a5a67751567abf6daaef75af88c3109df182b1f9891605af0822035",
+                                "interrupted-work-evidence:sha256:44703b471cd66ed3eddd004d4c71fcad0b8ff4d1c71e63f3ab57c696746031f1"
+                              ],
+                              "priorCheckpoint": {
+                                "equivalentFailureCount": 2,
+                                "failureFingerprint": "sha256:1c0f5c5c82310b18de9d395f8b9e439402aa3571c9ffd9493be40e554fd53795",
+                                "outcomeTerminal": false,
+                                "priorCheckpoint": {
+                                  "evidence": [
+                                    "interrupted-work-plan:sha256:88c8ff46a79b9f24cb435c6c4f2ced30bf9eaff00c84894b27cb42fba9a4d5c9",
+                                    "interrupted-work-evidence:sha256:9fb0441968b0bb1218311a6d6cf32e717031752ab691d08973c4a015c44a4dfc"
+                                  ],
+                                  "priorCheckpoint": {
+                                    "continuationDisposition": "replace-worker-attempt",
+                                    "dimension": "active-time",
+                                    "envelope": {
+                                      "activeMinutes": 480,
+                                      "attempts": 2,
+                                      "concurrentRuns": 1,
+                                      "cost": {
+                                        "kind": "not-metered-subscription-quota",
+                                        "liveSpendAuthorizedUsd": 0,
+                                        "usd": null
+                                      },
+                                      "deadline": "2026-07-26T20:19:14.683Z",
+                                      "externalActions": 0,
+                                      "machines": ["local"],
+                                      "modelInvocations": 9,
+                                      "moneyUsd": 0,
+                                      "stopConditions": [
+                                        "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                        "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                        "Source-version conflict or stale writer fence"
+                                      ],
+                                      "storageBytes": 1073740927
+                                    },
+                                    "observed": {
+                                      "activeMs": 1797214,
+                                      "attempts": 1,
+                                      "costKind": "not-metered-subscription-quota",
+                                      "externalActions": 0,
+                                      "liveSpendAuthorizedUsd": 0,
+                                      "modelInvocations": 1,
+                                      "moneyUsd": null,
+                                      "storageBytes": 547,
+                                      "toolCalls": 54
+                                    },
+                                    "outcomeTerminal": false,
+                                    "reason": "telemetry-exhaustion-replace-worker-attempt",
+                                    "resumable": true
+                                  },
+                                  "priorOutcomeFence": 45,
+                                  "priorState": "checkpointed",
+                                  "reason": "interrupted-worker-attempt-retired",
+                                  "resumable": true
+                                },
+                                "reason": "equivalent-interrupted-worker-attempt-circuit",
+                                "resumable": true
+                              },
+                              "priorOutcomeFence": 45,
+                              "priorState": "circuit-open",
+                              "reason": "interrupted-worker-attempt-retired",
+                              "resumable": true
+                            },
+                            "priorOutcomeFence": 45,
+                            "priorState": "circuit-open",
+                            "reason": "identity-preserving-worker-attempt-resume",
+                            "resumable": true,
+                            "routeIdempotencyKey": "route:7abdfcfa6e2ccb611"
+                          },
+                          "priorState": "running",
+                          "processTreeTerminationConfirmed": true,
+                          "reason": "service-shutdown",
+                          "resumable": true
+                        },
+                        "priorOutcomeFence": 46,
+                        "priorState": "checkpointed",
+                        "reason": "interrupted-worker-attempt-retired",
+                        "resumable": true
+                      },
+                      "priorOutcomeFence": 46,
+                      "priorState": "checkpointed",
+                      "reason": "identity-preserving-worker-attempt-resume",
+                      "resumable": true,
+                      "routeIdempotencyKey": "route:0cc31c7190a494b20"
+                    },
+                    "priorState": "running",
+                    "processTreeTerminationConfirmed": true,
+                    "reason": "service-shutdown",
+                    "resumable": true
+                  },
+                  "priorOutcomeFence": 47,
+                  "priorState": "checkpointed",
+                  "reason": "interrupted-worker-attempt-retired",
+                  "resumable": true
+                },
+                "reason": "equivalent-interrupted-worker-attempt-circuit",
+                "resumable": true
+              },
+              "priorOutcomeFence": 47,
+              "priorState": "circuit-open",
+              "reason": "interrupted-worker-attempt-retired",
+              "resumable": true
+            },
+            "priorOutcomeFence": 47,
+            "priorState": "circuit-open",
+            "reason": "identity-preserving-worker-attempt-resume",
+            "resumable": true,
+            "routeIdempotencyKey": "route:e4ae5629cdeb3a6ff"
+          },
+          "priorState": "running",
+          "processTreeTerminationConfirmed": true,
+          "reason": "service-shutdown",
+          "resumable": true
+        },
+        "priorOutcomeFence": 48,
+        "priorState": "checkpointed",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T21:14:14.424Z",
+      "updatedAt": "2026-07-26T21:35:08.366Z",
+      "completedAt": null
+    },
+    {
+      "id": "07dee647-08e9-40ae-aa8b-c1a84d226461",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "codex",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:c0365d5166cd8864c7ed3df31df9206aeb3af453e8a8bdce07beae626f421825",
+      "mutationVersion": "mv1:cb74c6930a3d2a87ada01fd50e5dfe15af1dea87cef5e30e4e93e6caaa5f6845",
+      "workstreamFence": 371,
+      "outcomeFence": 47,
+      "resourceEnvelope": {
+        "activeMinutes": 449.97638333333333,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T21:15:46.326Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 7,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073740380
+      },
+      "resourceUse": {
+        "activeMs": 5150,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 0
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "codex",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "gpt-5.6-sol",
+        "modelRoute": "route:74b236f349a966928",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "openai:chatgpt",
+        "runner": "sandcastle-codex@0.12.0+hq-safe-host-codex-v7",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 2,
+      "failureClass": "insufficient-evidence",
+      "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+      "circuitReason": "two-equivalent-interrupted-worker-attempt-retirements",
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:d18d36f324f78b2a4ca76a3004e6919ee4153a1008afe4efa54121666519208b",
+          "interrupted-work-evidence:sha256:13d7c438a564753dc64225f2cc2e4f5c0d3e3a14b54d89791d4b65a8528eb56a"
+        ],
+        "priorCheckpoint": {
+          "equivalentFailureCount": 2,
+          "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+          "interruptedReconcileRetiredAt": "2026-07-26T21:13:39.791Z",
+          "interruptedReconcileRetiredEvidence": [
+            "dirty-or-unowned-worktree:/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+            "worktree-conflict:dirty-or-unowned-worktree:/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42"
+          ],
+          "outcomeTerminal": false,
+          "priorCheckpoint": {
+            "evidence": [
+              "interrupted-work-plan:sha256:9cc149c672451e19a888a76d986398b909a50241e51f791f8defc379c19cf3d8",
+              "interrupted-work-evidence:sha256:f3ad456704f0366201c5f0e41d67658f81a4182b796ac01086cffd8e986cfb23"
+            ],
+            "priorCheckpoint": {
+              "priorCheckpoint": {
+                "checkpointIdentity": "sha256:dc0516689714278ed5f212d088d46095569fa7c1ba45a5e542a148d3f7f3e59a",
+                "effectIdentity": "outcome:demand-loop-ticket-3",
+                "evidence": [
+                  "interrupted-work-plan:sha256:fcd0612940b52ecbb84ac2c6307b63840b59f471f96afc958c20f5fca7a972f1",
+                  "interrupted-work-evidence:sha256:e6fa57c99e0fc86e248b211027727eaba5434e82b41aff3c253ac1d8498aa7f1"
+                ],
+                "priorCheckpoint": {
+                  "evidence": [
+                    "interrupted-work-plan:sha256:fcd0612940b52ecbb84ac2c6307b63840b59f471f96afc958c20f5fca7a972f1",
+                    "interrupted-work-evidence:sha256:e6fa57c99e0fc86e248b211027727eaba5434e82b41aff3c253ac1d8498aa7f1"
+                  ],
+                  "priorCheckpoint": {
+                    "priorCheckpoint": {
+                      "checkpointIdentity": "sha256:2714580c75e6660717b3308ac8a7811a4621d46dfe827cda9f17d0bed7df68db",
+                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                      "evidence": [
+                        "interrupted-work-plan:sha256:9a842ff56a5a67751567abf6daaef75af88c3109df182b1f9891605af0822035",
+                        "interrupted-work-evidence:sha256:44703b471cd66ed3eddd004d4c71fcad0b8ff4d1c71e63f3ab57c696746031f1"
+                      ],
+                      "priorCheckpoint": {
+                        "evidence": [
+                          "interrupted-work-plan:sha256:9a842ff56a5a67751567abf6daaef75af88c3109df182b1f9891605af0822035",
+                          "interrupted-work-evidence:sha256:44703b471cd66ed3eddd004d4c71fcad0b8ff4d1c71e63f3ab57c696746031f1"
+                        ],
+                        "priorCheckpoint": {
+                          "equivalentFailureCount": 2,
+                          "failureFingerprint": "sha256:1c0f5c5c82310b18de9d395f8b9e439402aa3571c9ffd9493be40e554fd53795",
+                          "outcomeTerminal": false,
+                          "priorCheckpoint": {
+                            "evidence": [
+                              "interrupted-work-plan:sha256:88c8ff46a79b9f24cb435c6c4f2ced30bf9eaff00c84894b27cb42fba9a4d5c9",
+                              "interrupted-work-evidence:sha256:9fb0441968b0bb1218311a6d6cf32e717031752ab691d08973c4a015c44a4dfc"
+                            ],
+                            "priorCheckpoint": {
+                              "continuationDisposition": "replace-worker-attempt",
+                              "dimension": "active-time",
+                              "envelope": {
+                                "activeMinutes": 480,
+                                "attempts": 2,
+                                "concurrentRuns": 1,
+                                "cost": {
+                                  "kind": "not-metered-subscription-quota",
+                                  "liveSpendAuthorizedUsd": 0,
+                                  "usd": null
+                                },
+                                "deadline": "2026-07-26T20:19:14.683Z",
+                                "externalActions": 0,
+                                "machines": ["local"],
+                                "modelInvocations": 9,
+                                "moneyUsd": 0,
+                                "stopConditions": [
+                                  "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                  "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                  "Source-version conflict or stale writer fence"
+                                ],
+                                "storageBytes": 1073740927
+                              },
+                              "observed": {
+                                "activeMs": 1797214,
+                                "attempts": 1,
+                                "costKind": "not-metered-subscription-quota",
+                                "externalActions": 0,
+                                "liveSpendAuthorizedUsd": 0,
+                                "modelInvocations": 1,
+                                "moneyUsd": null,
+                                "storageBytes": 547,
+                                "toolCalls": 54
+                              },
+                              "outcomeTerminal": false,
+                              "reason": "telemetry-exhaustion-replace-worker-attempt",
+                              "resumable": true
+                            },
+                            "priorOutcomeFence": 45,
+                            "priorState": "checkpointed",
+                            "reason": "interrupted-worker-attempt-retired",
+                            "resumable": true
+                          },
+                          "reason": "equivalent-interrupted-worker-attempt-circuit",
+                          "resumable": true
+                        },
+                        "priorOutcomeFence": 45,
+                        "priorState": "circuit-open",
+                        "reason": "interrupted-worker-attempt-retired",
+                        "resumable": true
+                      },
+                      "priorOutcomeFence": 45,
+                      "priorState": "circuit-open",
+                      "reason": "identity-preserving-worker-attempt-resume",
+                      "resumable": true,
+                      "routeIdempotencyKey": "route:7abdfcfa6e2ccb611"
+                    },
+                    "priorState": "running",
+                    "processTreeTerminationConfirmed": true,
+                    "reason": "service-shutdown",
+                    "resumable": true
+                  },
+                  "priorOutcomeFence": 46,
+                  "priorState": "checkpointed",
+                  "reason": "interrupted-worker-attempt-retired",
+                  "resumable": true
+                },
+                "priorOutcomeFence": 46,
+                "priorState": "checkpointed",
+                "reason": "identity-preserving-worker-attempt-resume",
+                "resumable": true,
+                "routeIdempotencyKey": "route:0cc31c7190a494b20"
+              },
+              "priorState": "running",
+              "processTreeTerminationConfirmed": true,
+              "reason": "service-shutdown",
+              "resumable": true
+            },
+            "priorOutcomeFence": 47,
+            "priorState": "checkpointed",
+            "reason": "interrupted-worker-attempt-retired",
+            "resumable": true
+          },
+          "reason": "equivalent-interrupted-worker-attempt-circuit",
+          "resumable": true
+        },
+        "priorOutcomeFence": 47,
+        "priorState": "circuit-open",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T20:46:10.940Z",
+      "updatedAt": "2026-07-26T21:14:09.427Z",
+      "completedAt": null
+    },
+    {
+      "id": "f671d1b0-30b5-4436-a55b-842d40eca86a",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "codex",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:6c81c46f358faa8888cac5823948c676af5a21132bf2836c54a7dec3c957b493",
+      "mutationVersion": "mv1:50d49879eb2b2a68847ddc56eba3e6d77cad9814114a346caacbc231f1117193",
+      "workstreamFence": 370,
+      "outcomeFence": 46,
+      "resourceEnvelope": {
+        "activeMinutes": 450.0464333333333,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T20:55:47.936Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 8,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073740380
+      },
+      "resourceUse": {
+        "activeMs": 4203,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 0
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "codex",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "gpt-5.6-sol",
+        "modelRoute": "route:589c3b68ed222a654",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "openai:chatgpt",
+        "runner": "sandcastle-codex@0.12.0+hq-safe-host-codex-v7",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 1,
+      "failureClass": null,
+      "failureFingerprint": "sha256:0c9941da8de178a8df5e2fee6a7be05491e950398d500af7b3b2ecd372670665",
+      "circuitReason": null,
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:fcd0612940b52ecbb84ac2c6307b63840b59f471f96afc958c20f5fca7a972f1",
+          "interrupted-work-evidence:sha256:e6fa57c99e0fc86e248b211027727eaba5434e82b41aff3c253ac1d8498aa7f1"
+        ],
+        "priorCheckpoint": {
+          "priorCheckpoint": {
+            "checkpointIdentity": "sha256:2714580c75e6660717b3308ac8a7811a4621d46dfe827cda9f17d0bed7df68db",
+            "effectIdentity": "outcome:demand-loop-ticket-3",
+            "evidence": [
+              "interrupted-work-plan:sha256:9a842ff56a5a67751567abf6daaef75af88c3109df182b1f9891605af0822035",
+              "interrupted-work-evidence:sha256:44703b471cd66ed3eddd004d4c71fcad0b8ff4d1c71e63f3ab57c696746031f1"
+            ],
+            "priorCheckpoint": {
+              "evidence": [
+                "interrupted-work-plan:sha256:9a842ff56a5a67751567abf6daaef75af88c3109df182b1f9891605af0822035",
+                "interrupted-work-evidence:sha256:44703b471cd66ed3eddd004d4c71fcad0b8ff4d1c71e63f3ab57c696746031f1"
+              ],
+              "priorCheckpoint": {
+                "equivalentFailureCount": 2,
+                "failureFingerprint": "sha256:1c0f5c5c82310b18de9d395f8b9e439402aa3571c9ffd9493be40e554fd53795",
+                "outcomeTerminal": false,
+                "priorCheckpoint": {
+                  "evidence": [
+                    "interrupted-work-plan:sha256:88c8ff46a79b9f24cb435c6c4f2ced30bf9eaff00c84894b27cb42fba9a4d5c9",
+                    "interrupted-work-evidence:sha256:9fb0441968b0bb1218311a6d6cf32e717031752ab691d08973c4a015c44a4dfc"
+                  ],
+                  "priorCheckpoint": {
+                    "continuationDisposition": "replace-worker-attempt",
+                    "dimension": "active-time",
+                    "envelope": {
+                      "activeMinutes": 480,
+                      "attempts": 2,
+                      "concurrentRuns": 1,
+                      "cost": {
+                        "kind": "not-metered-subscription-quota",
+                        "liveSpendAuthorizedUsd": 0,
+                        "usd": null
+                      },
+                      "deadline": "2026-07-26T20:19:14.683Z",
+                      "externalActions": 0,
+                      "machines": ["local"],
+                      "modelInvocations": 9,
+                      "moneyUsd": 0,
+                      "stopConditions": [
+                        "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                        "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                        "Source-version conflict or stale writer fence"
+                      ],
+                      "storageBytes": 1073740927
+                    },
+                    "observed": {
+                      "activeMs": 1797214,
+                      "attempts": 1,
+                      "costKind": "not-metered-subscription-quota",
+                      "externalActions": 0,
+                      "liveSpendAuthorizedUsd": 0,
+                      "modelInvocations": 1,
+                      "moneyUsd": null,
+                      "storageBytes": 547,
+                      "toolCalls": 54
+                    },
+                    "outcomeTerminal": false,
+                    "reason": "telemetry-exhaustion-replace-worker-attempt",
+                    "resumable": true
+                  },
+                  "priorOutcomeFence": 45,
+                  "priorState": "checkpointed",
+                  "reason": "interrupted-worker-attempt-retired",
+                  "resumable": true
+                },
+                "reason": "equivalent-interrupted-worker-attempt-circuit",
+                "resumable": true
+              },
+              "priorOutcomeFence": 45,
+              "priorState": "circuit-open",
+              "reason": "interrupted-worker-attempt-retired",
+              "resumable": true
+            },
+            "priorOutcomeFence": 45,
+            "priorState": "circuit-open",
+            "reason": "identity-preserving-worker-attempt-resume",
+            "resumable": true,
+            "routeIdempotencyKey": "route:7abdfcfa6e2ccb611"
+          },
+          "priorState": "running",
+          "processTreeTerminationConfirmed": true,
+          "reason": "service-shutdown",
+          "resumable": true
+        },
+        "priorOutcomeFence": 46,
+        "priorState": "checkpointed",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T20:26:13.173Z",
+      "updatedAt": "2026-07-26T20:45:40.862Z",
+      "completedAt": null
+    },
+    {
+      "id": "fe2511e9-10cc-4c6f-b687-3d5baaa65c20",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "claude-code",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:9ae96dc68a656de9cb2b10b6ce87ad677725c6b76312826708ff90e227abc07a",
+      "mutationVersion": "mv1:132de007686cc09815930038b507a955a0b48b99ea62130eb32cc5ebb4f1f4ab",
+      "workstreamFence": 368,
+      "outcomeFence": 45,
+      "resourceEnvelope": {
+        "activeMinutes": 480,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T20:19:14.683Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 9,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073740927
+      },
+      "resourceUse": {
+        "activeMs": 1797214,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 547,
+        "toolCalls": 54
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "claude-code",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "claude-sonnet-5",
+        "modelRoute": "route:d6095c1deaf9c4b10",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "anthropic:claude",
+        "runner": "sandcastle-with-emergency-direct-fallback@1.0.0",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 2,
+      "failureClass": "insufficient-evidence",
+      "failureFingerprint": "sha256:1c0f5c5c82310b18de9d395f8b9e439402aa3571c9ffd9493be40e554fd53795",
+      "circuitReason": "two-equivalent-interrupted-worker-attempt-retirements",
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:9a842ff56a5a67751567abf6daaef75af88c3109df182b1f9891605af0822035",
+          "interrupted-work-evidence:sha256:44703b471cd66ed3eddd004d4c71fcad0b8ff4d1c71e63f3ab57c696746031f1"
+        ],
+        "priorCheckpoint": {
+          "equivalentFailureCount": 2,
+          "failureFingerprint": "sha256:1c0f5c5c82310b18de9d395f8b9e439402aa3571c9ffd9493be40e554fd53795",
+          "outcomeTerminal": false,
+          "priorCheckpoint": {
+            "evidence": [
+              "interrupted-work-plan:sha256:88c8ff46a79b9f24cb435c6c4f2ced30bf9eaff00c84894b27cb42fba9a4d5c9",
+              "interrupted-work-evidence:sha256:9fb0441968b0bb1218311a6d6cf32e717031752ab691d08973c4a015c44a4dfc"
+            ],
+            "priorCheckpoint": {
+              "continuationDisposition": "replace-worker-attempt",
+              "dimension": "active-time",
+              "envelope": {
+                "activeMinutes": 480,
+                "attempts": 2,
+                "concurrentRuns": 1,
+                "cost": {
+                  "kind": "not-metered-subscription-quota",
+                  "liveSpendAuthorizedUsd": 0,
+                  "usd": null
+                },
+                "deadline": "2026-07-26T20:19:14.683Z",
+                "externalActions": 0,
+                "machines": ["local"],
+                "modelInvocations": 9,
+                "moneyUsd": 0,
+                "stopConditions": [
+                  "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                  "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                  "Source-version conflict or stale writer fence"
+                ],
+                "storageBytes": 1073740927
+              },
+              "observed": {
+                "activeMs": 1797214,
+                "attempts": 1,
+                "costKind": "not-metered-subscription-quota",
+                "externalActions": 0,
+                "liveSpendAuthorizedUsd": 0,
+                "modelInvocations": 1,
+                "moneyUsd": null,
+                "storageBytes": 547,
+                "toolCalls": 54
+              },
+              "outcomeTerminal": false,
+              "reason": "telemetry-exhaustion-replace-worker-attempt",
+              "resumable": true
+            },
+            "priorOutcomeFence": 45,
+            "priorState": "checkpointed",
+            "reason": "interrupted-worker-attempt-retired",
+            "resumable": true
+          },
+          "reason": "equivalent-interrupted-worker-attempt-circuit",
+          "resumable": true
+        },
+        "priorOutcomeFence": 45,
+        "priorState": "circuit-open",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T19:49:19.253Z",
+      "updatedAt": "2026-07-26T20:25:40.886Z",
+      "completedAt": null
+    },
+    {
+      "id": "993f0d6c-4e2f-4f9c-9b7b-8478cb331c60",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "claude-code",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:3ae407d479deb70dd3713f13cbc97c8c31636c829bcf74963f5f447a86039ade",
+      "mutationVersion": "mv1:c80d08f1bc6e33bb2045e2af046c610c99c4124ebbed103239007d0ec5516654",
+      "workstreamFence": 367,
+      "outcomeFence": 44,
+      "resourceEnvelope": {
+        "activeMinutes": 457.1152833333333,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T19:47:02.334Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 8,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073740952
+      },
+      "resourceUse": {
+        "activeMs": 1792397,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 25,
+        "toolCalls": 56
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "claude-code",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "claude-sonnet-5",
+        "modelRoute": "route:eab3d42202163bdc8",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "anthropic:claude",
+        "runner": "sandcastle-with-emergency-direct-fallback@1.0.0",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 1,
+      "failureClass": "insufficient-evidence",
+      "failureFingerprint": "sha256:19150eaec581532d8e1448667f09389f5705a2f81108340a8148e142e9df4a1c",
+      "circuitReason": null,
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:490826cef48da2433d2e8dd9375276c11752b2075dd80ea79ce87ffe939e03c1",
+          "interrupted-work-evidence:sha256:ba1f69d4fd5e384f99f25208af3cc0c18eeaa5eec953fc028ce8402c6ceb40a6"
+        ],
+        "priorCheckpoint": {
+          "continuationDisposition": "replace-worker-attempt",
+          "dimension": "active-time",
+          "envelope": {
+            "activeMinutes": 457.1152833333333,
+            "attempts": 2,
+            "concurrentRuns": 1,
+            "cost": {
+              "kind": "not-metered-subscription-quota",
+              "liveSpendAuthorizedUsd": 0,
+              "usd": null
+            },
+            "deadline": "2026-07-26T19:47:02.334Z",
+            "externalActions": 0,
+            "machines": ["local"],
+            "modelInvocations": 8,
+            "moneyUsd": 0,
+            "stopConditions": [
+              "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+              "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+              "Source-version conflict or stale writer fence"
+            ],
+            "storageBytes": 1073740952
+          },
+          "observed": {
+            "activeMs": 1792397,
+            "attempts": 1,
+            "costKind": "not-metered-subscription-quota",
+            "externalActions": 0,
+            "liveSpendAuthorizedUsd": 0,
+            "modelInvocations": 1,
+            "moneyUsd": null,
+            "storageBytes": 25,
+            "toolCalls": 56
+          },
+          "outcomeTerminal": false,
+          "reason": "telemetry-exhaustion-replace-worker-attempt",
+          "resumable": true
+        },
+        "priorOutcomeFence": 44,
+        "priorState": "checkpointed",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T19:17:10.977Z",
+      "updatedAt": "2026-07-26T19:49:13.330Z",
+      "completedAt": null
+    },
+    {
+      "id": "b4dc42ed-c75b-480a-9d7e-fea4b876e4e3",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "claude-code",
+      "nativeSessionId": "41098fc5-47a7-41e0-896a-b75d1c3ea1bf",
+      "promptDigest": "sha256:c22a84ac3b347c3264a986fc29c4d4204af2d6faf916b7112605d8e8a24911e2",
+      "mutationVersion": "mv1:80f94b18916e5f12a97f0517ba979499a19c6eb8e659140b624b73791aa7c6c0",
+      "workstreamFence": 366,
+      "outcomeFence": 43,
+      "resourceEnvelope": {
+        "activeMinutes": 480,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T19:14:50.262Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 9,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073741426
+      },
+      "resourceUse": {
+        "activeMs": 1373083,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 474,
+        "toolCalls": 80
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "claude-code",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "claude-sonnet-5",
+        "modelRoute": "route:3cc6e89de2a504cbf",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "anthropic:claude",
+        "runner": "sandcastle-with-emergency-direct-fallback@1.0.0",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 1,
+      "failureClass": null,
+      "failureFingerprint": "sha256:1c0f5c5c82310b18de9d395f8b9e439402aa3571c9ffd9493be40e554fd53795",
+      "circuitReason": null,
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:4f4374606706a59c9279f426ce199b4e33dd8961e35916884a21a081810f9c15",
+          "interrupted-work-evidence:sha256:14c7cb64cc586f71d4727ec1fcbe80d6cbe1413abd3bf612417c91c07e747856"
+        ],
+        "priorCheckpoint": {
+          "priorFence": 43,
+          "reason": "outcome-lease-expired",
+          "resumable": true
+        },
+        "priorOutcomeFence": 43,
+        "priorState": "checkpointed",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T18:44:54.548Z",
+      "updatedAt": "2026-07-26T19:16:58.818Z",
+      "completedAt": null
+    },
+    {
+      "id": "c390951e-470d-4f88-8474-3dae35d3b647",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "claude-code",
+      "nativeSessionId": "8a0ea5cb-1d04-42ae-a0c0-d4ef1257c335",
+      "promptDigest": "sha256:4bd47b2826ba451ee0f8b2642cc35c547aa5bd4b16ea3c138fa1415fdf42efc9",
+      "mutationVersion": "mv1:a6bc279f8c373f6f1d50b6b2ffa3d9b5fcb8824f152ee202edc812e296cf4779",
+      "workstreamFence": 365,
+      "outcomeFence": 42,
+      "resourceEnvelope": {
+        "activeMinutes": 458.52363333333335,
+        "attempts": 1,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T18:44:05.547Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 1,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073741426
+      },
+      "resourceUse": {
+        "activeMs": 1703030,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 45
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "claude-code",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "claude-sonnet-5",
+        "modelRoute": "route:b83b37d291da7ad6e",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "anthropic:claude",
+        "runner": "sandcastle-with-emergency-direct-fallback@1.0.0",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 1,
+      "failureClass": "insufficient-evidence",
+      "failureFingerprint": "sha256:9deb1a68faee49ffe0b12ccbbb0a9ad662d566f1726c8b41ac2c85e4f99ff877",
+      "circuitReason": null,
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:69332e9c25ababf00443a6469f48121ff0c1622b869443cffaf20e1774fc5636",
+          "interrupted-work-evidence:sha256:17d561ca4c8136953a10611b9294b29801c530afa61cac96143a1c31aeb78da8"
+        ],
+        "priorCheckpoint": {
+          "continuationDisposition": "replace-worker-attempt",
+          "dimension": "active-time",
+          "envelope": {
+            "activeMinutes": 458.52363333333335,
+            "attempts": 1,
+            "concurrentRuns": 1,
+            "cost": {
+              "kind": "not-metered-subscription-quota",
+              "liveSpendAuthorizedUsd": 0,
+              "usd": null
+            },
+            "deadline": "2026-07-26T18:44:05.547Z",
+            "externalActions": 0,
+            "machines": ["local"],
+            "modelInvocations": 1,
+            "moneyUsd": 0,
+            "stopConditions": [
+              "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+              "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+              "Source-version conflict or stale writer fence"
+            ],
+            "storageBytes": 1073741426
+          },
+          "observed": {
+            "activeMs": 1796690,
+            "attempts": 1,
+            "modelInvocations": 1
+          },
+          "outcomeTerminal": false,
+          "reason": "telemetry-exhaustion-replace-worker-attempt",
+          "resumable": true
+        },
+        "priorOutcomeFence": 42,
+        "priorState": "checkpointed",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T18:14:12.638Z",
+      "updatedAt": "2026-07-26T18:44:49.021Z",
+      "completedAt": null
+    },
+    {
+      "id": "2a443175-fb9a-4017-90b2-4a825ee4c47a",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "claude-code",
+      "nativeSessionId": "d1a3fc35-3a85-4dc0-9900-569a4100ad0f",
+      "promptDigest": "sha256:0a99afe7e24a42472b9e6dc1a17aec299b97a4f98443e68f6a6a36d2d5dbb68f",
+      "mutationVersion": "mv1:5e557aa955fbbf8bf98da853a221594f39a7febe4a4f4d244a166ed7cf1520d1",
+      "workstreamFence": 364,
+      "outcomeFence": 41,
+      "resourceEnvelope": {
+        "activeMinutes": 479.97145,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T18:21:52.344Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 3,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073741426
+      },
+      "resourceUse": {
+        "activeMs": 1286869,
+        "attempts": 2,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 2,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 29
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "claude-code",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "claude-sonnet-5",
+        "modelRoute": "route:bdf26c0a50e2b691a",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "anthropic:claude",
+        "runner": "sandcastle-with-emergency-direct-fallback@1.0.0",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 1,
+      "equivalentFailureCount": 1,
+      "failureClass": "product-defect",
+      "failureFingerprint": "sha256:d010816799a422e4cbcff21fd0449608f954f7b872065719c9eb61518a8c717f",
+      "circuitReason": null,
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:04200a23f68b3ca988d005e196cb37368fe65e4f6faa662d5f0e41acf18695be",
+          "interrupted-work-evidence:sha256:72c99e8c69012b922c9cc8fb97c4b308170f37ff509da73ad85d59a0abd19844"
+        ],
+        "priorCheckpoint": {
+          "continuationDisposition": "repair-same-owner",
+          "descendantPidsAlive": [],
+          "priorCheckpoint": {
+            "checkpointIdentity": "sha256:74f6c24ec9c7e3d389f9e8626bb09f00c6639fcb99805a995eeb18097e8846a5",
+            "effectIdentity": "outcome:demand-loop-ticket-3",
+            "evidence": [
+              "interrupted-work-plan:sha256:a3d2d39b5cb24c2d5c097cd1ac23abe6705d0133b877fb79131013945ec663d0",
+              "interrupted-work-evidence:sha256:dbab342889317f4fa2ddc89c01f77df07010563c53c16b2faa2334beef6cab51"
+            ],
+            "priorCheckpoint": {
+              "evidence": [
+                "interrupted-work-plan:sha256:a3d2d39b5cb24c2d5c097cd1ac23abe6705d0133b877fb79131013945ec663d0",
+                "interrupted-work-evidence:sha256:dbab342889317f4fa2ddc89c01f77df07010563c53c16b2faa2334beef6cab51"
+              ],
+              "priorCheckpoint": {
+                "equivalentFailureCount": 2,
+                "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+                "interruptedReconcileRetiredAt": "2026-07-26T17:51:29.573Z",
+                "interruptedReconcileRetiredEvidence": [
+                  "dirty-or-unowned-worktree:/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+                  "worktree-conflict:dirty-or-unowned-worktree:/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42"
+                ],
+                "outcomeTerminal": false,
+                "priorCheckpoint": {
+                  "evidence": [
+                    "interrupted-work-plan:sha256:447159ba55356585014052ee334e1fe19c3f89648b3550e64b4aa61e5a901eae",
+                    "interrupted-work-evidence:sha256:b20404805a3a170622be4c8946d71a8e5914bfbe917ca2b6a97928fe0fd6f2e4"
+                  ],
+                  "priorCheckpoint": {
+                    "priorCheckpoint": {
+                      "checkpointIdentity": "sha256:e720be22f898db8cf9ccaea451ba3dc5b57c6c120caa0b4b3f6d07f34b1c0ef9",
+                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                      "evidence": [
+                        "interrupted-work-plan:sha256:869b6f6b58c7b281f6eb7c5a9884956711038142297c6e0550dc5cdbebc5fdb7",
+                        "interrupted-work-evidence:sha256:a7a78492e5370bdf654875d8b083ae222990af27564d44ddfd482952e4b934cb"
+                      ],
+                      "priorCheckpoint": {
+                        "evidence": [
+                          "interrupted-work-plan:sha256:869b6f6b58c7b281f6eb7c5a9884956711038142297c6e0550dc5cdbebc5fdb7",
+                          "interrupted-work-evidence:sha256:a7a78492e5370bdf654875d8b083ae222990af27564d44ddfd482952e4b934cb"
+                        ],
+                        "priorCheckpoint": {
+                          "priorCheckpoint": {
+                            "checkpointIdentity": "sha256:ce0b7e1b76a80a0ed2085b3d808610e6a0a465182817377b84bb0445d7202bc1",
+                            "effectIdentity": "outcome:demand-loop-ticket-3",
+                            "evidence": [
+                              "interrupted-work-plan:sha256:699d9b4065a22a005ed462501ebfa58bb56cc9dbeded99b4cde0e827126ffc3a",
+                              "interrupted-work-evidence:sha256:acd3edafce8cf880c5a5a09fa8ac42b71467e9e7032267b0a2c3064887f7ff20"
+                            ],
+                            "priorCheckpoint": {
+                              "evidence": [
+                                "interrupted-work-plan:sha256:699d9b4065a22a005ed462501ebfa58bb56cc9dbeded99b4cde0e827126ffc3a",
+                                "interrupted-work-evidence:sha256:acd3edafce8cf880c5a5a09fa8ac42b71467e9e7032267b0a2c3064887f7ff20"
+                              ],
+                              "priorCheckpoint": {
+                                "equivalentFailureCount": 2,
+                                "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+                                "outcomeTerminal": false,
+                                "priorCheckpoint": {
+                                  "evidence": [
+                                    "interrupted-work-plan:sha256:0c57b41dbb256a7006852710c787111ec66fafc69c4d7c1924e5029128d852e6",
+                                    "interrupted-work-evidence:sha256:907fe1d2f20dd7a07409d97066f5df3a243c10b330bd874716587078b50da2a4"
+                                  ],
+                                  "priorCheckpoint": {
+                                    "priorCheckpoint": {
+                                      "checkpointIdentity": "sha256:62eec06ce53cc241244b78618380e46a17f6b99a04768bbfba94ad41f0a3d3e2",
+                                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                                      "evidence": [
+                                        "interrupted-work-plan:sha256:aa876a2d0b5435fe58fb2c233abc2fdb50211b817505ab6a57018a32f38b0744",
+                                        "interrupted-work-evidence:sha256:fece6669f2e6801b3e268dd078127e0170128c6526df1151063a20426ac3fdab"
+                                      ],
+                                      "priorCheckpoint": {
+                                        "evidence": [
+                                          "interrupted-work-plan:sha256:aa876a2d0b5435fe58fb2c233abc2fdb50211b817505ab6a57018a32f38b0744",
+                                          "interrupted-work-evidence:sha256:fece6669f2e6801b3e268dd078127e0170128c6526df1151063a20426ac3fdab"
+                                        ],
+                                        "priorCheckpoint": {
+                                          "priorCheckpoint": {
+                                            "checkpointIdentity": "sha256:c63259f9aac8ee8165ff3b29a5a2c25287036b354f475f6af7efd5f514a4d7f4",
+                                            "effectIdentity": "outcome:demand-loop-ticket-3",
+                                            "evidence": [
+                                              "interrupted-work-plan:sha256:000393199df6bb5b27ecbfd3de8747eba28a32da46944cc3cb9141fc6d6d2418",
+                                              "interrupted-work-evidence:sha256:ef3aba22cd22553f01d8d890f49c748535b3c56f6ba87b05c5184876f2836060"
+                                            ],
+                                            "priorCheckpoint": {
+                                              "evidence": [
+                                                "interrupted-work-plan:sha256:000393199df6bb5b27ecbfd3de8747eba28a32da46944cc3cb9141fc6d6d2418",
+                                                "interrupted-work-evidence:sha256:ef3aba22cd22553f01d8d890f49c748535b3c56f6ba87b05c5184876f2836060"
+                                              ],
+                                              "priorCheckpoint": {
+                                                "equivalentFailureCount": 2,
+                                                "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+                                                "outcomeTerminal": false,
+                                                "priorCheckpoint": {
+                                                  "evidence": [
+                                                    "interrupted-work-plan:sha256:8534f80019527625894f09e7f4fbdf5d277f2f16ace8baf5c4660b14aa5c2ada",
+                                                    "interrupted-work-evidence:sha256:a02b59090da5b22bf6af1aa9ca56c4b993b401d4bc77963c2a0bc7c20f1ce4f7"
+                                                  ],
+                                                  "priorCheckpoint": {
+                                                    "priorCheckpoint": {
+                                                      "checkpointIdentity": "sha256:799203d63c9dab9a3920fade5f6d4e3239fb6cb93713c7388b7ea9ac71dcb597",
+                                                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                                                      "evidence": [
+                                                        "interrupted-work-plan:sha256:15e9d00ef5ff5cdbed5c8505ec12ef2ad3900a86eb2ec13a0d8b3fa8576e4ea6",
+                                                        "interrupted-work-evidence:sha256:b93b803cc597521d066e50720b5c964a0c2a1b72fbeb04f2f23e7ca4fd26d500"
+                                                      ],
+                                                      "priorCheckpoint": {
+                                                        "evidence": [
+                                                          "interrupted-work-plan:sha256:15e9d00ef5ff5cdbed5c8505ec12ef2ad3900a86eb2ec13a0d8b3fa8576e4ea6",
+                                                          "interrupted-work-evidence:sha256:b93b803cc597521d066e50720b5c964a0c2a1b72fbeb04f2f23e7ca4fd26d500"
+                                                        ],
+                                                        "priorCheckpoint": {
+                                                          "priorCheckpoint": {
+                                                            "checkpointIdentity": "sha256:53f2ee0a290e9a1ab40dca3a0f22283ccb42e3ff85f0d8425fde81ddd9d64e83",
+                                                            "dimension": "active-time",
+                                                            "effectIdentity": "outcome:demand-loop-ticket-3",
+                                                            "envelope": {
+                                                              "activeMinutes": 455.44921666666664,
+                                                              "attempts": 1,
+                                                              "concurrentRuns": 1,
+                                                              "cost": {
+                                                                "kind": "not-metered-subscription-quota",
+                                                                "liveSpendAuthorizedUsd": 0,
+                                                                "usd": null
+                                                              },
+                                                              "deadline": "2026-07-26T17:14:07.136Z",
+                                                              "externalActions": 0,
+                                                              "machines": [
+                                                                "local"
+                                                              ],
+                                                              "modelInvocations": 7,
+                                                              "moneyUsd": 0,
+                                                              "stopConditions": [
+                                                                "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                                                "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                                                "Source-version conflict or stale writer fence"
+                                                              ],
+                                                              "storageBytes": 1073741426
+                                                            },
+                                                            "observed": {
+                                                              "activeMs": 1797253,
+                                                              "attempts": 2,
+                                                              "costKind": "not-metered-subscription-quota",
+                                                              "externalActions": 0,
+                                                              "liveSpendAuthorizedUsd": 0,
+                                                              "modelInvocations": 2,
+                                                              "moneyUsd": null,
+                                                              "storageBytes": 0,
+                                                              "toolCalls": 25
+                                                            },
+                                                            "outcomeTerminal": false,
+                                                            "priorCheckpoint": {
+                                                              "continuationDisposition": "replace-worker-attempt",
+                                                              "dimension": "active-time",
+                                                              "envelope": {
+                                                                "activeMinutes": 455.44921666666664,
+                                                                "attempts": 1,
+                                                                "concurrentRuns": 1,
+                                                                "cost": {
+                                                                  "kind": "not-metered-subscription-quota",
+                                                                  "liveSpendAuthorizedUsd": 0,
+                                                                  "usd": null
+                                                                },
+                                                                "deadline": "2026-07-26T17:14:07.136Z",
+                                                                "externalActions": 0,
+                                                                "machines": [
+                                                                  "local"
+                                                                ],
+                                                                "modelInvocations": 7,
+                                                                "moneyUsd": 0,
+                                                                "stopConditions": [
+                                                                  "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                                                  "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                                                  "Source-version conflict or stale writer fence"
+                                                                ],
+                                                                "storageBytes": 1073741426
+                                                              },
+                                                              "observed": {
+                                                                "activeMs": 1797253,
+                                                                "attempts": 2,
+                                                                "costKind": "not-metered-subscription-quota",
+                                                                "externalActions": 0,
+                                                                "liveSpendAuthorizedUsd": 0,
+                                                                "modelInvocations": 2,
+                                                                "moneyUsd": null,
+                                                                "storageBytes": 0,
+                                                                "toolCalls": 25
+                                                              },
+                                                              "outcomeTerminal": false,
+                                                              "reason": "telemetry-exhaustion-replace-worker-attempt",
+                                                              "resumable": true
+                                                            },
+                                                            "reason": "identity-preserving-worker-attempt-resume",
+                                                            "resumable": true,
+                                                            "routeIdempotencyKey": "route:5c4f4fe58c85990a2"
+                                                          },
+                                                          "priorState": "running",
+                                                          "processTreeTerminationConfirmed": true,
+                                                          "reason": "service-shutdown",
+                                                          "resumable": true
+                                                        },
+                                                        "priorOutcomeFence": 35,
+                                                        "priorState": "checkpointed",
+                                                        "reason": "interrupted-worker-attempt-retired",
+                                                        "resumable": true
+                                                      },
+                                                      "priorOutcomeFence": 35,
+                                                      "priorState": "checkpointed",
+                                                      "reason": "identity-preserving-worker-attempt-resume",
+                                                      "resumable": true,
+                                                      "routeIdempotencyKey": "route:73d9784895739331e"
+                                                    },
+                                                    "priorState": "running",
+                                                    "processTreeTerminationConfirmed": true,
+                                                    "reason": "service-shutdown",
+                                                    "resumable": true
+                                                  },
+                                                  "priorOutcomeFence": 36,
+                                                  "priorState": "checkpointed",
+                                                  "reason": "interrupted-worker-attempt-retired",
+                                                  "resumable": true
+                                                },
+                                                "reason": "equivalent-interrupted-worker-attempt-circuit",
+                                                "resumable": true
+                                              },
+                                              "priorOutcomeFence": 36,
+                                              "priorState": "circuit-open",
+                                              "reason": "interrupted-worker-attempt-retired",
+                                              "resumable": true
+                                            },
+                                            "priorOutcomeFence": 36,
+                                            "priorState": "circuit-open",
+                                            "reason": "identity-preserving-worker-attempt-resume",
+                                            "resumable": true,
+                                            "routeIdempotencyKey": "route:16607d581eb14d131"
+                                          },
+                                          "priorState": "running",
+                                          "processTreeTerminationConfirmed": true,
+                                          "reason": "service-shutdown",
+                                          "resumable": true
+                                        },
+                                        "priorOutcomeFence": 37,
+                                        "priorState": "checkpointed",
+                                        "reason": "interrupted-worker-attempt-retired",
+                                        "resumable": true
+                                      },
+                                      "priorOutcomeFence": 37,
+                                      "priorState": "checkpointed",
+                                      "reason": "identity-preserving-worker-attempt-resume",
+                                      "resumable": true,
+                                      "routeIdempotencyKey": "route:17fc209e7b3ebccdb"
+                                    },
+                                    "priorState": "running",
+                                    "processTreeTerminationConfirmed": true,
+                                    "reason": "service-shutdown",
+                                    "resumable": true
+                                  },
+                                  "priorOutcomeFence": 38,
+                                  "priorState": "checkpointed",
+                                  "reason": "interrupted-worker-attempt-retired",
+                                  "resumable": true
+                                },
+                                "reason": "equivalent-interrupted-worker-attempt-circuit",
+                                "resumable": true
+                              },
+                              "priorOutcomeFence": 38,
+                              "priorState": "circuit-open",
+                              "reason": "interrupted-worker-attempt-retired",
+                              "resumable": true
+                            },
+                            "priorOutcomeFence": 38,
+                            "priorState": "circuit-open",
+                            "reason": "identity-preserving-worker-attempt-resume",
+                            "resumable": true,
+                            "routeIdempotencyKey": "route:526013d90bf0a97ea"
+                          },
+                          "priorState": "running",
+                          "processTreeTerminationConfirmed": true,
+                          "reason": "service-shutdown",
+                          "resumable": true
+                        },
+                        "priorOutcomeFence": 39,
+                        "priorState": "checkpointed",
+                        "reason": "interrupted-worker-attempt-retired",
+                        "resumable": true
+                      },
+                      "priorOutcomeFence": 39,
+                      "priorState": "checkpointed",
+                      "reason": "identity-preserving-worker-attempt-resume",
+                      "resumable": true,
+                      "routeIdempotencyKey": "route:beb45ecbfbec4bfd5"
+                    },
+                    "priorState": "running",
+                    "processTreeTerminationConfirmed": true,
+                    "reason": "service-shutdown",
+                    "resumable": true
+                  },
+                  "priorOutcomeFence": 40,
+                  "priorState": "checkpointed",
+                  "reason": "interrupted-worker-attempt-retired",
+                  "resumable": true
+                },
+                "reason": "equivalent-interrupted-worker-attempt-circuit",
+                "resumable": true
+              },
+              "priorOutcomeFence": 40,
+              "priorState": "circuit-open",
+              "reason": "interrupted-worker-attempt-retired",
+              "resumable": true
+            },
+            "priorOutcomeFence": 40,
+            "priorState": "circuit-open",
+            "reason": "identity-preserving-worker-attempt-resume",
+            "resumable": true,
+            "routeIdempotencyKey": "route:a91cbe6d8461c75d0"
+          },
+          "priorState": "repairing",
+          "processIdentity": {
+            "pid": 52914,
+            "platform": "darwin",
+            "processGroup": 52914,
+            "schema": "runner-process-identity-v1",
+            "startToken": "Sun Jul 26 11:02:53 2026"
+          },
+          "processTreeTerminationConfirmed": true,
+          "reason": "runner-process-loss",
+          "resumable": true,
+          "retirementReason": null,
+          "safeDetail": "resumeSession cannot be combined with maxIterations > 1. Resume applies to iteration 1 only; multi-iteration resume semantics are not supported."
+        },
+        "priorOutcomeFence": 41,
+        "priorState": "checkpointed",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T17:51:56.611Z",
+      "updatedAt": "2026-07-26T18:14:03.917Z",
+      "completedAt": null
+    },
+    {
+      "id": "1775e6ae-f08a-4c02-b20a-8cc0573a4d05",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "claude-code",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:25aa23a54231b89fd51195ac8485625a17f1f1b175a4ed1d13db0f441cc11399",
+      "mutationVersion": "mv1:0402ee0c0cf7b8ccb24b2aefbf6e5b0622fe121ac900854340df15698c684c75",
+      "workstreamFence": 362,
+      "outcomeFence": 40,
+      "resourceEnvelope": {
+        "activeMinutes": 479.97768333333335,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T18:13:30.230Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 4,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073741426
+      },
+      "resourceUse": {
+        "activeMs": 374,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 0
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "claude-code",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "claude-sonnet-5",
+        "modelRoute": "route:c28931e55dfa85954",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "anthropic:claude",
+        "runner": "sandcastle-with-emergency-direct-fallback@1.0.0",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 2,
+      "failureClass": "insufficient-evidence",
+      "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+      "circuitReason": "two-equivalent-interrupted-worker-attempt-retirements",
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:a3d2d39b5cb24c2d5c097cd1ac23abe6705d0133b877fb79131013945ec663d0",
+          "interrupted-work-evidence:sha256:dbab342889317f4fa2ddc89c01f77df07010563c53c16b2faa2334beef6cab51"
+        ],
+        "priorCheckpoint": {
+          "equivalentFailureCount": 2,
+          "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+          "interruptedReconcileRetiredAt": "2026-07-26T17:51:29.573Z",
+          "interruptedReconcileRetiredEvidence": [
+            "dirty-or-unowned-worktree:/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+            "worktree-conflict:dirty-or-unowned-worktree:/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42"
+          ],
+          "outcomeTerminal": false,
+          "priorCheckpoint": {
+            "evidence": [
+              "interrupted-work-plan:sha256:447159ba55356585014052ee334e1fe19c3f89648b3550e64b4aa61e5a901eae",
+              "interrupted-work-evidence:sha256:b20404805a3a170622be4c8946d71a8e5914bfbe917ca2b6a97928fe0fd6f2e4"
+            ],
+            "priorCheckpoint": {
+              "priorCheckpoint": {
+                "checkpointIdentity": "sha256:e720be22f898db8cf9ccaea451ba3dc5b57c6c120caa0b4b3f6d07f34b1c0ef9",
+                "effectIdentity": "outcome:demand-loop-ticket-3",
+                "evidence": [
+                  "interrupted-work-plan:sha256:869b6f6b58c7b281f6eb7c5a9884956711038142297c6e0550dc5cdbebc5fdb7",
+                  "interrupted-work-evidence:sha256:a7a78492e5370bdf654875d8b083ae222990af27564d44ddfd482952e4b934cb"
+                ],
+                "priorCheckpoint": {
+                  "evidence": [
+                    "interrupted-work-plan:sha256:869b6f6b58c7b281f6eb7c5a9884956711038142297c6e0550dc5cdbebc5fdb7",
+                    "interrupted-work-evidence:sha256:a7a78492e5370bdf654875d8b083ae222990af27564d44ddfd482952e4b934cb"
+                  ],
+                  "priorCheckpoint": {
+                    "priorCheckpoint": {
+                      "checkpointIdentity": "sha256:ce0b7e1b76a80a0ed2085b3d808610e6a0a465182817377b84bb0445d7202bc1",
+                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                      "evidence": [
+                        "interrupted-work-plan:sha256:699d9b4065a22a005ed462501ebfa58bb56cc9dbeded99b4cde0e827126ffc3a",
+                        "interrupted-work-evidence:sha256:acd3edafce8cf880c5a5a09fa8ac42b71467e9e7032267b0a2c3064887f7ff20"
+                      ],
+                      "priorCheckpoint": {
+                        "evidence": [
+                          "interrupted-work-plan:sha256:699d9b4065a22a005ed462501ebfa58bb56cc9dbeded99b4cde0e827126ffc3a",
+                          "interrupted-work-evidence:sha256:acd3edafce8cf880c5a5a09fa8ac42b71467e9e7032267b0a2c3064887f7ff20"
+                        ],
+                        "priorCheckpoint": {
+                          "equivalentFailureCount": 2,
+                          "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+                          "outcomeTerminal": false,
+                          "priorCheckpoint": {
+                            "evidence": [
+                              "interrupted-work-plan:sha256:0c57b41dbb256a7006852710c787111ec66fafc69c4d7c1924e5029128d852e6",
+                              "interrupted-work-evidence:sha256:907fe1d2f20dd7a07409d97066f5df3a243c10b330bd874716587078b50da2a4"
+                            ],
+                            "priorCheckpoint": {
+                              "priorCheckpoint": {
+                                "checkpointIdentity": "sha256:62eec06ce53cc241244b78618380e46a17f6b99a04768bbfba94ad41f0a3d3e2",
+                                "effectIdentity": "outcome:demand-loop-ticket-3",
+                                "evidence": [
+                                  "interrupted-work-plan:sha256:aa876a2d0b5435fe58fb2c233abc2fdb50211b817505ab6a57018a32f38b0744",
+                                  "interrupted-work-evidence:sha256:fece6669f2e6801b3e268dd078127e0170128c6526df1151063a20426ac3fdab"
+                                ],
+                                "priorCheckpoint": {
+                                  "evidence": [
+                                    "interrupted-work-plan:sha256:aa876a2d0b5435fe58fb2c233abc2fdb50211b817505ab6a57018a32f38b0744",
+                                    "interrupted-work-evidence:sha256:fece6669f2e6801b3e268dd078127e0170128c6526df1151063a20426ac3fdab"
+                                  ],
+                                  "priorCheckpoint": {
+                                    "priorCheckpoint": {
+                                      "checkpointIdentity": "sha256:c63259f9aac8ee8165ff3b29a5a2c25287036b354f475f6af7efd5f514a4d7f4",
+                                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                                      "evidence": [
+                                        "interrupted-work-plan:sha256:000393199df6bb5b27ecbfd3de8747eba28a32da46944cc3cb9141fc6d6d2418",
+                                        "interrupted-work-evidence:sha256:ef3aba22cd22553f01d8d890f49c748535b3c56f6ba87b05c5184876f2836060"
+                                      ],
+                                      "priorCheckpoint": {
+                                        "evidence": [
+                                          "interrupted-work-plan:sha256:000393199df6bb5b27ecbfd3de8747eba28a32da46944cc3cb9141fc6d6d2418",
+                                          "interrupted-work-evidence:sha256:ef3aba22cd22553f01d8d890f49c748535b3c56f6ba87b05c5184876f2836060"
+                                        ],
+                                        "priorCheckpoint": {
+                                          "equivalentFailureCount": 2,
+                                          "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+                                          "outcomeTerminal": false,
+                                          "priorCheckpoint": {
+                                            "evidence": [
+                                              "interrupted-work-plan:sha256:8534f80019527625894f09e7f4fbdf5d277f2f16ace8baf5c4660b14aa5c2ada",
+                                              "interrupted-work-evidence:sha256:a02b59090da5b22bf6af1aa9ca56c4b993b401d4bc77963c2a0bc7c20f1ce4f7"
+                                            ],
+                                            "priorCheckpoint": {
+                                              "priorCheckpoint": {
+                                                "checkpointIdentity": "sha256:799203d63c9dab9a3920fade5f6d4e3239fb6cb93713c7388b7ea9ac71dcb597",
+                                                "effectIdentity": "outcome:demand-loop-ticket-3",
+                                                "evidence": [
+                                                  "interrupted-work-plan:sha256:15e9d00ef5ff5cdbed5c8505ec12ef2ad3900a86eb2ec13a0d8b3fa8576e4ea6",
+                                                  "interrupted-work-evidence:sha256:b93b803cc597521d066e50720b5c964a0c2a1b72fbeb04f2f23e7ca4fd26d500"
+                                                ],
+                                                "priorCheckpoint": {
+                                                  "evidence": [
+                                                    "interrupted-work-plan:sha256:15e9d00ef5ff5cdbed5c8505ec12ef2ad3900a86eb2ec13a0d8b3fa8576e4ea6",
+                                                    "interrupted-work-evidence:sha256:b93b803cc597521d066e50720b5c964a0c2a1b72fbeb04f2f23e7ca4fd26d500"
+                                                  ],
+                                                  "priorCheckpoint": {
+                                                    "priorCheckpoint": {
+                                                      "checkpointIdentity": "sha256:53f2ee0a290e9a1ab40dca3a0f22283ccb42e3ff85f0d8425fde81ddd9d64e83",
+                                                      "dimension": "active-time",
+                                                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                                                      "envelope": {
+                                                        "activeMinutes": 455.44921666666664,
+                                                        "attempts": 1,
+                                                        "concurrentRuns": 1,
+                                                        "cost": {
+                                                          "kind": "not-metered-subscription-quota",
+                                                          "liveSpendAuthorizedUsd": 0,
+                                                          "usd": null
+                                                        },
+                                                        "deadline": "2026-07-26T17:14:07.136Z",
+                                                        "externalActions": 0,
+                                                        "machines": ["local"],
+                                                        "modelInvocations": 7,
+                                                        "moneyUsd": 0,
+                                                        "stopConditions": [
+                                                          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                                          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                                          "Source-version conflict or stale writer fence"
+                                                        ],
+                                                        "storageBytes": 1073741426
+                                                      },
+                                                      "observed": {
+                                                        "activeMs": 1797253,
+                                                        "attempts": 2,
+                                                        "costKind": "not-metered-subscription-quota",
+                                                        "externalActions": 0,
+                                                        "liveSpendAuthorizedUsd": 0,
+                                                        "modelInvocations": 2,
+                                                        "moneyUsd": null,
+                                                        "storageBytes": 0,
+                                                        "toolCalls": 25
+                                                      },
+                                                      "outcomeTerminal": false,
+                                                      "priorCheckpoint": {
+                                                        "continuationDisposition": "replace-worker-attempt",
+                                                        "dimension": "active-time",
+                                                        "envelope": {
+                                                          "activeMinutes": 455.44921666666664,
+                                                          "attempts": 1,
+                                                          "concurrentRuns": 1,
+                                                          "cost": {
+                                                            "kind": "not-metered-subscription-quota",
+                                                            "liveSpendAuthorizedUsd": 0,
+                                                            "usd": null
+                                                          },
+                                                          "deadline": "2026-07-26T17:14:07.136Z",
+                                                          "externalActions": 0,
+                                                          "machines": ["local"],
+                                                          "modelInvocations": 7,
+                                                          "moneyUsd": 0,
+                                                          "stopConditions": [
+                                                            "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                                            "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                                            "Source-version conflict or stale writer fence"
+                                                          ],
+                                                          "storageBytes": 1073741426
+                                                        },
+                                                        "observed": {
+                                                          "activeMs": 1797253,
+                                                          "attempts": 2,
+                                                          "costKind": "not-metered-subscription-quota",
+                                                          "externalActions": 0,
+                                                          "liveSpendAuthorizedUsd": 0,
+                                                          "modelInvocations": 2,
+                                                          "moneyUsd": null,
+                                                          "storageBytes": 0,
+                                                          "toolCalls": 25
+                                                        },
+                                                        "outcomeTerminal": false,
+                                                        "reason": "telemetry-exhaustion-replace-worker-attempt",
+                                                        "resumable": true
+                                                      },
+                                                      "reason": "identity-preserving-worker-attempt-resume",
+                                                      "resumable": true,
+                                                      "routeIdempotencyKey": "route:5c4f4fe58c85990a2"
+                                                    },
+                                                    "priorState": "running",
+                                                    "processTreeTerminationConfirmed": true,
+                                                    "reason": "service-shutdown",
+                                                    "resumable": true
+                                                  },
+                                                  "priorOutcomeFence": 35,
+                                                  "priorState": "checkpointed",
+                                                  "reason": "interrupted-worker-attempt-retired",
+                                                  "resumable": true
+                                                },
+                                                "priorOutcomeFence": 35,
+                                                "priorState": "checkpointed",
+                                                "reason": "identity-preserving-worker-attempt-resume",
+                                                "resumable": true,
+                                                "routeIdempotencyKey": "route:73d9784895739331e"
+                                              },
+                                              "priorState": "running",
+                                              "processTreeTerminationConfirmed": true,
+                                              "reason": "service-shutdown",
+                                              "resumable": true
+                                            },
+                                            "priorOutcomeFence": 36,
+                                            "priorState": "checkpointed",
+                                            "reason": "interrupted-worker-attempt-retired",
+                                            "resumable": true
+                                          },
+                                          "reason": "equivalent-interrupted-worker-attempt-circuit",
+                                          "resumable": true
+                                        },
+                                        "priorOutcomeFence": 36,
+                                        "priorState": "circuit-open",
+                                        "reason": "interrupted-worker-attempt-retired",
+                                        "resumable": true
+                                      },
+                                      "priorOutcomeFence": 36,
+                                      "priorState": "circuit-open",
+                                      "reason": "identity-preserving-worker-attempt-resume",
+                                      "resumable": true,
+                                      "routeIdempotencyKey": "route:16607d581eb14d131"
+                                    },
+                                    "priorState": "running",
+                                    "processTreeTerminationConfirmed": true,
+                                    "reason": "service-shutdown",
+                                    "resumable": true
+                                  },
+                                  "priorOutcomeFence": 37,
+                                  "priorState": "checkpointed",
+                                  "reason": "interrupted-worker-attempt-retired",
+                                  "resumable": true
+                                },
+                                "priorOutcomeFence": 37,
+                                "priorState": "checkpointed",
+                                "reason": "identity-preserving-worker-attempt-resume",
+                                "resumable": true,
+                                "routeIdempotencyKey": "route:17fc209e7b3ebccdb"
+                              },
+                              "priorState": "running",
+                              "processTreeTerminationConfirmed": true,
+                              "reason": "service-shutdown",
+                              "resumable": true
+                            },
+                            "priorOutcomeFence": 38,
+                            "priorState": "checkpointed",
+                            "reason": "interrupted-worker-attempt-retired",
+                            "resumable": true
+                          },
+                          "reason": "equivalent-interrupted-worker-attempt-circuit",
+                          "resumable": true
+                        },
+                        "priorOutcomeFence": 38,
+                        "priorState": "circuit-open",
+                        "reason": "interrupted-worker-attempt-retired",
+                        "resumable": true
+                      },
+                      "priorOutcomeFence": 38,
+                      "priorState": "circuit-open",
+                      "reason": "identity-preserving-worker-attempt-resume",
+                      "resumable": true,
+                      "routeIdempotencyKey": "route:526013d90bf0a97ea"
+                    },
+                    "priorState": "running",
+                    "processTreeTerminationConfirmed": true,
+                    "reason": "service-shutdown",
+                    "resumable": true
+                  },
+                  "priorOutcomeFence": 39,
+                  "priorState": "checkpointed",
+                  "reason": "interrupted-worker-attempt-retired",
+                  "resumable": true
+                },
+                "priorOutcomeFence": 39,
+                "priorState": "checkpointed",
+                "reason": "identity-preserving-worker-attempt-resume",
+                "resumable": true,
+                "routeIdempotencyKey": "route:beb45ecbfbec4bfd5"
+              },
+              "priorState": "running",
+              "processTreeTerminationConfirmed": true,
+              "reason": "service-shutdown",
+              "resumable": true
+            },
+            "priorOutcomeFence": 40,
+            "priorState": "checkpointed",
+            "reason": "interrupted-worker-attempt-retired",
+            "resumable": true
+          },
+          "reason": "equivalent-interrupted-worker-attempt-circuit",
+          "resumable": true
+        },
+        "priorOutcomeFence": 40,
+        "priorState": "circuit-open",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T17:43:34.699Z",
+      "updatedAt": "2026-07-26T17:51:51.078Z",
+      "completedAt": null
+    },
+    {
+      "id": "b0b8fdb5-a4ee-49fc-b681-b1520bbf654b",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "claude-code",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:f7ee9b5812a2b1f03e4b23a5c5ba63999154f3ee455dbfce045142b43dc12ea0",
+      "mutationVersion": "mv1:9171aad30404d4a2d423337ccffd2943712d53d3cafe83fb4e9802f1919ca0be",
+      "workstreamFence": 361,
+      "outcomeFence": 39,
+      "resourceEnvelope": {
+        "activeMinutes": 479.9818333333333,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T18:05:22.552Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 5,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073741426
+      },
+      "resourceUse": {
+        "activeMs": 249,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 0
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "claude-code",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "claude-sonnet-5",
+        "modelRoute": "route:3aba761256db1e092",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "anthropic:claude",
+        "runner": "sandcastle-with-emergency-direct-fallback@1.0.0",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 1,
+      "failureClass": null,
+      "failureFingerprint": "sha256:0c9941da8de178a8df5e2fee6a7be05491e950398d500af7b3b2ecd372670665",
+      "circuitReason": null,
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:869b6f6b58c7b281f6eb7c5a9884956711038142297c6e0550dc5cdbebc5fdb7",
+          "interrupted-work-evidence:sha256:a7a78492e5370bdf654875d8b083ae222990af27564d44ddfd482952e4b934cb"
+        ],
+        "priorCheckpoint": {
+          "priorCheckpoint": {
+            "checkpointIdentity": "sha256:ce0b7e1b76a80a0ed2085b3d808610e6a0a465182817377b84bb0445d7202bc1",
+            "effectIdentity": "outcome:demand-loop-ticket-3",
+            "evidence": [
+              "interrupted-work-plan:sha256:699d9b4065a22a005ed462501ebfa58bb56cc9dbeded99b4cde0e827126ffc3a",
+              "interrupted-work-evidence:sha256:acd3edafce8cf880c5a5a09fa8ac42b71467e9e7032267b0a2c3064887f7ff20"
+            ],
+            "priorCheckpoint": {
+              "evidence": [
+                "interrupted-work-plan:sha256:699d9b4065a22a005ed462501ebfa58bb56cc9dbeded99b4cde0e827126ffc3a",
+                "interrupted-work-evidence:sha256:acd3edafce8cf880c5a5a09fa8ac42b71467e9e7032267b0a2c3064887f7ff20"
+              ],
+              "priorCheckpoint": {
+                "equivalentFailureCount": 2,
+                "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+                "outcomeTerminal": false,
+                "priorCheckpoint": {
+                  "evidence": [
+                    "interrupted-work-plan:sha256:0c57b41dbb256a7006852710c787111ec66fafc69c4d7c1924e5029128d852e6",
+                    "interrupted-work-evidence:sha256:907fe1d2f20dd7a07409d97066f5df3a243c10b330bd874716587078b50da2a4"
+                  ],
+                  "priorCheckpoint": {
+                    "priorCheckpoint": {
+                      "checkpointIdentity": "sha256:62eec06ce53cc241244b78618380e46a17f6b99a04768bbfba94ad41f0a3d3e2",
+                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                      "evidence": [
+                        "interrupted-work-plan:sha256:aa876a2d0b5435fe58fb2c233abc2fdb50211b817505ab6a57018a32f38b0744",
+                        "interrupted-work-evidence:sha256:fece6669f2e6801b3e268dd078127e0170128c6526df1151063a20426ac3fdab"
+                      ],
+                      "priorCheckpoint": {
+                        "evidence": [
+                          "interrupted-work-plan:sha256:aa876a2d0b5435fe58fb2c233abc2fdb50211b817505ab6a57018a32f38b0744",
+                          "interrupted-work-evidence:sha256:fece6669f2e6801b3e268dd078127e0170128c6526df1151063a20426ac3fdab"
+                        ],
+                        "priorCheckpoint": {
+                          "priorCheckpoint": {
+                            "checkpointIdentity": "sha256:c63259f9aac8ee8165ff3b29a5a2c25287036b354f475f6af7efd5f514a4d7f4",
+                            "effectIdentity": "outcome:demand-loop-ticket-3",
+                            "evidence": [
+                              "interrupted-work-plan:sha256:000393199df6bb5b27ecbfd3de8747eba28a32da46944cc3cb9141fc6d6d2418",
+                              "interrupted-work-evidence:sha256:ef3aba22cd22553f01d8d890f49c748535b3c56f6ba87b05c5184876f2836060"
+                            ],
+                            "priorCheckpoint": {
+                              "evidence": [
+                                "interrupted-work-plan:sha256:000393199df6bb5b27ecbfd3de8747eba28a32da46944cc3cb9141fc6d6d2418",
+                                "interrupted-work-evidence:sha256:ef3aba22cd22553f01d8d890f49c748535b3c56f6ba87b05c5184876f2836060"
+                              ],
+                              "priorCheckpoint": {
+                                "equivalentFailureCount": 2,
+                                "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+                                "outcomeTerminal": false,
+                                "priorCheckpoint": {
+                                  "evidence": [
+                                    "interrupted-work-plan:sha256:8534f80019527625894f09e7f4fbdf5d277f2f16ace8baf5c4660b14aa5c2ada",
+                                    "interrupted-work-evidence:sha256:a02b59090da5b22bf6af1aa9ca56c4b993b401d4bc77963c2a0bc7c20f1ce4f7"
+                                  ],
+                                  "priorCheckpoint": {
+                                    "priorCheckpoint": {
+                                      "checkpointIdentity": "sha256:799203d63c9dab9a3920fade5f6d4e3239fb6cb93713c7388b7ea9ac71dcb597",
+                                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                                      "evidence": [
+                                        "interrupted-work-plan:sha256:15e9d00ef5ff5cdbed5c8505ec12ef2ad3900a86eb2ec13a0d8b3fa8576e4ea6",
+                                        "interrupted-work-evidence:sha256:b93b803cc597521d066e50720b5c964a0c2a1b72fbeb04f2f23e7ca4fd26d500"
+                                      ],
+                                      "priorCheckpoint": {
+                                        "evidence": [
+                                          "interrupted-work-plan:sha256:15e9d00ef5ff5cdbed5c8505ec12ef2ad3900a86eb2ec13a0d8b3fa8576e4ea6",
+                                          "interrupted-work-evidence:sha256:b93b803cc597521d066e50720b5c964a0c2a1b72fbeb04f2f23e7ca4fd26d500"
+                                        ],
+                                        "priorCheckpoint": {
+                                          "priorCheckpoint": {
+                                            "checkpointIdentity": "sha256:53f2ee0a290e9a1ab40dca3a0f22283ccb42e3ff85f0d8425fde81ddd9d64e83",
+                                            "dimension": "active-time",
+                                            "effectIdentity": "outcome:demand-loop-ticket-3",
+                                            "envelope": {
+                                              "activeMinutes": 455.44921666666664,
+                                              "attempts": 1,
+                                              "concurrentRuns": 1,
+                                              "cost": {
+                                                "kind": "not-metered-subscription-quota",
+                                                "liveSpendAuthorizedUsd": 0,
+                                                "usd": null
+                                              },
+                                              "deadline": "2026-07-26T17:14:07.136Z",
+                                              "externalActions": 0,
+                                              "machines": ["local"],
+                                              "modelInvocations": 7,
+                                              "moneyUsd": 0,
+                                              "stopConditions": [
+                                                "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                                "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                                "Source-version conflict or stale writer fence"
+                                              ],
+                                              "storageBytes": 1073741426
+                                            },
+                                            "observed": {
+                                              "activeMs": 1797253,
+                                              "attempts": 2,
+                                              "costKind": "not-metered-subscription-quota",
+                                              "externalActions": 0,
+                                              "liveSpendAuthorizedUsd": 0,
+                                              "modelInvocations": 2,
+                                              "moneyUsd": null,
+                                              "storageBytes": 0,
+                                              "toolCalls": 25
+                                            },
+                                            "outcomeTerminal": false,
+                                            "priorCheckpoint": {
+                                              "continuationDisposition": "replace-worker-attempt",
+                                              "dimension": "active-time",
+                                              "envelope": {
+                                                "activeMinutes": 455.44921666666664,
+                                                "attempts": 1,
+                                                "concurrentRuns": 1,
+                                                "cost": {
+                                                  "kind": "not-metered-subscription-quota",
+                                                  "liveSpendAuthorizedUsd": 0,
+                                                  "usd": null
+                                                },
+                                                "deadline": "2026-07-26T17:14:07.136Z",
+                                                "externalActions": 0,
+                                                "machines": ["local"],
+                                                "modelInvocations": 7,
+                                                "moneyUsd": 0,
+                                                "stopConditions": [
+                                                  "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                                  "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                                  "Source-version conflict or stale writer fence"
+                                                ],
+                                                "storageBytes": 1073741426
+                                              },
+                                              "observed": {
+                                                "activeMs": 1797253,
+                                                "attempts": 2,
+                                                "costKind": "not-metered-subscription-quota",
+                                                "externalActions": 0,
+                                                "liveSpendAuthorizedUsd": 0,
+                                                "modelInvocations": 2,
+                                                "moneyUsd": null,
+                                                "storageBytes": 0,
+                                                "toolCalls": 25
+                                              },
+                                              "outcomeTerminal": false,
+                                              "reason": "telemetry-exhaustion-replace-worker-attempt",
+                                              "resumable": true
+                                            },
+                                            "reason": "identity-preserving-worker-attempt-resume",
+                                            "resumable": true,
+                                            "routeIdempotencyKey": "route:5c4f4fe58c85990a2"
+                                          },
+                                          "priorState": "running",
+                                          "processTreeTerminationConfirmed": true,
+                                          "reason": "service-shutdown",
+                                          "resumable": true
+                                        },
+                                        "priorOutcomeFence": 35,
+                                        "priorState": "checkpointed",
+                                        "reason": "interrupted-worker-attempt-retired",
+                                        "resumable": true
+                                      },
+                                      "priorOutcomeFence": 35,
+                                      "priorState": "checkpointed",
+                                      "reason": "identity-preserving-worker-attempt-resume",
+                                      "resumable": true,
+                                      "routeIdempotencyKey": "route:73d9784895739331e"
+                                    },
+                                    "priorState": "running",
+                                    "processTreeTerminationConfirmed": true,
+                                    "reason": "service-shutdown",
+                                    "resumable": true
+                                  },
+                                  "priorOutcomeFence": 36,
+                                  "priorState": "checkpointed",
+                                  "reason": "interrupted-worker-attempt-retired",
+                                  "resumable": true
+                                },
+                                "reason": "equivalent-interrupted-worker-attempt-circuit",
+                                "resumable": true
+                              },
+                              "priorOutcomeFence": 36,
+                              "priorState": "circuit-open",
+                              "reason": "interrupted-worker-attempt-retired",
+                              "resumable": true
+                            },
+                            "priorOutcomeFence": 36,
+                            "priorState": "circuit-open",
+                            "reason": "identity-preserving-worker-attempt-resume",
+                            "resumable": true,
+                            "routeIdempotencyKey": "route:16607d581eb14d131"
+                          },
+                          "priorState": "running",
+                          "processTreeTerminationConfirmed": true,
+                          "reason": "service-shutdown",
+                          "resumable": true
+                        },
+                        "priorOutcomeFence": 37,
+                        "priorState": "checkpointed",
+                        "reason": "interrupted-worker-attempt-retired",
+                        "resumable": true
+                      },
+                      "priorOutcomeFence": 37,
+                      "priorState": "checkpointed",
+                      "reason": "identity-preserving-worker-attempt-resume",
+                      "resumable": true,
+                      "routeIdempotencyKey": "route:17fc209e7b3ebccdb"
+                    },
+                    "priorState": "running",
+                    "processTreeTerminationConfirmed": true,
+                    "reason": "service-shutdown",
+                    "resumable": true
+                  },
+                  "priorOutcomeFence": 38,
+                  "priorState": "checkpointed",
+                  "reason": "interrupted-worker-attempt-retired",
+                  "resumable": true
+                },
+                "reason": "equivalent-interrupted-worker-attempt-circuit",
+                "resumable": true
+              },
+              "priorOutcomeFence": 38,
+              "priorState": "circuit-open",
+              "reason": "interrupted-worker-attempt-retired",
+              "resumable": true
+            },
+            "priorOutcomeFence": 38,
+            "priorState": "circuit-open",
+            "reason": "identity-preserving-worker-attempt-resume",
+            "resumable": true,
+            "routeIdempotencyKey": "route:526013d90bf0a97ea"
+          },
+          "priorState": "running",
+          "processTreeTerminationConfirmed": true,
+          "reason": "service-shutdown",
+          "resumable": true
+        },
+        "priorOutcomeFence": 39,
+        "priorState": "checkpointed",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T17:35:26.338Z",
+      "updatedAt": "2026-07-26T17:43:28.863Z",
+      "completedAt": null
+    },
+    {
+      "id": "70d7e469-bfaa-4b50-8ba8-9adb1016a2c8",
+      "workstreamId": "demand-loop",
+      "outcomeId": "demand-loop-ticket-3",
+      "admissionId": "8abb1d77-5bc9-4073-b74d-8ed501c5b253",
+      "state": "needs-replan",
+      "role": "replanner",
+      "branch": "codex/autonomous-demand-loop-ticket-3-eb519e42",
+      "worktree": "/Users/jordanhindo/.local/state/latent-sea-hq/control-plane/workspaces/demand-loop-ticket-3-eb519e42",
+      "environmentProfile": "scheduler-isolated-local",
+      "nativeHarness": "claude-code",
+      "nativeSessionId": null,
+      "promptDigest": "sha256:5e8dbcf2c7eeb1c28bff1c91421eb60647f57af3175758d90bef76b863cdb40e",
+      "mutationVersion": "mv1:e7fb4589074811ffb539d26ddf9ce13fcc4e60b6f1585f08de2c06df9d630d1f",
+      "workstreamFence": 359,
+      "outcomeFence": 38,
+      "resourceEnvelope": {
+        "activeMinutes": 479.9862,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "cost": {
+          "kind": "not-metered-subscription-quota",
+          "liveSpendAuthorizedUsd": 0,
+          "usd": null
+        },
+        "deadline": "2026-07-26T17:59:59.130Z",
+        "externalActions": 0,
+        "machines": ["local"],
+        "modelInvocations": 6,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073741426
+      },
+      "resourceUse": {
+        "activeMs": 262,
+        "attempts": 1,
+        "costKind": "not-metered-subscription-quota",
+        "externalActions": 0,
+        "liveSpendAuthorizedUsd": 0,
+        "modelInvocations": 1,
+        "moneyUsd": null,
+        "storageBytes": 0,
+        "toolCalls": 0
+      },
+      "governingVersions": {
+        "connector": "none",
+        "controllerExecution": "1.0.3",
+        "executionContract": "sha256:b7216e59fac88907e8a59d4bae4a7f818030f6f12bf839058adf5ecaa4f1b398",
+        "harness": "claude-code",
+        "integrationBaseCommit": "461e9678848ee386fd274f51c8407bdd85955154",
+        "integrationTarget": "main",
+        "kernel": "1.0.0",
+        "model": "claude-sonnet-5",
+        "modelRoute": "route:86f27eb801d106638",
+        "pack": "latent-sea@1.0.0",
+        "policy": "latent-sea-entry-policy-v1,work-genesis-v1,proportional-outcomes-v1,source-sovereignty-v1,inspect-writer-fencing-v1",
+        "providerAccount": "anthropic:claude",
+        "runner": "sandcastle-with-emergency-direct-fallback@1.0.0",
+        "skill": "skills/hq/SKILL.md",
+        "source": "hq-outcome-v1:demand-loop:demand-loop-ticket-3:sha256:6f5c6515b2e898fa9b3d135bab9c6bdc6daf10f39b5050b6763f3e653ea833d1",
+        "verifier": "public-seam-proof-v1",
+        "workflow": "autonomous-outcome-v1"
+      },
+      "proofCommands": [
+        "npm --prefix control-plane run typecheck",
+        "npm --prefix control-plane test"
+      ],
+      "repairCount": 0,
+      "equivalentFailureCount": 2,
+      "failureClass": "insufficient-evidence",
+      "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+      "circuitReason": "two-equivalent-interrupted-worker-attempt-retirements",
+      "mergeEligible": false,
+      "automaticMerge": false,
+      "sourceReceipt": null,
+      "checkpoint": {
+        "evidence": [
+          "interrupted-work-plan:sha256:699d9b4065a22a005ed462501ebfa58bb56cc9dbeded99b4cde0e827126ffc3a",
+          "interrupted-work-evidence:sha256:acd3edafce8cf880c5a5a09fa8ac42b71467e9e7032267b0a2c3064887f7ff20"
+        ],
+        "priorCheckpoint": {
+          "equivalentFailureCount": 2,
+          "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+          "outcomeTerminal": false,
+          "priorCheckpoint": {
+            "evidence": [
+              "interrupted-work-plan:sha256:0c57b41dbb256a7006852710c787111ec66fafc69c4d7c1924e5029128d852e6",
+              "interrupted-work-evidence:sha256:907fe1d2f20dd7a07409d97066f5df3a243c10b330bd874716587078b50da2a4"
+            ],
+            "priorCheckpoint": {
+              "priorCheckpoint": {
+                "checkpointIdentity": "sha256:62eec06ce53cc241244b78618380e46a17f6b99a04768bbfba94ad41f0a3d3e2",
+                "effectIdentity": "outcome:demand-loop-ticket-3",
+                "evidence": [
+                  "interrupted-work-plan:sha256:aa876a2d0b5435fe58fb2c233abc2fdb50211b817505ab6a57018a32f38b0744",
+                  "interrupted-work-evidence:sha256:fece6669f2e6801b3e268dd078127e0170128c6526df1151063a20426ac3fdab"
+                ],
+                "priorCheckpoint": {
+                  "evidence": [
+                    "interrupted-work-plan:sha256:aa876a2d0b5435fe58fb2c233abc2fdb50211b817505ab6a57018a32f38b0744",
+                    "interrupted-work-evidence:sha256:fece6669f2e6801b3e268dd078127e0170128c6526df1151063a20426ac3fdab"
+                  ],
+                  "priorCheckpoint": {
+                    "priorCheckpoint": {
+                      "checkpointIdentity": "sha256:c63259f9aac8ee8165ff3b29a5a2c25287036b354f475f6af7efd5f514a4d7f4",
+                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                      "evidence": [
+                        "interrupted-work-plan:sha256:000393199df6bb5b27ecbfd3de8747eba28a32da46944cc3cb9141fc6d6d2418",
+                        "interrupted-work-evidence:sha256:ef3aba22cd22553f01d8d890f49c748535b3c56f6ba87b05c5184876f2836060"
+                      ],
+                      "priorCheckpoint": {
+                        "evidence": [
+                          "interrupted-work-plan:sha256:000393199df6bb5b27ecbfd3de8747eba28a32da46944cc3cb9141fc6d6d2418",
+                          "interrupted-work-evidence:sha256:ef3aba22cd22553f01d8d890f49c748535b3c56f6ba87b05c5184876f2836060"
+                        ],
+                        "priorCheckpoint": {
+                          "equivalentFailureCount": 2,
+                          "failureFingerprint": "sha256:0725f6b6f20ef1f04025385bbb4e97f1729f57d3caf8ac345af8bf9edc67aca6",
+                          "outcomeTerminal": false,
+                          "priorCheckpoint": {
+                            "evidence": [
+                              "interrupted-work-plan:sha256:8534f80019527625894f09e7f4fbdf5d277f2f16ace8baf5c4660b14aa5c2ada",
+                              "interrupted-work-evidence:sha256:a02b59090da5b22bf6af1aa9ca56c4b993b401d4bc77963c2a0bc7c20f1ce4f7"
+                            ],
+                            "priorCheckpoint": {
+                              "priorCheckpoint": {
+                                "checkpointIdentity": "sha256:799203d63c9dab9a3920fade5f6d4e3239fb6cb93713c7388b7ea9ac71dcb597",
+                                "effectIdentity": "outcome:demand-loop-ticket-3",
+                                "evidence": [
+                                  "interrupted-work-plan:sha256:15e9d00ef5ff5cdbed5c8505ec12ef2ad3900a86eb2ec13a0d8b3fa8576e4ea6",
+                                  "interrupted-work-evidence:sha256:b93b803cc597521d066e50720b5c964a0c2a1b72fbeb04f2f23e7ca4fd26d500"
+                                ],
+                                "priorCheckpoint": {
+                                  "evidence": [
+                                    "interrupted-work-plan:sha256:15e9d00ef5ff5cdbed5c8505ec12ef2ad3900a86eb2ec13a0d8b3fa8576e4ea6",
+                                    "interrupted-work-evidence:sha256:b93b803cc597521d066e50720b5c964a0c2a1b72fbeb04f2f23e7ca4fd26d500"
+                                  ],
+                                  "priorCheckpoint": {
+                                    "priorCheckpoint": {
+                                      "checkpointIdentity": "sha256:53f2ee0a290e9a1ab40dca3a0f22283ccb42e3ff85f0d8425fde81ddd9d64e83",
+                                      "dimension": "active-time",
+                                      "effectIdentity": "outcome:demand-loop-ticket-3",
+                                      "envelope": {
+                                        "activeMinutes": 455.44921666666664,
+                                        "attempts": 1,
+                                        "concurrentRuns": 1,
+                                        "cost": {
+                                          "kind": "not-metered-subscription-quota",
+                                          "liveSpendAuthorizedUsd": 0,
+                                          "usd": null
+                                        },
+                                        "deadline": "2026-07-26T17:14:07.136Z",
+                                        "externalActions": 0,
+                                        "machines": ["local"],
+                                        "modelInvocations": 7,
+                                        "moneyUsd": 0,
+                                        "stopConditions": [
+                                          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                          "Source-version conflict or stale writer fence"
+                                        ],
+                                        "storageBytes": 1073741426
+                                      },
+                                      "observed": {
+                                        "activeMs": 1797253,
+                                        "attempts": 2,
+                                        "costKind": "not-metered-subscription-quota",
+                                        "externalActions": 0,
+                                        "liveSpendAuthorizedUsd": 0,
+                                        "modelInvocations": 2,
+                                        "moneyUsd": null,
+                                        "storageBytes": 0,
+                                        "toolCalls": 25
+                                      },
+                                      "outcomeTerminal": false,
+                                      "priorCheckpoint": {
+                                        "continuationDisposition": "replace-worker-attempt",
+                                        "dimension": "active-time",
+                                        "envelope": {
+                                          "activeMinutes": 455.44921666666664,
+                                          "attempts": 1,
+                                          "concurrentRuns": 1,
+                                          "cost": {
+                                            "kind": "not-metered-subscription-quota",
+                                            "liveSpendAuthorizedUsd": 0,
+                                            "usd": null
+                                          },
+                                          "deadline": "2026-07-26T17:14:07.136Z",
+                                          "externalActions": 0,
+                                          "machines": ["local"],
+                                          "modelInvocations": 7,
+                                          "moneyUsd": 0,
+                                          "stopConditions": [
+                                            "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+                                            "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+                                            "Source-version conflict or stale writer fence"
+                                          ],
+                                          "storageBytes": 1073741426
+                                        },
+                                        "observed": {
+                                          "activeMs": 1797253,
+                                          "attempts": 2,
+                                          "costKind": "not-metered-subscription-quota",
+                                          "externalActions": 0,
+                                          "liveSpendAuthorizedUsd": 0,
+                                          "modelInvocations": 2,
+                                          "moneyUsd": null,
+                                          "storageBytes": 0,
+                                          "toolCalls": 25
+                                        },
+                                        "outcomeTerminal": false,
+                                        "reason": "telemetry-exhaustion-replace-worker-attempt",
+                                        "resumable": true
+                                      },
+                                      "reason": "identity-preserving-worker-attempt-resume",
+                                      "resumable": true,
+                                      "routeIdempotencyKey": "route:5c4f4fe58c85990a2"
+                                    },
+                                    "priorState": "running",
+                                    "processTreeTerminationConfirmed": true,
+                                    "reason": "service-shutdown",
+                                    "resumable": true
+                                  },
+                                  "priorOutcomeFence": 35,
+                                  "priorState": "checkpointed",
+                                  "reason": "interrupted-worker-attempt-retired",
+                                  "resumable": true
+                                },
+                                "priorOutcomeFence": 35,
+                                "priorState": "checkpointed",
+                                "reason": "identity-preserving-worker-attempt-resume",
+                                "resumable": true,
+                                "routeIdempotencyKey": "route:73d9784895739331e"
+                              },
+                              "priorState": "running",
+                              "processTreeTerminationConfirmed": true,
+                              "reason": "service-shutdown",
+                              "resumable": true
+                            },
+                            "priorOutcomeFence": 36,
+                            "priorState": "checkpointed",
+                            "reason": "interrupted-worker-attempt-retired",
+                            "resumable": true
+                          },
+                          "reason": "equivalent-interrupted-worker-attempt-circuit",
+                          "resumable": true
+                        },
+                        "priorOutcomeFence": 36,
+                        "priorState": "circuit-open",
+                        "reason": "interrupted-worker-attempt-retired",
+                        "resumable": true
+                      },
+                      "priorOutcomeFence": 36,
+                      "priorState": "circuit-open",
+                      "reason": "identity-preserving-worker-attempt-resume",
+                      "resumable": true,
+                      "routeIdempotencyKey": "route:16607d581eb14d131"
+                    },
+                    "priorState": "running",
+                    "processTreeTerminationConfirmed": true,
+                    "reason": "service-shutdown",
+                    "resumable": true
+                  },
+                  "priorOutcomeFence": 37,
+                  "priorState": "checkpointed",
+                  "reason": "interrupted-worker-attempt-retired",
+                  "resumable": true
+                },
+                "priorOutcomeFence": 37,
+                "priorState": "checkpointed",
+                "reason": "identity-preserving-worker-attempt-resume",
+                "resumable": true,
+                "routeIdempotencyKey": "route:17fc209e7b3ebccdb"
+              },
+              "priorState": "running",
+              "processTreeTerminationConfirmed": true,
+              "reason": "service-shutdown",
+              "resumable": true
+            },
+            "priorOutcomeFence": 38,
+            "priorState": "checkpointed",
+            "reason": "interrupted-worker-attempt-retired",
+            "resumable": true
+          },
+          "reason": "equivalent-interrupted-worker-attempt-circuit",
+          "resumable": true
+        },
+        "priorOutcomeFence": 38,
+        "priorState": "circuit-open",
+        "reason": "interrupted-worker-attempt-retired",
+        "resumable": true
+      },
+      "createdAt": "2026-07-26T17:30:02.826Z",
+      "updatedAt": "2026-07-26T17:35:21.400Z",
+      "completedAt": null
+    }
+  ]
+}

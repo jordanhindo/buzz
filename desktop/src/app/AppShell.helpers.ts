@@ -9,7 +9,9 @@ export type AppView =
   | "agents"
   | "workflows"
   | "pulse"
-  | "projects";
+  | "projects"
+  | "work"
+  | "map";
 
 const WINDOW_DRAG_HANDLE_HEIGHT = 44;
 const TAURI_DRAG_REGION_ATTR = "data-tauri-drag-region";
@@ -106,7 +108,14 @@ export function toSearchHit(
   };
 }
 
-export function deriveShellRoute(pathname: string): {
+export function deriveShellRoute(
+  pathname: string,
+  // The Work surface hosts a portfolio-wide dependency-graph lens at
+  // `/work?view=map`. It shares the `/work` route (one mount point, driven by
+  // the `view` search param — see hqShellSearch.ts), so the sidebar highlight
+  // is derived from `view` rather than a separate pathname.
+  view?: string,
+): {
   selectedChannelId: string | null;
   selectedView: AppView;
 } {
@@ -150,6 +159,13 @@ export function deriveShellRoute(pathname: string): {
     return {
       selectedChannelId: null,
       selectedView: "pulse",
+    };
+  }
+
+  if (pathname === "/work") {
+    return {
+      selectedChannelId: null,
+      selectedView: view === "map" ? "map" : "work",
     };
   }
 

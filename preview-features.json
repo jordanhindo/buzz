@@ -2,6 +2,15 @@
   "version": 1,
   "features": [
     {
+      "id": "work",
+      "name": "Work",
+      "description": "HQ-backed portfolio of workstreams, outcomes, and the things that need you",
+      "defaultEnabled": true,
+      "platforms": [
+        "desktop"
+      ]
+    },
+    {
       "id": "workflows",
       "name": "Workflows",
       "description": "YAML-defined automations with approval gates",
