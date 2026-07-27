@@ -180,14 +180,15 @@ test.describe("hq-proto bridge (dark)", () => {
     // (18 deduped edges — see contract/mapGraph.test.mjs). The ~35 standalone
     // workstreams aren't drawn as disconnected noise; the header says so.
     await expect(
-      page.getByText("13 of 48 workstreams · 18 dependencies"),
+      page.getByText(
+        "The 13 workstreams with dependencies · 18 edges · the other 35 stand alone on Work",
+      ),
     ).toBeVisible();
     await expect(page.getByTestId("map-node")).toHaveCount(13);
 
     // Real node ids/titles from the live capture — same ones the Dependencies
     // edge strip test above proves are real, not fabricated. Scoped to the node
-    // itself: the title also appears as a Focus filter tab, so an unscoped
-    // getByText would be ambiguous.
+    // itself (the Focus dropdown that also lists these titles is closed here).
     await expect(
       page
         .getByTestId("map-node")
@@ -202,9 +203,11 @@ test.describe("hq-proto bridge (dark)", () => {
     await page.screenshot({ path: `${SHOTS}/map-full.png` });
 
     // Filter 1: focus launch-site (`Website and purchase surface`) — narrows
-    // to its real 6-node dependency neighborhood (see mapGraph.test.mjs).
+    // to its real 6-node dependency neighborhood (see mapGraph.test.mjs). Focus
+    // is a dropdown now (open it, pick the workstream), not a tab row.
+    await page.getByRole("button", { name: /All workstreams/ }).click();
     await page
-      .getByRole("tab", { name: "Website and purchase surface" })
+      .getByRole("menuitemradio", { name: "Website and purchase surface" })
       .click();
 
     // Filter 2 (composes with filter 1): status = Waiting. Of launch-site's

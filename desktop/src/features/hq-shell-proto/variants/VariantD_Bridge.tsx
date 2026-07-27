@@ -307,6 +307,7 @@ export function VariantD_Bridge({ transport }: VariantDProps) {
       <InboxView
         focus={focus}
         onBack={goBackFromInbox}
+        onOpenWorkstream={(id) => openWorkstream(id)}
         portfolio={rows}
         transport={transport}
       />

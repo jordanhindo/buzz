@@ -76,6 +76,7 @@ function ContextPanel({
   onOpenOutcome,
   activeOutcomeId,
   portfolio,
+  onOpenWorkstream,
 }: {
   focus: InboxFocus;
   transport: HqTransport;
@@ -83,6 +84,7 @@ function ContextPanel({
   activeRelation?: LineageLink["relation"];
   onOpenOutcome?: (outcome: OutcomeSummary) => void;
   activeOutcomeId?: string;
+  onOpenWorkstream?: (id: string) => void;
   // The full portfolio row set — needed to resolve the Dependencies edge
   // strip's downstream ("blocks") side, which HQ never returns directly (see
   // contract/dependencyEdges.ts). Optional: omitting it still renders
@@ -127,6 +129,7 @@ function ContextPanel({
             detail={detail}
             onOpenLink={onOpenLink}
             onOpenOutcome={onOpenOutcome}
+            onOpenWorkstream={onOpenWorkstream}
             portfolio={portfolio}
           />
         ) : null}
@@ -140,12 +143,15 @@ export function InboxView({
   transport,
   onBack,
   portfolio,
+  onOpenWorkstream,
 }: {
   focus: InboxFocus;
   transport: HqTransport;
   onBack: () => void;
   // Threaded down to the Dependencies edge strip — see ContextPanel's doc.
   portfolio?: WorkstreamRow[];
+  // Navigate to a workstream a dependency edge resolves to.
+  onOpenWorkstream?: (id: string) => void;
 }) {
   const subjectId = focus.kind === "attention" ? focus.item.id : focus.id;
   const title = focus.kind === "attention" ? focus.item.title : focus.title;
@@ -212,6 +218,7 @@ export function InboxView({
             focus={focus}
             onOpenLink={openLink}
             onOpenOutcome={openOutcome}
+            onOpenWorkstream={onOpenWorkstream}
             portfolio={portfolio}
             transport={transport}
           />

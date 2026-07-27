@@ -457,10 +457,15 @@ function DependencyGroup({
   label,
   Icon,
   edges,
+  onOpenWorkstream,
 }: {
   label: string;
   Icon: typeof ArrowUp;
   edges: ResolvedDependencyEdge[];
+  // A dependency that resolves to another workstream navigates to it, like
+  // every other cross-reference in the app. Outcome/unresolved edges have no
+  // in-app destination, so they stay plain text.
+  onOpenWorkstream?: (id: string) => void;
 }) {
   if (edges.length === 0) return null;
   return (
@@ -470,27 +475,42 @@ function DependencyGroup({
         {label}
       </p>
       <ul className="space-y-1">
-        {edges.map((edge) => (
-          <li
-            className="flex items-center gap-2 text-xs"
-            key={`${edge.resolvedAs}-${edge.target}`}
-          >
-            <span
-              className={cn(
-                "min-w-0 flex-1 truncate",
-                edge.resolvedAs === "unresolved"
-                  ? "italic text-foreground/45"
-                  : "text-foreground/80",
-              )}
-              title={
-                edge.resolvedAs === "unresolved" ? edge.target : edge.label
-              }
+        {edges.map((edge) => {
+          const navigable =
+            edge.resolvedAs === "workstream" && onOpenWorkstream != null;
+          return (
+            <li
+              className="flex items-center gap-2 text-xs"
+              key={`${edge.resolvedAs}-${edge.target}`}
             >
-              {edge.label}
-            </span>
-            <DependencyPill edge={edge} />
-          </li>
-        ))}
+              {navigable ? (
+                <button
+                  className="min-w-0 flex-1 truncate text-left text-foreground/80 underline-offset-2 hover:text-foreground hover:underline"
+                  onClick={() => onOpenWorkstream?.(edge.target)}
+                  title={edge.label}
+                  type="button"
+                >
+                  {edge.label}
+                </button>
+              ) : (
+                <span
+                  className={cn(
+                    "min-w-0 flex-1 truncate",
+                    edge.resolvedAs === "unresolved"
+                      ? "italic text-foreground/45"
+                      : "text-foreground/80",
+                  )}
+                  title={
+                    edge.resolvedAs === "unresolved" ? edge.target : edge.label
+                  }
+                >
+                  {edge.label}
+                </span>
+              )}
+              <DependencyPill edge={edge} />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -516,6 +536,7 @@ export function WorkstreamDetailPanel({
   onOpenOutcome,
   activeOutcomeId,
   portfolio,
+  onOpenWorkstream,
 }: {
   detail: WorkstreamDetail;
   // Opening a linked artifact or an outcome swaps the inbox's right pane (the
@@ -529,6 +550,8 @@ export function WorkstreamDetailPanel({
   // ("blocks") side and cross-workstream upstream targets. Optional — see
   // splitWorkstreamDependencyEdges' degrade behavior when omitted.
   portfolio?: WorkstreamRow[];
+  // Navigate to a dependency that resolves to another workstream.
+  onOpenWorkstream?: (id: string) => void;
 }) {
   const contract = detail.outcomeContract;
   const lineage = detail.lineage ?? [];
@@ -644,11 +667,13 @@ export function WorkstreamDetailPanel({
                     edges={upstream}
                     Icon={ArrowUp}
                     label="Waiting on"
+                    onOpenWorkstream={onOpenWorkstream}
                   />
                   <DependencyGroup
                     edges={downstream}
                     Icon={ArrowDown}
                     label="Blocks"
+                    onOpenWorkstream={onOpenWorkstream}
                   />
                 </div>
               </DeepSection>

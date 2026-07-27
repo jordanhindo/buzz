@@ -28,9 +28,16 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import dagre from "dagre";
-import { ArrowLeft, GitBranch } from "lucide-react";
+import { ArrowLeft, ChevronDown, GitBranch } from "lucide-react";
 
 import { Button } from "@/shared/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/shared/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { cn } from "@/shared/lib/cn";
 import type { Activity } from "@/features/hq-shell-proto/contract/activity";
@@ -196,36 +203,56 @@ function FilterBar({
     [connectedIds, nodesById],
   );
 
+  const focusLabel =
+    filters.workstreamFocus == null
+      ? "All workstreams"
+      : (nodesById.get(filters.workstreamFocus)?.title ??
+        filters.workstreamFocus);
+
   return (
     <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border/60 px-4 py-2.5">
       <div className="flex items-center gap-2">
         <span className="text-2xs font-semibold uppercase tracking-wide text-muted-foreground/60">
           Focus
         </span>
-        <Tabs
-          onValueChange={(value) =>
-            onChange({
-              ...filters,
-              workstreamFocus: value === "all" ? null : value,
-            })
-          }
-          value={filters.workstreamFocus ?? "all"}
-        >
-          <TabsList className="h-auto flex-wrap p-1">
-            <TabsTrigger className="text-2xs" value="all">
-              All
-            </TabsTrigger>
-            {sortedConnected.map((id) => (
-              <TabsTrigger
-                className="max-w-[10rem] truncate text-2xs"
-                key={id}
-                value={id}
-              >
-                {nodesById.get(id)?.title ?? id}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
+        {/* Many long-named options — a dropdown, not a per-workstream tab row
+            that overflows and truncates. Status below stays segmented (6 short
+            fixed options: the right shape for tabs). */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              className="h-7 max-w-[14rem] justify-between gap-2 text-2xs font-medium"
+              size="sm"
+              variant="outline"
+            >
+              <span className="truncate">{focusLabel}</span>
+              <ChevronDown className="h-3 w-3 shrink-0 opacity-60" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="start"
+            className="max-h-[60vh] overflow-y-auto"
+          >
+            <DropdownMenuRadioGroup
+              onValueChange={(value) =>
+                onChange({
+                  ...filters,
+                  workstreamFocus: value === "all" ? null : value,
+                })
+              }
+              value={filters.workstreamFocus ?? "all"}
+            >
+              <DropdownMenuRadioItem value="all">
+                All workstreams
+              </DropdownMenuRadioItem>
+              {sortedConnected.map((id) => (
+                <DropdownMenuRadioItem key={id} value={id}>
+                  {nodesById.get(id)?.title ?? id}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       <div className="flex items-center gap-2">
@@ -356,8 +383,9 @@ export function MapView({
               Map
             </h1>
             <p className="truncate text-xs text-muted-foreground">
-              {graph.nodes.length} of {fullGraph.nodes.length} workstreams ·{" "}
-              {graph.edges.length} dependencies
+              The {graph.nodes.length} workstreams with dependencies ·{" "}
+              {graph.edges.length} edges · the other{" "}
+              {fullGraph.nodes.length - graph.nodes.length} stand alone on Work
             </p>
           </div>
         </div>
