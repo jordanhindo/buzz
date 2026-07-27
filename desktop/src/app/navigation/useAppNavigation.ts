@@ -120,6 +120,32 @@ export function useAppNavigation() {
     [commitNavigation],
   );
 
+  const goWork = React.useCallback(
+    (behavior?: NavigationBehavior) =>
+      commitNavigation(
+        {
+          to: "/work",
+        },
+        behavior,
+      ),
+    [commitNavigation],
+  );
+
+  // The dependency-graph lens is a view of the same Work surface, so Map is a
+  // deep-link into `/work` (view=map) rather than a separate route — one mount
+  // point, driven by the search param (see hqShellSearch.ts).
+  const goMap = React.useCallback(
+    (behavior?: NavigationBehavior) =>
+      commitNavigation(
+        {
+          to: "/work",
+          search: { view: "map" },
+        },
+        behavior,
+      ),
+    [commitNavigation],
+  );
+
   const goWorkflows = React.useCallback(
     (behavior?: NavigationBehavior) =>
       commitNavigation(
@@ -304,6 +330,8 @@ export function useAppNavigation() {
     goProjects,
     goPulse,
     goSettings,
+    goWork,
+    goMap,
     goWorkflow,
     goWorkflows,
     openSearchHit,

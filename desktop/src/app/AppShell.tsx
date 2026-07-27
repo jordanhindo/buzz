@@ -130,6 +130,8 @@ export function AppShell() {
     goProjects,
     goPulse,
     goSettings,
+    goWork,
+    goMap,
     goWorkflows,
     closeSettings,
     openSearchHit,
@@ -137,8 +139,12 @@ export function AppShell() {
   const { canGoBack, canGoForward, goBack, goForward } =
     useBackForwardControls();
   const { selectedChannelId, selectedView } = React.useMemo(
-    () => deriveShellRoute(location.pathname),
-    [location.pathname],
+    () =>
+      deriveShellRoute(
+        location.pathname,
+        (location.search as { view?: string })?.view,
+      ),
+    [location.pathname, location.search],
   );
   const {
     removeCommunity: handleRemoveCommunity,
@@ -882,6 +888,8 @@ export function AppShell() {
                           onSelectProjects={() => void goProjects()}
                           onSelectPulse={() => void goPulse()}
                           onSelectSettings={handleOpenSettings}
+                          onSelectWork={() => void goWork()}
+                          onSelectMap={() => void goMap()}
                           onSelectWorkflows={() => void goWorkflows()}
                           onSetPresenceStatus={(status) =>
                             presenceSession.setStatus(status)

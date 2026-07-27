@@ -1,0 +1,596 @@
+{
+  "schema": "product-release-view-v1",
+  "source": {
+    "system": "release-train",
+    "reference": "release-train:0.2.10",
+    "version": "sha256:098269dcd718105f49d64b49119deb08fa59966566b6f27d2b79e148426aafaf",
+    "digest": "sha256:098269dcd718105f49d64b49119deb08fa59966566b6f27d2b79e148426aafaf"
+  },
+  "openReleaseVersion": "0.2.10",
+  "release": {
+    "version": "0.2.10",
+    "path": "releases/0.2.10.md",
+    "status": "open",
+    "integration": "feat/1.0-integration",
+    "sourceVersion": "sha256:9d901a76fe0a8f860250a4677f09fdef459a7032413c85b278cda0703bda7034",
+    "gates": [],
+    "items": [
+      {
+        "id": "release-train:0.2.10:account-first-welcome-and-license-recovery-on-first-launch",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Account-first welcome and license recovery on first launch",
+        "description": "Jordan's 2026-07-20 physical test found the paid-customer entry screen only accepts a manual key even when the Customer Account already owns it; add sign-in as the primary recovery path while preserving manual key entry and offline instrument guarantees",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "source": "Plaud `96be594dea208dc3c6729db91f5023a6`"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:first-run-and-model-setup-experience-redesign",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "First-run and model-setup experience redesign",
+        "description": "replace the generic checkbox/checklist with a welcoming, truthful flow that presents installable models clearly, explains model-specific lifecycle states, and uses finished human copy; broader redesign is deliberately outside the focused 0.2.9 Quality repair",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "source": "Plaud `96be594dea208dc3c6729db91f5023a6`"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:batch-queued-generation",
+        "state": "building",
+        "workflow": "needs-jordan",
+        "workflowSource": "explicit",
+        "title": "Batch/queued generation",
+        "description": "The musician-facing Batch Generation behavior is settled. Implementation remains blocked only on a founder-approved Visual Contract for the affected Generate surfaces.",
+        "owner": "product agent",
+        "blockedBy": null,
+        "plan": "docs/plans/2026-07-19-ADR-batch-queued-generation.md",
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "workflow": "needs-jordan",
+          "origin": "founder:conversation:batch-generation-approved-grill",
+          "evidence-digest": "sha256:111766e13f030b59cdae84f18ae6427ca98ee97abbb780e1457a96ae7aad9717",
+          "context-manifest": "releases/context/0.2.10-batch-queued-generation-d43be969ef6c.json",
+          "hq-intake-id": "04ca7a0ab0d8af3004813358828f3fae724d606d2d170244dffc78fca011bb7f",
+          "hq-intake-payload": "a7ccb9aee7359cedb2f3aafed9e4b71ad0032ad18b9f7f43930e955a1620137a",
+          "owner": "product agent",
+          "plan": "docs/plans/2026-07-19-ADR-batch-queued-generation.md"
+        },
+        "contextManifestRef": {
+          "path": "releases/context/0.2.10-batch-queued-generation-d43be969ef6c.json",
+          "schema": "release-train-context-manifest-v1",
+          "version": "sha256:d43be969ef6c01ed16283c87835b07748af4c0d8e0b2992c84238d63b95dae20"
+        },
+        "contextLinks": [
+          {
+            "relation": "adr",
+            "label": "Accepted Batch Generation ADR",
+            "reference": "docs/plans/2026-07-19-ADR-batch-queued-generation.md",
+            "version": "git:b84770b65c25f47c51e82fa543d063a891f0697a",
+            "digest": "sha256:a35f50b0c22cbf129dcd4f7d42fbad10e18f31c3f6cff8e4df121c2e32decd60"
+          },
+          {
+            "relation": "decision",
+            "label": "Queued Generation design context",
+            "reference": "docs/plans/2026-07-18-generation-queue-design-and-0.2.8-scope.md",
+            "version": "git:d9fcb95cc2840dab66b5fa3daf6c79df30495b34",
+            "digest": "sha256:897925ba416dc1608db5d1e8bb1eb062bb6e21c7c14e818db76e660d3488cceb"
+          }
+        ],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:branding-swap",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Branding swap",
+        "description": "app icons + marks; verified NOT done as of scope-doc writing: `assets/icon/*.png` still the old marks, new SVGs staged at `~/salience-branding-0.2.8-staged/` (local, unverified path — not in git)",
+        "owner": null,
+        "blockedBy": null,
+        "plan": "docs/plans/2026-07-18-generation-queue-design-and-0.2.8-scope.md",
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "plan": "docs/plans/2026-07-18-generation-queue-design-and-0.2.8-scope.md"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:what-s-new-changelog-panel",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "\"What's new\" changelog panel",
+        "description": "dismissible, first-launch-after- update, per-release data-file contract (extension point); reuses/extends `AppUpdateService::releaseNotes` (`AppUpdateService.h:82`, `AppUpdateService.cpp:885`) — verified no panel exists in `Source/` yet as of scope-doc writing",
+        "owner": null,
+        "blockedBy": null,
+        "plan": "docs/plans/2026-07-18-generation-queue-design-and-0.2.8-scope.md",
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "plan": "docs/plans/2026-07-18-generation-queue-design-and-0.2.8-scope.md"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:ai-edit-long-source-duration-fix-stereo-preservation-proof",
+        "state": "building",
+        "workflow": "ready",
+        "workflowSource": "inferred",
+        "title": "AI-edit long-source duration fix + stereo preservation proof",
+        "description": "`--max-duration-sec 4.0` is an arbitrary runner guard, not a Stable Audio 3 model limit, and it rejects on full source duration instead of the masked region. The apparent `mean(axis=0)` downmix is metric-only; the playable runner path and official Small SFX inpainting contract are stereo, so this slice proves preservation without adding speculative stereo DSP.",
+        "owner": "codex",
+        "blockedBy": null,
+        "plan": "https://github.com/jordanhindo/local-ai-sampler-workstation/issues/110",
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "owner": "codex",
+          "plan": "https://github.com/jordanhindo/local-ai-sampler-workstation/issues/110"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:rate-limiter-fail-open-for-license-activate-recheck",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Rate-limiter fail-open for license activate/recheck",
+        "description": "Jordan decided fail-open 2026-07-18 (\"fail open for 0.2.8\"); shipped code fails CLOSED (rateLimit.mjs:47-56, index.ts:873-909) and 503s a paying user on a limiter hiccup — was slated for the feature train before the hotfix renumber",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {},
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:idle-soak-gate-in-the-release-dod",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Idle soak gate in the release DoD",
+        "description": "install candidate over legacy state, launch standalone+VST3, force the update check (delete updates/last-check.txt), idle 3 min, assert zero crash events — the 0.2.8 hotfix crash was 100% reproducible in ~65s idle and no proof ever idled; wire into the release lanes (Dell rig has the full setup from 2026-07-18) — proofs must also carry build identity + source lineage (branch, commit, dirty flag, binary mtime) per the 2026-06-08 stale-build lesson (wiki harness-as-a-service.md)",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {},
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:std-async-lifetime-audit",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "std::async lifetime audit",
+        "description": "~15 std::async sites in PluginProcessor.cpp; the 0.2.8 crash was a broken capture-lifetime pattern (makeReal argument-evaluation order); sweep the rest for the same class in one bounded pass",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {},
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:crash-evidence-built-in",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Crash evidence built-in",
+        "description": "own crash handler writing dump + breadcrumb log on tester machines, and rebuild the log collector to PRINT findings to console (tester scripts rule 2026-07-18); the 0.2.7 collector captured no crash evidence at all",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {},
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:four-part-version-comparison-verified-end-to-end-updater-comparator-publish-monotonicity-guard-c",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Four-part version comparison verified end-to-end (updater comparator, publish monotonicity guard, CMake stamping)",
+        "description": "so future hotfixes ship as x.y.z.1 on the SHIPPED number and never steal a planned number again (kills renumbering)",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {},
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:wire-release-lint-into-release-sh-candidate-preflight",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Wire release_lint into release.sh candidate preflight",
+        "description": "the pipeline and releases/ verify each other automatically (standing candidate from extending.md)",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {},
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:reconcile-github-execution-issues-with-the-release-train-and-install-issue-lifecycle-garbage-col",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Reconcile GitHub execution issues with the Release Train and install issue lifecycle garbage collection",
+        "description": "audit the 68 currently open issues and all 82 planned 1.0 items against current code, release truth, and duplication; keep GitHub issues open only for active execution or newly reported problems awaiting triage; close completed, duplicate, superseded, and already-imported issues with evidence and an exact Release Train reference; route ambiguous product choices to `To Grill`; reconcile linked issues on Release Train transitions and in a weekly sweep without closing solely because of age",
+        "owner": "release/control-plane agent",
+        "blockedBy": null,
+        "plan": "docs/plans/2026-07-19-ai-first-control-plane-context.md",
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "owner": "release/control-plane agent",
+          "plan": "docs/plans/2026-07-19-ai-first-control-plane-context.md"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:ship-the-chosen-candidate-b-bass-lora",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Ship the chosen candidate-B bass LoRA",
+        "description": "Source/Stylize/StyleRepository.cpp:15-16 still points at old brain-full-no-snares-step5250, not candidateB_plain_5250.safetensors; Jordan's final ear pick never recorded",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "from": ".hermes/parking/PARK-5a3c0b611ff0.md"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:feedback-signal-reader-reads-stale-prefix",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Feedback/signal reader reads stale prefix",
+        "description": "expects signal/ while the Worker writes feedback/signal/ — quick isolated fix",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "from": "wiki latent-sea-activity-feed.md"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:settings-models-choose-folder-never-implemented",
+        "state": "idea",
+        "workflow": "research",
+        "workflowSource": "inferred",
+        "title": "Settings→Models \"Choose Folder\" never implemented",
+        "description": "no folder-picker wiring in Source",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "from": "gh#81"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:shorten-and-harden-the-signed-release-candidate-pipeline",
+        "state": "proven",
+        "workflow": "ready",
+        "workflowSource": "inferred",
+        "title": "Shorten and harden the signed release-candidate pipeline",
+        "description": "turn the 0.2.9 release-night failures into permanent capability: reuse a safely fingerprinted Mac build tree, bound and retry stalled Windows artifact downloads, and recover stale same-version tester cohorts without weakening signing, provenance, Runtime Lock, seal, or tamper checks",
+        "owner": "release controller",
+        "blockedBy": null,
+        "plan": null,
+        "commit": "691c95cbf34990ecb9d01aab5e3652cd47500e04",
+        "proof": null,
+        "proofLocal": "integrated `test_macos_lane_build_cache.sh`, `test_windows_release_lane_download_retry.sh`, `test_local_release_candidate.py` (22 tests), and `test_verify_release_identity.sh` (4 cases) all pass on `feat/1.0-integration@8c5557f5`",
+        "annotations": {
+          "owner": "release controller",
+          "commit": "691c95cbf34990ecb9d01aab5e3652cd47500e04",
+          "proof-local": "integrated `test_macos_lane_build_cache.sh`, `test_windows_release_lane_download_retry.sh`, `test_local_release_candidate.py` (22 tests), and `test_verify_release_identity.sh` (4 cases) all pass on `feat/1.0-integration@8c5557f5`"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      },
+      {
+        "id": "release-train:0.2.10:finish-the-release-acceleration-system-and-canonical-operating-record",
+        "state": "landed",
+        "workflow": "ready",
+        "workflowSource": "explicit",
+        "title": "Finish the release acceleration system and canonical operating record",
+        "description": "complete the remaining 0.2.9 release-night hardening: fail before expensive Windows work, bound Dell disk and cache growth, run the signed Mac lane on the 64 GB Mac Studio, prebuild exact candidates before approval, replace the temporary product-path identity list with a sealed build-input manifest, and maintain one canonical optimization log for the Release Train skill maintainer",
+        "owner": "release controller",
+        "blockedBy": null,
+        "plan": "docs/handoffs/2026-07-21-029-release-cut-risk-adjudication-handoff.md",
+        "commit": "afd41aa038eb3274555f754fde13c7351da88ed9",
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "workflow": "ready",
+          "origin": "agent:agent:codex-release-hardening",
+          "evidence-digest": "sha256:ea84bbf749697e52faa0ac1d984a2e1290f2ee76bfe5d3e84d0c53d50eb060ff",
+          "context-manifest": "releases/context/0.2.10-finish-the-release-acceleration-system-and-canonical-operating-record-70e626442a5a.json",
+          "hq-intake-id": "d58d3087504c7340ef7313a5fd0fdb7162add091178aff02649c676e32eebf21",
+          "hq-intake-payload": "6bf97a8642c6fcc869d841460756242edc9be3af8c8d0428e6ca3a567a56862b",
+          "owner": "release controller",
+          "plan": "docs/handoffs/2026-07-21-029-release-cut-risk-adjudication-handoff.md",
+          "execution-contract": "releases/contracts/0.2.10-finish-the-release-acceleration-system-and-canonical-operating-record-d58d3087504c.json",
+          "commit": "afd41aa038eb3274555f754fde13c7351da88ed9",
+          "hq-transition-land": "feadae35fdbff330f298457a5bc2990b0d69d6671fbf38082de5173da1c26be9",
+          "hq-transition-land-payload": "875c61dff3e569afbf0e0758797b1f828b20e8bcc236d88137bcf6a5884b2d67"
+        },
+        "contextManifestRef": {
+          "path": "releases/context/0.2.10-finish-the-release-acceleration-system-and-canonical-operating-record-70e626442a5a.json",
+          "schema": "release-train-context-manifest-v1",
+          "version": "sha256:70e626442a5abb040881427cd6b0918373832ff7db75f60b4aabcbc2d8fe5ec2"
+        },
+        "contextLinks": [
+          {
+            "relation": "handoff",
+            "label": "Release-system skill maintainer handoff",
+            "reference": "https://github.com/jordanhindo/local-ai-sampler-workstation/blob/d300c643d9ef297ffd7c19243adaafa6191c80c3/docs/handoffs/2026-07-22-release-system-skill-maintainer-handoff.md",
+            "version": "git:d300c643d9ef297ffd7c19243adaafa6191c80c3",
+            "digest": "sha256:f099d0b94192c1e68be1e3963793f3761c8fe3679450fa96772876ea27aaf121"
+          },
+          {
+            "relation": "proof",
+            "label": "Integrated release acceleration proof record",
+            "reference": "https://github.com/jordanhindo/local-ai-sampler-workstation/blob/d300c643d9ef297ffd7c19243adaafa6191c80c3/docs/RELEASE-PIPELINE-OPTIMIZATION-LOG.md",
+            "version": "git:d300c643d9ef297ffd7c19243adaafa6191c80c3",
+            "digest": "sha256:090772bf95eb8ff99f9e252cf34d93b730055f56c739c19b5f61f0c33d848d01"
+          }
+        ],
+        "executionContractRef": {
+          "path": "releases/contracts/0.2.10-finish-the-release-acceleration-system-and-canonical-operating-record-d58d3087504c.json",
+          "schema": "release-train-execution-contract-v1",
+          "version": "sha256:a14925dea494eb517a43249a455786cffe07ea85bbd7fd435237f39a9f3704d5"
+        },
+        "executionContract": {
+          "outcome": "The signed release path is preflighted, presealed, resumable, observable, typed-cleaned, and documented as one reusable operating contract",
+          "sourceItem": {
+            "system": "release-train",
+            "id": "release-train:0.2.10:finish-the-release-acceleration-system-and-canonical-operating-record",
+            "uri": "releases/0.2.10.md#finish-the-release-acceleration-system-and-canonical-operating-record",
+            "version": "sha256:9d901a76fe0a8f860250a4677f09fdef459a7032413c85b278cda0703bda7034",
+            "freshness": "current",
+            "evidence": "release item with releases/contracts/0.2.10-finish-the-release-acceleration-system-and-canonical-operating-record-d58d3087504c.json"
+          },
+          "repositories": ["jordanhindo/local-ai-sampler-workstation"],
+          "publicSeams": [
+            "scripts/release/release.sh candidate VERSION",
+            "scripts/release/release.sh publish VERSION",
+            "scripts/release/release.sh machines-idle",
+            "hq release next"
+          ],
+          "ownership": [
+            "scripts/ci",
+            "scripts/release",
+            "scripts/tests",
+            ".github/workflows",
+            "docs/LOCAL-RELEASE-CANDIDATE.md",
+            "docs/RELEASE-PIPELINE-OPTIMIZATION-LOG.md",
+            "docs/handoffs/2026-07-22-release-system-skill-maintainer-handoff.md",
+            "AGENTS.md"
+          ],
+          "forbiddenActions": [
+            "Do not expand product scope beyond this bounded result",
+            "Do not mutate HQ company source records",
+            "Do not publish or merge without the controller proof path"
+          ],
+          "deliverables": [
+            "Accelerated two-machine candidate workflow",
+            "Focused failure-injection and exact physical proof",
+            "Canonical release operating record and skill-maintainer handoff"
+          ],
+          "dependencies": [],
+          "resourceEnvelope": {
+            "activeMinutes": 480,
+            "attempts": 2,
+            "concurrentRuns": 1,
+            "externalActions": 1,
+            "moneyUsd": 0,
+            "storageBytes": 1073741824,
+            "stopConditions": [
+              "Two equivalent infrastructure failures without new evidence",
+              "The authorized release-system scope must expand",
+              "A product behavior decision becomes necessary"
+            ]
+          },
+          "authorityGrants": [
+            {
+              "id": "finish-the-release-acceleration-system-and-canonical-operating-record-local-worktree",
+              "kind": "workstream",
+              "scopes": [
+                "repository:local-ai-sampler-workstation",
+                "path:scripts/ci",
+                "path:scripts/release",
+                "path:scripts/tests",
+                "path:.github/workflows",
+                "path:docs/LOCAL-RELEASE-CANDIDATE.md",
+                "path:docs/RELEASE-PIPELINE-OPTIMIZATION-LOG.md",
+                "path:docs/handoffs/2026-07-22-release-system-skill-maintainer-handoff.md",
+                "path:AGENTS.md"
+              ],
+              "expiresAt": null,
+              "externalEffectsAllowed": false
+            }
+          ],
+          "recovery": [
+            "Commit and push useful work before handoff or interruption",
+            "Record proof and remaining uncertainty before leaving the Run",
+            "Remove the disposable worktree after integration"
+          ],
+          "proofGate": {
+            "publicSeam": "scripts/release/release.sh candidate VERSION",
+            "requiredEvidence": [
+              "Exact Mac Studio and Dell candidate seal",
+              "Focused release fixtures pass",
+              "Release optimization record is committed and pushed"
+            ],
+            "commands": [
+              "bash scripts/tests/test_windows_release_lane_download_retry.sh",
+              "python3 scripts/tests/test_local_release_candidate.py",
+              "python3 scripts/tests/test_continuous_release_candidate.py",
+              "bash scripts/tests/test_verify_release_identity.sh"
+            ],
+            "completionAuthority": "HQ controller after independent review"
+          },
+          "decomposition": {
+            "kind": "vertical-user-outcome",
+            "valueKind": "user",
+            "boundedResult": "The signed release path is preflighted, presealed, resumable, observable, typed-cleaned, and documented as one reusable operating contract",
+            "parentOutcomeId": null,
+            "inheritedSource": null
+          },
+          "admissionContexts": [
+            {
+              "id": "finish-the-release-acceleration-system-and-canonical-operating-record-implementer",
+              "role": "implementer",
+              "outcomeId": "release-train:0.2.10:finish-the-release-acceleration-system-and-canonical-operating-record",
+              "leaseIntent": "writer",
+              "allowedLifecycleStates": [
+                "active",
+                "waiting",
+                "completed",
+                "failed",
+                "superseded"
+              ]
+            },
+            {
+              "id": "finish-the-release-acceleration-system-and-canonical-operating-record-reviewer",
+              "role": "reviewer",
+              "outcomeId": "release-train:0.2.10:finish-the-release-acceleration-system-and-canonical-operating-record",
+              "leaseIntent": "inspect",
+              "allowedLifecycleStates": [
+                "active",
+                "completed",
+                "failed",
+                "superseded"
+              ]
+            }
+          ],
+          "defaultAdmissionContextId": "finish-the-release-acceleration-system-and-canonical-operating-record-implementer"
+        }
+      },
+      {
+        "id": "release-train:0.2.10:batch-presets-saving-multiple-generations-to-send-off-again-at-one-time",
+        "state": "deferred → 1.1",
+        "workflow": "waiting",
+        "workflowSource": "inferred",
+        "title": "Batch presets (\"saving multiple generations to send off again at one time\")",
+        "description": "resolved to the 1.1 train); depends on per-Style LoRA builds across Fast + Quality model families; distinct from single-prompt presets which already exist and stay as-is (`Source/UI/GenerateSurface.cpp`, `savePresetIcon`/`loadPresetIcon`/`GeneratePreset`)",
+        "owner": null,
+        "blockedBy": null,
+        "plan": null,
+        "commit": null,
+        "proof": null,
+        "proofLocal": null,
+        "annotations": {
+          "reason": "post-1.0 by triage adjudication (2026-07-18 ruling; scope doc had said \"post-1.0\" while this file initially said 1.0"
+        },
+        "contextManifestRef": null,
+        "contextLinks": [],
+        "executionContractRef": null,
+        "executionContract": null
+      }
+    ]
+  }
+}

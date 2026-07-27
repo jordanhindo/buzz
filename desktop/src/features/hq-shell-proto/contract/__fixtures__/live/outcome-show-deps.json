@@ -1,0 +1,164 @@
+{
+  "workstreamId": "demand-loop",
+  "outcome": {
+    "contextLinks": [],
+    "dependencies": ["demand-loop-ticket-1"],
+    "executionContract": {
+      "admissionContexts": [
+        {
+          "allowedLifecycleStates": [
+            "active",
+            "waiting",
+            "completed",
+            "failed"
+          ],
+          "id": "implementer",
+          "leaseIntent": "writer",
+          "outcomeId": "demand-loop-ticket-2",
+          "role": "implementer"
+        },
+        {
+          "allowedLifecycleStates": ["active", "completed"],
+          "id": "reviewer",
+          "leaseIntent": "inspect",
+          "outcomeId": "demand-loop-ticket-2",
+          "role": "reviewer"
+        }
+      ],
+      "authorityGrants": [
+        {
+          "expiresAt": null,
+          "externalEffectsAllowed": false,
+          "id": "demand-loop-grant",
+          "kind": "workstream",
+          "scopes": [
+            "hq:local-reversible-implementation",
+            "source:read",
+            "proof:local"
+          ]
+        }
+      ],
+      "decomposition": {
+        "boundedResult": "Ticket 2 objective",
+        "inheritedSource": null,
+        "kind": "vertical-business-outcome",
+        "parentOutcomeId": null,
+        "valueKind": "business"
+      },
+      "defaultAdmissionContextId": "implementer",
+      "deliverables": [
+        "sweep definition format in pack source",
+        "Market-Hard sweep definition",
+        "sweep method skill",
+        "fixture corpus + dense-list regression fixture"
+      ],
+      "dependencies": ["demand-loop-ticket-1"],
+      "forbiddenActions": [
+        "No new kernel lifecycle states or founder surfaces",
+        "No product telemetry work (release-train concern)",
+        "No automatic merge",
+        "No live money, DNS, signing, identity enrollment, named-relationship contact, or public launch",
+        "No copied source truth, full transcript, reusable credential, or raw provider record"
+      ],
+      "outcome": "Demand-sweep runtime and Market-Hard sweep definition proven with a fixture corpus per Ticket 2 acceptance criteria in docs/specs/2026-07-20-demand-loop-execution-tickets.md",
+      "ownership": [
+        "Sole assigned implementer owns the complete vertical ticket outcome",
+        "Main orchestrator alone adjudicates review and merge"
+      ],
+      "proofGate": {
+        "commands": [
+          "npm --prefix control-plane run typecheck",
+          "npm --prefix control-plane test"
+        ],
+        "completionAuthority": "Independent whole-outcome reviewer and main-orchestrator adjudication",
+        "publicSeam": "source reconciliation + company-intake public seams",
+        "requiredEvidence": [
+          "passing proof-command transcripts",
+          "fixture scenarios from the canonical ticket acceptance criteria"
+        ]
+      },
+      "publicSeams": ["source reconciliation + company-intake public seams"],
+      "recovery": [
+        "Keep useful work committed and pushed on the assigned branch",
+        "Refresh canonical sources after restart or conflict",
+        "Fail closed on stale mutation version or writer fence"
+      ],
+      "repositories": ["jordanhindo/latent-sea-hq"],
+      "resourceEnvelope": {
+        "activeMinutes": 480,
+        "attempts": 2,
+        "concurrentRuns": 1,
+        "externalActions": 0,
+        "moneyUsd": 0,
+        "stopConditions": [
+          "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+          "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+          "Source-version conflict or stale writer fence"
+        ],
+        "storageBytes": 1073741824
+      },
+      "sourceItem": {
+        "evidence": "HQ Outcome demand-loop-ticket-2 from outcome-local dashboard source lineage",
+        "freshness": "current",
+        "id": "dashboard-outcome:demand-loop-ticket-2",
+        "system": "hq",
+        "uri": "/Users/jordanhindo/latent-sea-hq/dashboard/state.json",
+        "version": "hq-outcome-v1:demand-loop:demand-loop-ticket-2:sha256:eac545e7fa1bb6c34b09f4f804adfd52f291dda81bd650d3150aaba12a0d76cd"
+      }
+    },
+    "executionIssueReference": "github:jordanhindo/latent-sea-hq#7",
+    "id": "demand-loop-ticket-2",
+    "intake": {
+      "admittedClass": "agent-specification",
+      "consequentialMeaning": false,
+      "fullySpecified": true,
+      "humanAuthorityRequired": false,
+      "requestedClass": "agent-specification",
+      "reversible": false
+    },
+    "lifecycleFacts": {
+      "dependencyEdges": [
+        {
+          "kind": "requires-outcome",
+          "schema": "outcome-dependency-edge-v1",
+          "targetId": "demand-loop-ticket-1"
+        }
+      ],
+      "park": null,
+      "schema": "outcome-lifecycle-facts-v1",
+      "wake": null
+    },
+    "objective": "Sweep definition format + first (Market-Hard external) sweep definition + sweep method skill; fixture-proven filing through the gate; self-observation sweep plug-in point documented for the separately assigned Codex work.",
+    "state": "ready",
+    "title": "Demand-sweep runtime + Market-Hard sweep definition"
+  },
+  "frontier": {
+    "id": "demand-loop-ticket-2",
+    "title": "Demand-sweep runtime + Market-Hard sweep definition",
+    "state": "ready",
+    "sourceReference": {
+      "evidence": "HQ Outcome demand-loop-ticket-2 from outcome-local dashboard source lineage",
+      "freshness": "current",
+      "id": "dashboard-outcome:demand-loop-ticket-2",
+      "system": "hq",
+      "uri": "/Users/jordanhindo/latent-sea-hq/dashboard/state.json",
+      "version": "hq-outcome-v1:demand-loop:demand-loop-ticket-2:sha256:eac545e7fa1bb6c34b09f4f804adfd52f291dda81bd650d3150aaba12a0d76cd"
+    },
+    "resourceEnvelope": {
+      "activeMinutes": 480,
+      "attempts": 2,
+      "concurrentRuns": 1,
+      "externalActions": 0,
+      "moneyUsd": 0,
+      "stopConditions": [
+        "Two equivalent infrastructure or tooling failures without evidence-producing progress",
+        "Any request for money, identity, signing, named-relationship contact, public launch, or external effect",
+        "Source-version conflict or stale writer fence"
+      ],
+      "storageBytes": 1073741824
+    },
+    "schedulingClaims": [],
+    "releaseTiming": null,
+    "reasons": ["runtime:branch-needs-replan"]
+  }
+}
