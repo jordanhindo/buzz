@@ -11,6 +11,7 @@ import { useBackForwardControls } from "@/app/navigation/useBackForwardControls"
 import { useCommunityNavigationTransitions } from "@/app/useCommunityNavigationTransitions";
 import { useLiveHomeFeedActions } from "@/app/useLiveHomeFeedActions";
 import { useChannelBrowserDialog } from "@/app/useChannelBrowserDialog";
+import { useChannelCreationHandlers } from "@/app/useChannelCreationHandlers";
 import { useMarkAsReadShortcuts } from "@/app/useMarkAsReadShortcuts";
 import { useSettingsShortcuts } from "@/app/useSettingsShortcuts";
 import { useAppShellDesktopNotifications } from "@/app/useAppShellDesktopNotifications";
@@ -86,7 +87,7 @@ import { useRelayAutoHeal } from "@/shared/api/useRelayAutoHeal";
 import { useDeferredStartup } from "@/shared/hooks/useDeferredStartup";
 import { useWebviewScrollBoundaryLock } from "@/shared/hooks/useWebviewScrollBoundaryLock";
 import { joinChannel } from "@/shared/api/tauri";
-import type { ChannelVisibility, SearchHit } from "@/shared/api/types";
+import type { SearchHit } from "@/shared/api/types";
 import { ChannelNavigationProvider } from "@/shared/context/ChannelNavigationContext";
 import { MainInsetProvider } from "@/shared/layout/MainInsetContext";
 import { chromeCssVarDefaults } from "@/shared/layout/chromeLayout";
@@ -492,91 +493,16 @@ export function AppShell() {
     [queryClient],
   );
 
-  const handleCreateChannel = React.useCallback(
-    async (
-      {
-        description,
-        name,
-        visibility,
-        ttlSeconds,
-        templateId,
-      }: {
-        name: string;
-        description?: string;
-        visibility: ChannelVisibility;
-        ttlSeconds?: number;
-        templateId?: string;
-      },
-      onCreated?: (channelId: string) => void,
-    ) => {
-      const createdChannel = await createChannelMutation.mutateAsync({
-        name,
-        description,
-        channelType: "stream",
-        visibility,
-        ttlSeconds,
-      });
-
-      await applyCanvas(templateId, createdChannel.id, name);
-      await goChannel(createdChannel.id);
-      onCreated?.(createdChannel.id);
-      void applyAgents(templateId, createdChannel.id);
-    },
-    [applyAgents, applyCanvas, createChannelMutation, goChannel],
-  );
-
-  const handleCreateForum = React.useCallback(
-    async ({
-      description,
-      name,
-      visibility,
-      ttlSeconds,
-      templateId,
-    }: {
-      name: string;
-      description?: string;
-      visibility: ChannelVisibility;
-      ttlSeconds?: number;
-      templateId?: string;
-    }) => {
-      const createdForum = await createForumMutation.mutateAsync({
-        name,
-        description,
-        channelType: "forum",
-        visibility,
-        ttlSeconds,
-      });
-
-      await applyCanvas(templateId, createdForum.id, name);
-      await goChannel(createdForum.id);
-      void applyAgents(templateId, createdForum.id);
-    },
-    [applyAgents, applyCanvas, createForumMutation, goChannel],
-  );
-
-  // The channel browser can create either a stream or a forum depending on
-  // which section opened it. Route to the matching handler.
-  const handleBrowseChannelCreate = React.useCallback(
-    async (input: {
-      name: string;
-      description?: string;
-      visibility: ChannelVisibility;
-      ttlSeconds?: number;
-      templateId?: string;
-    }) => {
-      if (browseDialogType === "forum") {
-        await handleCreateForum(input);
-      } else {
-        await handleCreateChannel(input, getCreateSuccess() ?? undefined);
-      }
-    },
-    [
+  const { handleCreateChannel, handleCreateForum, handleBrowseChannelCreate } =
+    useChannelCreationHandlers({
+      createChannelMutation,
+      createForumMutation,
+      applyCanvas,
+      applyAgents,
+      goChannel,
       browseDialogType,
-      handleCreateChannel,
-      handleCreateForum,
       getCreateSuccess,
-    ],
-  );
+    });
 
   const handleHideDm = React.useCallback(
     async (channelId: string) => {
