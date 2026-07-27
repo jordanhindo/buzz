@@ -5,6 +5,7 @@
 import { isTauri } from "@tauri-apps/api/core";
 import * as React from "react";
 
+import type { HqClient } from "@/features/hq-shell-proto/contract/LiveHqTransport";
 import { LiveHqTransport } from "@/features/hq-shell-proto/contract/LiveHqTransport";
 import { createLiveSnapshotHqClient } from "@/features/hq-shell-proto/contract/liveSnapshotHqClient";
 import { createTauriHqClient } from "@/features/hq-shell-proto/contract/tauriHqClient";
@@ -16,6 +17,26 @@ import {
   FixtureWorkstreamBinding,
 } from "@/features/hq-shell-proto/contract/workstreamBinding";
 import { VariantD_Bridge } from "@/features/hq-shell-proto/variants/VariantD_Bridge";
+
+declare global {
+  interface Window {
+    // e2e-only: makes the captured-snapshot preview client reject every read,
+    // standing in for a degraded/timing-out HQ daemon so the honest
+    // "HQ isn't responding" + Retry surface can be exercised. Never consulted
+    // on the live (Tauri) path — see the branch below.
+    __BUZZ_E2E_HQ_FAIL_READS__?: boolean;
+  }
+}
+
+// Wrap a snapshot client so every read rejects, simulating a degraded daemon.
+// Preview/e2e only: the live Tauri path never reaches this.
+function failingHqClient(): HqClient {
+  return {
+    async getJson(): Promise<unknown> {
+      throw new Error("HQ daemon is not responding (e2e fault injection).");
+    },
+  };
+}
 
 export function HqShellPrototype() {
   // In the packaged Buzz Desktop app, read Jordan's real HQ through the native
@@ -32,7 +53,9 @@ export function HqShellPrototype() {
       isTauri()
         ? new LiveHqTransport(createTauriHqClient(), EmptyWorkstreamBinding)
         : new LiveHqTransport(
-            createLiveSnapshotHqClient(),
+            window.__BUZZ_E2E_HQ_FAIL_READS__
+              ? failingHqClient()
+              : createLiveSnapshotHqClient(),
             new FixtureWorkstreamBinding(DEV_WORKSTREAM_BINDING),
             new FixtureFounderReplyRelay({
               mismatchAttentionIds: [DEV_MISMATCH_ATTENTION_ID],

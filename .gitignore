@@ -71,3 +71,6 @@ deploy/charts/*/charts/*.tgz
 
 # agent tooling state (never commit)
 .omc/
+
+# TanStack Router generated route tree cache (regenerated on dev/build)
+desktop/.tanstack/

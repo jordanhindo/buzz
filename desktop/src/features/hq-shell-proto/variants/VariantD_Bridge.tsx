@@ -204,6 +204,8 @@ export function VariantD_Bridge({ transport }: VariantDProps) {
     releases,
     workingNow: liveWorkingNow,
     isLoading,
+    error,
+    reload,
   } = useHqPortfolio(transport);
   const { structure } = useCompanyStructure(transport);
 
@@ -253,6 +255,25 @@ export function VariantD_Bridge({ transport }: VariantDProps) {
     navigate({
       search: search.from ? { view: search.from } : {},
     });
+
+  // A failed HQ read is surfaced honestly — never left as an endless spinner.
+  if (error) {
+    return (
+      <div className="flex h-full items-center justify-center p-10">
+        <LifecycleStateView
+          action={
+            <Button onClick={reload} size="sm" variant="outline">
+              Retry
+            </Button>
+          }
+          className="max-w-md"
+          description="HQ didn't respond — its daemon may be degraded or still reconciling. Check `hq daemon status`, then retry."
+          state="offline"
+          title="HQ isn't responding"
+        />
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

@@ -57,6 +57,7 @@ export default defineConfig({
         "**/hq-work-map-sidebar.spec.ts",
         "**/hq-work-binding.spec.ts",
         "**/hq-work-write-path.spec.ts",
+        "**/hq-work-degraded.spec.ts",
         "**/pubkey-display-screenshots.spec.ts",
         "**/file-attachment.spec.ts",
         "**/image-attachment-gallery.spec.ts",

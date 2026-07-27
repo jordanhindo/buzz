@@ -27,6 +27,12 @@ export type HqPortfolioState = {
   // source for "Working now" (activity.ts). Never the frontier composition.
   workingNow: string[] | null;
   isLoading: boolean;
+  // Set when an HQ read fails (e.g. the daemon is degraded or times out). The
+  // surface must render this honestly — a failed read must never masquerade as
+  // an endless loading spinner.
+  error: string | null;
+  // Re-run the whole portfolio load (the Retry affordance on the error state).
+  reload: () => void;
 };
 
 export function useHqPortfolio(transport: HqTransport): HqPortfolioState {
@@ -43,7 +49,15 @@ export function useHqPortfolio(transport: HqTransport): HqPortfolioState {
     null,
   );
   const [workingNow, setWorkingNow] = React.useState<string[] | null>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+  const [reloadNonce, setReloadNonce] = React.useState(0);
 
+  const reload = React.useCallback(() => {
+    setReloadNonce((nonce) => nonce + 1);
+  }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reloadNonce is an intentional trigger only; its value is not consumed in the effect body
   React.useEffect(() => {
     let cancelled = false;
     setRows(null);
@@ -53,6 +67,8 @@ export function useHqPortfolio(transport: HqTransport): HqPortfolioState {
     setRecent(null);
     setFrontier(null);
     setWorkingNow(null);
+    setIsLoading(true);
+    setError(null);
 
     Promise.all([
       transport.getWorkstreamPortfolio(),
@@ -62,31 +78,40 @@ export function useHqPortfolio(transport: HqTransport): HqPortfolioState {
       transport.getRecentActivity(),
       transport.getReadyFrontier(),
       transport.getWorkingNow(),
-    ]).then(
-      ([
-        portfolioRows,
-        attentionItems,
-        surfaces,
-        releaseRows,
-        recentEvents,
-        frontierTotals,
-        workingNowIds,
-      ]) => {
+    ])
+      .then(
+        ([
+          portfolioRows,
+          attentionItems,
+          surfaces,
+          releaseRows,
+          recentEvents,
+          frontierTotals,
+          workingNowIds,
+        ]) => {
+          if (cancelled) return;
+          setRows(portfolioRows);
+          setAttention(attentionItems);
+          setPackSurfaces(surfaces);
+          setReleases(releaseRows);
+          setRecent(recentEvents);
+          setFrontier(frontierTotals);
+          setWorkingNow(workingNowIds);
+          setIsLoading(false);
+        },
+      )
+      .catch((cause: unknown) => {
+        // A single HQ read rejecting (timeout, degraded daemon) used to leave the
+        // whole surface spinning forever with an unhandled rejection. Surface it.
         if (cancelled) return;
-        setRows(portfolioRows);
-        setAttention(attentionItems);
-        setPackSurfaces(surfaces);
-        setReleases(releaseRows);
-        setRecent(recentEvents);
-        setFrontier(frontierTotals);
-        setWorkingNow(workingNowIds);
-      },
-    );
+        setError(cause instanceof Error ? cause.message : "HQ read failed.");
+        setIsLoading(false);
+      });
 
     return () => {
       cancelled = true;
     };
-  }, [transport]);
+  }, [transport, reloadNonce]);
 
   return {
     rows,
@@ -96,7 +121,9 @@ export function useHqPortfolio(transport: HqTransport): HqPortfolioState {
     recent,
     frontier,
     workingNow,
-    isLoading: rows === null,
+    isLoading,
+    error,
+    reload,
   };
 }
 
