@@ -26,6 +26,7 @@ import type {
   Receipt,
   RecentEvent,
   ReleaseSummary,
+  SubjectBinding,
   TypedIntent,
   WorkstreamDetail,
   WorkstreamRow,
@@ -160,6 +161,23 @@ export class FixtureTransport implements HqTransport {
     await delay(this.latencyMs);
     if (this.scenario === "empty-company") return null;
     return CONVERSATIONS[subjectId] ?? null;
+  }
+
+  async getSubjectBinding(subjectId: string): Promise<SubjectBinding> {
+    await delay(this.latencyMs);
+    // Derive from the fixture's own workstream detail — the same source its
+    // boundConversations / liveSession come from — so the right pane's live-
+    // session path is exercisable in fixtures without a parallel data table.
+    const detail =
+      this.scenario === "empty-company"
+        ? undefined
+        : WORKSTREAM_DETAILS[subjectId];
+    const conversations = detail?.boundConversations ?? [];
+    return {
+      conversations,
+      session: detail?.liveSession ?? null,
+      bound: conversations.length > 0,
+    };
   }
 
   async getCompanyStructure(): Promise<CompanyStructure> {

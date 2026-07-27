@@ -4,23 +4,33 @@
 // the rest of the contract; the concrete resolvers live here, exactly like
 // HqTransport (interface in types.ts) vs. LiveHqTransport / FixtureTransport.
 //
-// Today no real binding source exists — HQ does not project which Buzz
-// channel/thread carries the live agent session for a workstream. The honest
-// default is therefore EMPTY: the Work surface shows "No conversation bound to
-// this yet" until a real source (a Buzz presence/registry lookup) is wired.
-// The fixture resolver is a dev/e2e stand-in so the confirm → submit relay UI
-// can be built and screenshotted against a real-shaped binding first.
+// Three sources conform to the one seam:
+//   • Empty   — nothing bound, no session (honest pre-wire default).
+//   • Fixture — a static in-memory map for dev/e2e (the write-path demo).
+//   • Live    — HQ's `conversation-binding-v1` read. Renders the live session
+//               even before any Buzz channel is registered (`bound === false`),
+//               so the surface says "a live codex session is orchestrating
+//               this" instead of "nothing bound yet".
 
+import type { HqClient } from "./LiveHqTransport";
 import type {
   BoundConversationRef,
+  LiveSessionRef,
+  SubjectBinding,
   WorkstreamConversationBinding,
 } from "./types";
 
-// Honest default. Nothing is bound → getConversation() stays null and
-// WorkstreamDetail.boundConversations stays []. This is byte-identical to the
-// pre-binding behavior, so "delete the binding and the surface is unchanged".
+const EMPTY_BINDING: SubjectBinding = {
+  conversations: [],
+  session: null,
+  bound: false,
+};
+
+// Honest default. Nothing is bound and no session is reported → getConversation()
+// stays null and WorkstreamDetail.boundConversations stays []. Byte-identical to
+// the pre-binding behavior: "delete the binding and the surface is unchanged".
 export const EmptyWorkstreamBinding: WorkstreamConversationBinding = {
-  boundFor: () => [],
+  resolve: async () => EMPTY_BINDING,
 };
 
 // A static, in-memory binding for dev/e2e. Keyed by the exact `subjectId` the
@@ -33,8 +43,88 @@ export class FixtureWorkstreamBinding implements WorkstreamConversationBinding {
     this.bindings = new Map(Object.entries(entries));
   }
 
-  boundFor(subjectId: string): BoundConversationRef[] {
-    return this.bindings.get(subjectId) ?? [];
+  async resolve(subjectId: string): Promise<SubjectBinding> {
+    const conversations = this.bindings.get(subjectId) ?? [];
+    // The fixture carries no live session — its point is the bound-conversation
+    // write-path demo, so `bound` tracks whether a conversation is present.
+    return { conversations, session: null, bound: conversations.length > 0 };
+  }
+}
+
+// The shape HQ's `hq workstream binding <id>` / GET /v1/conversation-bindings/:id
+// returns (schema "conversation-binding-v1"). Only the fields the surface reads
+// are typed; everything is treated as optional/nullable at the boundary.
+interface RawConversationBinding {
+  conversation?: { kind?: string; id?: string; label?: string } | null;
+  session?: {
+    sessionKind?: "codex" | "claude" | null;
+    harness?: string;
+    nativeSessionId?: string;
+    agentPubkey?: string | null;
+    admissionId?: string;
+    lifecycleState?: string;
+    leaseRelation?: "no-writer" | "current-writer" | "other-writer";
+    transcriptPointer?: string | null;
+    resumeOperation?: string | null;
+  } | null;
+  bound?: boolean;
+}
+
+function mapSession(
+  raw: RawConversationBinding["session"],
+): LiveSessionRef | null {
+  if (!raw) return null;
+  return {
+    sessionKind: raw.sessionKind ?? null,
+    harness: raw.harness ?? "",
+    nativeSessionId: raw.nativeSessionId ?? "",
+    agentPubkey: raw.agentPubkey ?? null,
+    admissionId: raw.admissionId ?? "",
+    lifecycleState: raw.lifecycleState ?? "",
+    leaseRelation: raw.leaseRelation ?? "no-writer",
+    transcriptPointer: raw.transcriptPointer ?? null,
+    resumeOperation: raw.resumeOperation ?? null,
+  };
+}
+
+// The live source: HQ's conversation-binding read. Serves the live session now;
+// bound conversations only once `bound === true` (i.e. HQ's registration write
+// path has authored real relay coordinates — null for every subject today).
+export class LiveWorkstreamBinding implements WorkstreamConversationBinding {
+  // Explicit field rather than a constructor parameter property — the desktop
+  // unit runner strips types in strip-only mode, which rejects TS parameter
+  // properties (`constructor(private readonly x)`).
+  private readonly client: HqClient;
+
+  constructor(client: HqClient) {
+    this.client = client;
+  }
+
+  async resolve(subjectId: string): Promise<SubjectBinding> {
+    const raw = (await this.client.getJson(
+      `/v1/conversation-bindings/${subjectId}`,
+    )) as RawConversationBinding;
+
+    const session = mapSession(raw.session);
+
+    // Only surface a bound conversation when HQ says so AND it carries real
+    // coordinates. The agent-session identity for the write path comes from the
+    // live session, not fabricated onto the conversation.
+    const conv = raw.conversation;
+    const conversations: BoundConversationRef[] =
+      raw.bound === true && conv?.id
+        ? [
+            {
+              kind: conv.kind === "thread" ? "thread" : "channel",
+              id: conv.id,
+              label: conv.label ?? conv.id,
+              agentPubkey: session?.agentPubkey ?? undefined,
+              sessionKind: session?.sessionKind ?? undefined,
+            },
+          ]
+        : [];
+
+    return { conversations, session, bound: raw.bound === true };
   }
 }
 

@@ -20,6 +20,10 @@ fn resolve_argv(verb: &str, arg: Option<&str>) -> Result<Vec<String>, String> {
         "next" => vec!["next".into()],
         "workstream-list" => vec!["workstream".into(), "list".into()],
         "workstream-show" => vec!["workstream".into(), "show".into()],
+        // The conversation-binding read (`hq workstream binding <subject-id>`) —
+        // the live source LiveHqTransport's `/v1/conversation-bindings/:id`
+        // resolves to. Serves the live agent session + bound-conversation state.
+        "workstream-binding" => vec!["workstream".into(), "binding".into()],
         "outcome-show" => vec!["outcome".into(), "show".into()],
         "run-show" => vec!["run".into(), "show".into()],
         "run-list" => vec!["run".into(), "list".into()],
@@ -36,7 +40,10 @@ fn resolve_argv(verb: &str, arg: Option<&str>) -> Result<Vec<String>, String> {
     };
 
     // Verbs that take a single positional id (e.g. `hq workstream show <id>`).
-    let needs_id = matches!(verb, "workstream-show" | "outcome-show" | "run-show");
+    let needs_id = matches!(
+        verb,
+        "workstream-show" | "workstream-binding" | "outcome-show" | "run-show"
+    );
     if needs_id {
         let id = arg.ok_or_else(|| format!("hq_read: verb '{verb}' requires an id"))?;
         let trimmed = id.trim();
@@ -163,6 +170,18 @@ mod tests {
             resolve_argv("workstream-show", Some("ws-42")).unwrap(),
             vec!["workstream", "show", "ws-42", "--json"]
         );
+    }
+
+    #[test]
+    fn maps_workstream_binding_with_id() {
+        // Must match tauriHqClient's `/v1/conversation-bindings/:id` mapping.
+        assert_eq!(
+            resolve_argv("workstream-binding", Some("launch-site")).unwrap(),
+            vec!["workstream", "binding", "launch-site", "--json"]
+        );
+        // Id is required and flag-like ids are rejected (no CLI option smuggling).
+        assert!(resolve_argv("workstream-binding", None).is_err());
+        assert!(resolve_argv("workstream-binding", Some("--oops")).is_err());
     }
 
     #[test]

@@ -41,6 +41,16 @@ function pathToVerb(path: string): HqVerb {
     return { verb: "workstream-show", arg: decodeURIComponent(workstream[1]) };
   }
 
+  // The conversation-binding read (`hq workstream binding <subject-id>`) — the
+  // live source for WorkstreamDetail.liveSession + boundConversations.
+  const binding = path.match(/^\/v1\/conversation-bindings\/([^/]+)$/);
+  if (binding) {
+    return {
+      verb: "workstream-binding",
+      arg: decodeURIComponent(binding[1]),
+    };
+  }
+
   throw new Error(`tauriHqClient: no hq verb is mapped for path '${path}'`);
 }
 

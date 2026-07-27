@@ -10,6 +10,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/cn";
 import { ConversationPanel } from "@/features/hq-shell-proto/primitives/ConversationPanel";
+import { LiveSessionPanel } from "@/features/hq-shell-proto/primitives/LiveSessionPanel";
 import {
   type DominantStatus,
   dominantFrontierStatus,
@@ -159,7 +160,7 @@ export function InboxView({
     focus.kind === "attention"
       ? `${ATTENTION_KIND_LABEL[focus.item.kind]} · needs your call`
       : "Workstream";
-  const { conversation } = useConversation(transport, subjectId);
+  const { conversation, liveSession } = useConversation(transport, subjectId);
 
   // The founder write path applies only to an attention item that carries a
   // packageDigest (HQ's content version). A workstream focus, or an item HQ
@@ -248,6 +249,8 @@ export function InboxView({
               }
               writeContext={writeContext}
             />
+          ) : liveSession ? (
+            <LiveSessionPanel session={liveSession} />
           ) : (
             <div className="flex h-full items-center justify-center p-6 text-sm text-muted-foreground">
               No conversation bound to this yet.

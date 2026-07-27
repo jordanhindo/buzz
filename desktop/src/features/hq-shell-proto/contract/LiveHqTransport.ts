@@ -36,6 +36,7 @@ import type {
   RunReceipt,
   FounderReplyInput,
   FounderReplyRelay,
+  SubjectBinding,
   TypedIntent,
   WorkflowRoute,
   WorkstreamConversationBinding,
@@ -806,6 +807,8 @@ export class LiveHqTransport implements HqTransport {
     const truthOwner =
       rawOutcomes[0]?.executionContract?.proofGate?.completionAuthority ?? "HQ";
 
+    const binding = await this.binding.resolve(id);
+
     return {
       ...row,
       brief: composeBrief(workstream),
@@ -818,9 +821,11 @@ export class LiveHqTransport implements HqTransport {
       lineage: composeLineage(rawOutcomes),
       runs,
       // HQ has no separate plan (the per-outcome executionContract IS the plan).
-      // Bound conversations come from the injected binding resolver, not HQ —
-      // empty by default until a live session→workstream wire exists.
-      boundConversations: this.binding.boundFor(id),
+      // Bound conversations + the live session come from the injected binding
+      // resolver, not the workstream read — empty/null by default, real on the
+      // live path once HQ's conversation-binding read reports them.
+      boundConversations: binding.conversations,
+      liveSession: binding.session,
     };
   }
 
@@ -867,8 +872,8 @@ export class LiveHqTransport implements HqTransport {
     // "nothing bound yet" gap, unchanged); a binding → a conversation bound to
     // that channel, seeded with the write-path wire but no relayed messages
     // yet. This is the seam the confirm → submit relay writes into.
-    const refs = this.binding.boundFor(subjectId);
-    const primary = refs[0];
+    const { conversations } = await this.binding.resolve(subjectId);
+    const primary = conversations[0];
     if (!primary) return null;
     return {
       subjectId,
@@ -876,6 +881,13 @@ export class LiveHqTransport implements HqTransport {
       subtitle: `Bound to ${primary.label} — reply routes to its agent session`,
       messages: [],
     };
+  }
+
+  async getSubjectBinding(subjectId: string): Promise<SubjectBinding> {
+    // The one primitive: the injected resolver's read of HQ's
+    // conversation-binding. getConversation() is the bound-conversation slice of
+    // this; the live session + `bound` come straight through for the right pane.
+    return this.binding.resolve(subjectId);
   }
 
   async getCompanyStructure(): Promise<CompanyStructure> {

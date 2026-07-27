@@ -232,6 +232,9 @@ export interface WorkstreamDetail extends WorkstreamRow {
   runs?: RunReceipt[];
   dependencyChain?: string[];
   boundConversations: BoundConversationRef[];
+  // The live agent session orchestrating this workstream, when one exists —
+  // shown even when no Buzz conversation is bound yet (bound === false).
+  liveSession?: LiveSessionRef | null;
 }
 
 export interface AttentionItem extends ProjectionMeta {
@@ -349,12 +352,40 @@ export interface BoundConversationRef {
   sessionKind?: "codex" | "claude"; // → CODEX_THREAD_ID / HQ_CLAUDE_SESSION_ID
 }
 
-// The resolver seam. One conforming implementation per binding source (empty
-// today, a Buzz presence/registry lookup later) — nothing else in the surface
-// changes when a new source is added. The rigid core; the growable edge.
+// The live agent session carrying a subject, mirrored from HQ's
+// `conversation-binding-v1` `session`. HQ holds this native-session identity
+// even before any Buzz channel is registered — so the surface can honestly say
+// "a live codex session is orchestrating this" instead of "nothing bound yet".
+// `agentPubkey` is null until a registration write path authors it (HQ never
+// fabricates it), so this is NOT yet a relay address — it's provenance.
+export interface LiveSessionRef {
+  sessionKind: "codex" | "claude" | null;
+  harness: string;
+  nativeSessionId: string;
+  agentPubkey: string | null;
+  admissionId: string;
+  lifecycleState: string;
+  leaseRelation: "no-writer" | "current-writer" | "other-writer";
+  transcriptPointer: string | null;
+  resumeOperation: string | null;
+}
+
+// The resolved binding for one subject: the bound conversations (empty until a
+// registration write path authors real relay coordinates), the live session
+// (when one exists), and `bound` — true only when a real conversation carries
+// coordinates. Mirrors HQ's `conversation-binding-v1`.
+export interface SubjectBinding {
+  conversations: BoundConversationRef[];
+  session: LiveSessionRef | null;
+  bound: boolean;
+}
+
+// The resolver seam. One conforming implementation per binding source (empty,
+// fixture, or the live HQ read) — nothing else in the surface changes when a
+// new source is added. The rigid core; the growable edge. Async because the
+// live source is a per-subject HQ read.
 export interface WorkstreamConversationBinding {
-  // Every conversation bound to a workstream/attention subject (may be empty).
-  boundFor(subjectId: string): BoundConversationRef[];
+  resolve(subjectId: string): Promise<SubjectBinding>;
 }
 
 // The bytes the operator approves for a founder reply. The shell NEVER shells
@@ -460,6 +491,11 @@ export interface HqTransport {
   getReleases(): Promise<ReleaseSummary[]>;
   getRecentActivity(): Promise<RecentEvent[]>;
   getConversation(subjectId: string): Promise<Conversation | null>;
+  // The full binding for a subject: its bound conversations, the live agent
+  // session (present even when `bound === false`), and `bound`. The right pane
+  // uses this to show the live session when no Buzz conversation is wired yet,
+  // instead of a dead "nothing bound" gap. Mirrors HQ's `conversation-binding-v1`.
+  getSubjectBinding(subjectId: string): Promise<SubjectBinding>;
   getCompanyStructure(): Promise<CompanyStructure>;
   submitIntent(intent: TypedIntent): Promise<Receipt>;
   // The founder write path (D5). Distinct from submitIntent (Seam 6's generic

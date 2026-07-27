@@ -10,6 +10,7 @@ import type {
   Conversation,
   FrontierComposition,
   HqTransport,
+  LiveSessionRef,
   PackSurface,
   RecentEvent,
   ReleaseSummary,
@@ -134,18 +135,29 @@ export function useConversation(
   const [conversation, setConversation] = React.useState<Conversation | null>(
     null,
   );
+  // The live agent session behind this subject, when HQ reports one but no Buzz
+  // conversation is bound yet (`bound === false`). Lets the right pane show the
+  // orchestrating session instead of a dead "nothing bound" gap.
+  const [liveSession, setLiveSession] = React.useState<LiveSessionRef | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     if (!subjectId) {
       setConversation(null);
+      setLiveSession(null);
       return;
     }
     let cancelled = false;
     setIsLoading(true);
-    transport.getConversation(subjectId).then((result) => {
+    Promise.all([
+      transport.getConversation(subjectId),
+      transport.getSubjectBinding(subjectId),
+    ]).then(([conv, binding]) => {
       if (cancelled) return;
-      setConversation(result);
+      setConversation(conv);
+      setLiveSession(binding.session);
       setIsLoading(false);
     });
     return () => {
@@ -153,7 +165,7 @@ export function useConversation(
     };
   }, [transport, subjectId]);
 
-  return { conversation, isLoading };
+  return { conversation, liveSession, isLoading };
 }
 
 export function useCompanyStructure(transport: HqTransport) {
