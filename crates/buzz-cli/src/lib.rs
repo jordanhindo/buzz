@@ -1866,6 +1866,27 @@ mod tests {
     }
 
     #[test]
+    fn repo_create_accepts_channel_binding() {
+        let cli = Cli::try_parse_from([
+            "buzz",
+            "repos",
+            "create",
+            "--id",
+            "project",
+            "--channel",
+            "5029e6e9-300e-42a5-a0fe-8e9ed0b11b8e",
+        ])
+        .expect("parse repo channel binding");
+        let Cmd::Repos(ReposCmd::Create { channel, .. }) = cli.command else {
+            panic!("expected repos create command");
+        };
+        assert_eq!(
+            channel.as_deref(),
+            Some("5029e6e9-300e-42a5-a0fe-8e9ed0b11b8e")
+        );
+    }
+
+    #[test]
     fn command_inventory_is_stable() {
         let expected_groups: Vec<&str> = vec![
             "agents",

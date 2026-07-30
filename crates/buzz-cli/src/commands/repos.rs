@@ -246,7 +246,6 @@ fn build_create_announcement(
         &relay_refs,
     )
     .map_err(|e| CliError::Other(format!("build_repo_announcement failed: {e}")))?;
-
     if let Some(channel) = channel {
         crate::validate::validate_uuid(channel)?;
         builder = builder.tag(Tag::parse(["buzz-channel", channel]).map_err(tag_error)?);
