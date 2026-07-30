@@ -18,7 +18,12 @@ type IndicatorIcon = ComponentType<{
 }>;
 
 const variants: Record<
-  "available" | "downloading" | "installing" | "manual-required" | "ready",
+  | "available"
+  | "downloading"
+  | "installing"
+  | "manual-required"
+  | "upstream-available"
+  | "ready",
   {
     Icon: IndicatorIcon;
     iconClassName?: string;
@@ -49,6 +54,11 @@ const variants: Record<
       "Update available — download from GitHub (use AppImage for auto-updates)",
     badgeColor: "bg-primary",
   },
+  "upstream-available": {
+    Icon: ExternalLink,
+    label: "Official Buzz update available for reviewed Buzz HQ sync",
+    badgeColor: "bg-primary",
+  },
   ready: {
     Icon: RotateCw,
     label: "Update now",
@@ -62,6 +72,7 @@ function getVariant(state: UpdateStatus["state"]) {
     state === "downloading" ||
     state === "installing" ||
     state === "manual-required" ||
+    state === "upstream-available" ||
     state === "ready"
   ) {
     return variants[state];
@@ -79,7 +90,9 @@ export function UpdateIndicator({ className }: { className?: string }) {
 
   const { Icon, iconClassName = "h-4 w-4", label, badgeColor } = variant;
   const isActionable =
-    status.state === "ready" || status.state === "manual-required";
+    status.state === "ready" ||
+    status.state === "manual-required" ||
+    status.state === "upstream-available";
   const handleClick =
     status.state === "ready"
       ? installAndRelaunch
@@ -87,7 +100,11 @@ export function UpdateIndicator({ className }: { className?: string }) {
         ? () => {
             void openUrl(status.releaseUrl);
           }
-        : null;
+        : status.state === "upstream-available"
+          ? () => {
+              void openUrl(status.releaseUrl);
+            }
+          : null;
 
   return (
     <Tooltip>

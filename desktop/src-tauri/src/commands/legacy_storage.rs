@@ -4,6 +4,7 @@ use rusqlite::{Connection, OpenFlags};
 use serde::Serialize;
 
 const BUZZ_RELEASE_IDENTIFIER_PREFIX: &str = "xyz.block.buzz.app";
+const BUZZ_HQ_RELEASE_IDENTIFIER: &str = "xyz.block.buzz.hq";
 const SPROUT_RELEASE_IDENTIFIER: &str = "xyz.block.sprout.app";
 const BUZZ_DEV_IDENTIFIER_PREFIX: &str = "xyz.block.buzz.app.dev";
 const SPROUT_DEV_IDENTIFIER_PREFIX: &str = "xyz.block.sprout.app.dev";
@@ -28,7 +29,9 @@ pub struct LegacyOnboardingCompletion {
 }
 
 fn legacy_identifier(current_identifier: &str) -> Option<String> {
-    if current_identifier.starts_with(BUZZ_DEV_IDENTIFIER_PREFIX) {
+    if current_identifier == BUZZ_HQ_RELEASE_IDENTIFIER {
+        Some(BUZZ_RELEASE_IDENTIFIER_PREFIX.to_string())
+    } else if current_identifier.starts_with(BUZZ_DEV_IDENTIFIER_PREFIX) {
         Some(current_identifier.replacen(
             BUZZ_DEV_IDENTIFIER_PREFIX,
             SPROUT_DEV_IDENTIFIER_PREFIX,
@@ -215,6 +218,14 @@ mod tests {
         assert_eq!(
             legacy_identifier("xyz.block.buzz.app"),
             Some("xyz.block.sprout.app".to_string())
+        );
+    }
+
+    #[test]
+    fn legacy_identifier_maps_hq_to_official_buzz() {
+        assert_eq!(
+            legacy_identifier(BUZZ_HQ_RELEASE_IDENTIFIER),
+            Some(BUZZ_RELEASE_IDENTIFIER_PREFIX.to_string())
         );
     }
 

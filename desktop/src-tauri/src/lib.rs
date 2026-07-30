@@ -913,6 +913,8 @@ pub fn run() {
             archive::index_observer_channel_id,
             archive::read_unindexed_observer_rows,
             is_auto_update_supported,
+            get_desktop_distribution,
+            check_upstream_buzz_release,
             set_window_vibrancy,
             #[cfg(target_os = "macos")]
             tray_menu::clear_tray_agent_activity,

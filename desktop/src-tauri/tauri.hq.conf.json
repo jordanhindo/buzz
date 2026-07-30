@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Buzz HQ",
+  "identifier": "xyz.block.buzz.hq",
+  "plugins": {
+    "updater": {
+      "endpoints": []
+    },
+    "deep-link": {
+      "desktop": {
+        "schemes": ["buzz-hq"]
+      }
+    }
+  },
+  "bundle": {
+    "macOS": {
+      "infoPlist": "Info.hq.plist"
+    }
+  }
+}

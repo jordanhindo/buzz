@@ -1,6 +1,10 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { check, type Update } from "@tauri-apps/plugin-updater";
 import { relaunch } from "@tauri-apps/plugin-process";
+import {
+  checkUpstreamBuzzRelease,
+  getDesktopDistribution,
+} from "@/shared/api/desktopDistribution";
 import { isAutoUpdateSupported } from "@/shared/api/tauri";
 
 export type UpdateStatus =
@@ -18,6 +22,12 @@ export type UpdateStatus =
       version: string;
       /** GitHub releases page for the update. */
       releaseUrl: string;
+    }
+  | {
+      state: "upstream-available";
+      version: string;
+      releaseUrl: string;
+      name: string;
     };
 
 const BACKGROUND_UPDATE_CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000;
@@ -28,6 +38,7 @@ const BACKGROUND_BLOCKED_STATES = new Set<UpdateStatus["state"]>([
   "installing",
   "ready",
   "manual-required",
+  "upstream-available",
 ]);
 
 const GITHUB_RELEASES_URL = "https://github.com/block/buzz/releases/latest";
@@ -143,6 +154,19 @@ export function useUpdater() {
 
         if (!background) {
           setStatus({ state: "checking" });
+        }
+
+        const distribution = await getDesktopDistribution();
+        if (distribution.variant === "hq") {
+          const release = await checkUpstreamBuzzRelease();
+          const shouldShowQuietResult =
+            !background || manualResultRequestedRef.current;
+          if (release) {
+            setStatus({ state: "upstream-available", ...release });
+          } else if (shouldShowQuietResult) {
+            setStatus({ state: "up-to-date" });
+          }
+          return;
         }
 
         const update = await check({

@@ -13,6 +13,22 @@ pub(crate) fn keyring_service() -> &'static str {
             .get_or_init(|| dev_keyring_service(std::env::var("BUZZ_DEV_KEYRING_SERVICE").ok()))
             .as_str()
     } else {
+        release_keyring_service(desktop_variant())
+    }
+}
+
+pub(crate) fn desktop_variant() -> &'static str {
+    option_env!("BUZZ_DESKTOP_BUILD_VARIANT").unwrap_or("official")
+}
+
+pub(crate) fn is_hq_build() -> bool {
+    desktop_variant() == "hq"
+}
+
+fn release_keyring_service(variant: &str) -> &'static str {
+    if variant == "hq" {
+        "buzz-desktop-hq"
+    } else {
         "buzz-desktop"
     }
 }
@@ -27,7 +43,7 @@ pub(super) fn migration_marker_name(service: &str, default_name: &str) -> String
 
 #[cfg(test)]
 mod tests {
-    use super::{dev_keyring_service, migration_marker_name};
+    use super::{dev_keyring_service, migration_marker_name, release_keyring_service};
 
     #[test]
     fn standalone_scope_must_remain_under_dev_service() {
@@ -55,5 +71,11 @@ mod tests {
             migration_marker_name("buzz-desktop-dev.example", "identity.migrated"),
             "identity.buzz-desktop-dev.example.migrated"
         );
+    }
+
+    #[test]
+    fn hq_release_uses_an_isolated_keyring_service() {
+        assert_eq!(release_keyring_service("official"), "buzz-desktop");
+        assert_eq!(release_keyring_service("hq"), "buzz-desktop-hq");
     }
 }

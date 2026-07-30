@@ -7,6 +7,10 @@ test("shows the card for states that require user action or feedback", () => {
   assert.equal(shouldShowSidebarUpdateCard({ state: "ready" }), true);
   assert.equal(shouldShowSidebarUpdateCard({ state: "installing" }), true);
   assert.equal(shouldShowSidebarUpdateCard({ state: "manual-required" }), true);
+  assert.equal(
+    shouldShowSidebarUpdateCard({ state: "upstream-available" }),
+    true,
+  );
 });
 
 test("hides the card for states with nothing actionable to show", () => {

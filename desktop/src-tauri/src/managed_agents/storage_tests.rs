@@ -81,6 +81,7 @@ impl KeyStore for FakeKeyStore {
         *self.read_count.borrow_mut() += 1;
         Ok(self.stored.borrow().get(name).cloned())
     }
+    #[cfg(debug_assertions)]
     fn load_all_readonly(&self) -> Result<Option<HashMap<String, String>>, String> {
         if !self.reachable {
             return Err("keyring backend unreachable".to_string());
@@ -104,6 +105,7 @@ impl KeyStore for FakeKeyStore {
             .insert(name.to_string(), value.to_string());
         Ok(())
     }
+    #[cfg(debug_assertions)]
     fn store_all(&self, entries: &HashMap<String, String>) -> Result<(), String> {
         if !self.reachable {
             return Err("keyring backend unreachable".to_string());

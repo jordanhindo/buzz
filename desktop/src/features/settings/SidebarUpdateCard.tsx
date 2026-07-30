@@ -111,6 +111,23 @@ export function SidebarUpdateCard({ onDismiss }: SidebarUpdateCardProps) {
     );
   }
 
+  if (status.state === "upstream-available") {
+    return (
+      <SidebarCompactActionCard
+        actionAriaLabel="View upstream Buzz release notes"
+        actionTestId="sidebar-upstream-buzz-release"
+        description={`Official Buzz v${status.version} is ready for reviewed sync into Buzz HQ.`}
+        dismissLabel="Dismiss upstream update notification"
+        icon={<ExternalLink aria-hidden="true" className="h-5 w-5" />}
+        iconKey="upstream"
+        onAction={() => void openUrl(status.releaseUrl)}
+        onDismiss={onDismiss}
+        testId="sidebar-update-card-upstream"
+        title="Upstream Buzz update"
+      />
+    );
+  }
+
   return (
     <SidebarUpdateCompactCard
       actionTestId="sidebar-update-now"

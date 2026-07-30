@@ -242,6 +242,18 @@ desktop-release-build target="aarch64-apple-darwin":
     pnpm install
     cd {{desktop_dir}} && pnpm tauri build --features mesh-llm --target {{target}}
 
+# Build the installable Buzz HQ variant with real sidecars. The variant owns a
+# distinct bundle ID, deep-link scheme, app-data directory, and keyring service.
+# It monitors official Buzz releases but never installs them directly.
+desktop-hq-release-build:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    pnpm install
+    cargo build --release -p buzz-acp -p buzz-agent -p buzz-dev-mcp -p git-credential-nostr -p buzz-cli
+    ./scripts/bundle-sidecars.sh
+    cd {{desktop_dir}}
+    BUZZ_DESKTOP_VARIANT=hq pnpm tauri build --features mesh-llm --config src-tauri/tauri.hq.conf.json --bundles app
+
 # Run desktop checks suitable for CI / pre-push
 desktop-ci: desktop-check desktop-test desktop-tauri-fmt-check desktop-build desktop-tauri-check desktop-tauri-test
 

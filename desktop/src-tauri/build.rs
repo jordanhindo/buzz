@@ -16,7 +16,16 @@ fn main() {
     println!("cargo:rerun-if-env-changed=BUZZ_BUILD_OBSERVER_ARCHIVE_DEFAULT");
     println!("cargo:rerun-if-env-changed=BUZZ_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT");
     println!("cargo:rerun-if-env-changed=BUZZ_BUILD_AUTO_CONNECT_DEFAULT_RELAY");
+    println!("cargo:rerun-if-env-changed=BUZZ_DESKTOP_VARIANT");
     println!("cargo:rustc-check-cfg=cfg(buzz_updater_enabled)");
+
+    let desktop_variant =
+        std::env::var("BUZZ_DESKTOP_VARIANT").unwrap_or_else(|_| "official".to_string());
+    assert!(
+        matches!(desktop_variant.as_str(), "official" | "hq"),
+        "BUZZ_DESKTOP_VARIANT must be 'official' or 'hq'"
+    );
+    println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_VARIANT={desktop_variant}");
 
     if let Ok(relay_url) = std::env::var("BUZZ_RELAY_URL") {
         println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_RELAY_URL={relay_url}");
@@ -106,7 +115,7 @@ fn main() {
         .map(|value| value.trim().to_string())
         .filter(|value| !value.is_empty());
 
-    if updater_public_key.is_some() && updater_endpoint.is_some() {
+    if desktop_variant == "official" && updater_public_key.is_some() && updater_endpoint.is_some() {
         println!("cargo:rustc-cfg=buzz_updater_enabled");
     }
 

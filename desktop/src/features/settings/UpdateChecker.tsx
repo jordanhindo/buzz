@@ -91,6 +91,24 @@ export function UpdateChecker() {
           </SettingsOptionRow>
         )}
 
+        {status.state === "upstream-available" && (
+          <SettingsOptionRow>
+            <div className="min-w-0">
+              <p className="text-sm font-medium">
+                Upstream Buzz v{status.version} is available
+              </p>
+              <p className="text-sm font-normal text-muted-foreground">
+                Buzz HQ will not install this release directly. Review its
+                notes, merge upstream into the Buzz HQ branch, and verify the
+                combined build before publishing a Buzz HQ update.
+              </p>
+            </div>
+            <Button size="sm" onClick={() => void openUrl(status.releaseUrl)}>
+              View Release Notes
+            </Button>
+          </SettingsOptionRow>
+        )}
+
         {status.state === "available" && (
           <SettingsOptionRow>
             <div className="min-w-0">

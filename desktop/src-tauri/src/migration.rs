@@ -155,6 +155,7 @@ fn run_boot_migrations_inner(app: &tauri::AppHandle, reset_completed: bool) {
         maybe_migrate_dev_repos_dir(is_dev, reset_completed, &home, &dev_nest);
     }
 
+    hq::migrate(app, reset_completed);
     migrate_legacy_app_data_dir(app);
     sync_shared_agent_data(app);
     // Dev-build-only: copy any agent keys that exist in the production
@@ -1378,11 +1379,10 @@ mod detach;
 pub use detach::detach_directory_backed_teams;
 mod team_suffix;
 pub use team_suffix::strip_baked_team_instructions;
-
+mod hq;
 #[cfg(test)]
 #[path = "migration_test_support.rs"]
 mod test_support;
-
 #[cfg(test)]
 #[path = "migration_tests.rs"]
 mod tests;

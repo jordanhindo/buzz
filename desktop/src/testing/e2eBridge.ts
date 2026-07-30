@@ -295,6 +295,14 @@ type E2eConfig = {
      *  Linux .deb install where Tauri's updater cannot swap the binary).
      *  Defaults to true for all existing tests. */
     autoUpdateSupported?: boolean;
+    /** Build identity used by the update UI. Defaults to official Buzz. */
+    desktopVariant?: "official" | "hq";
+    /** Optional upstream release returned to an HQ build. */
+    upstreamBuzzRelease?: {
+      version: string;
+      releaseUrl: string;
+      name: string;
+    } | null;
     /** Reject `plugin:opener|open_url` to exercise browser-return fallback UI. */
     openerError?: string;
     /** Delay binding signatures so specs can exercise request supersession. */
@@ -11508,6 +11516,15 @@ export function maybeInstallE2eTauriMocks() {
         // Default true so all existing tests continue to use the auto-update
         // path. Set mock.autoUpdateSupported: false to simulate a .deb install.
         return activeConfig?.mock?.autoUpdateSupported !== false;
+      case "get_desktop_distribution": {
+        const variant = activeConfig?.mock?.desktopVariant ?? "official";
+        return {
+          variant,
+          installsOfficialUpdates: variant === "official",
+        };
+      }
+      case "check_upstream_buzz_release":
+        return activeConfig?.mock?.upstreamBuzzRelease ?? null;
       case "relay_reconnect_hook":
         return null;
       case "relay_reconnect_hook_configured":
