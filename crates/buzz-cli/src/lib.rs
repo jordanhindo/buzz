@@ -1113,6 +1113,9 @@ pub enum ReposCmd {
         /// Preferred Nostr relay(s) for repo discovery — can be specified multiple times
         #[arg(long = "nostr-relay")]
         relays: Vec<String>,
+        /// Bind repository write access to members of this Buzz channel
+        #[arg(long)]
+        channel: Option<String>,
     },
     /// Get a repository announcement
     Get {
@@ -1801,6 +1804,27 @@ mod tests {
     #[test]
     fn cli_definition_is_valid() {
         Cli::command().debug_assert();
+    }
+
+    #[test]
+    fn repo_create_accepts_channel_binding() {
+        let cli = Cli::try_parse_from([
+            "buzz",
+            "repos",
+            "create",
+            "--id",
+            "project",
+            "--channel",
+            "5029e6e9-300e-42a5-a0fe-8e9ed0b11b8e",
+        ])
+        .expect("parse repo channel binding");
+        let Cmd::Repos(ReposCmd::Create { channel, .. }) = cli.command else {
+            panic!("expected repos create command");
+        };
+        assert_eq!(
+            channel.as_deref(),
+            Some("5029e6e9-300e-42a5-a0fe-8e9ed0b11b8e")
+        );
     }
 
     #[test]

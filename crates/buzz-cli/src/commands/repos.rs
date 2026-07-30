@@ -207,6 +207,7 @@ pub async fn cmd_create_repo(
     clone_urls: &[String],
     web_url: Option<&str>,
     relays: &[String],
+    channel_id: Option<&str>,
 ) -> Result<(), CliError> {
     validate_repo_id(repo_id)?;
 
@@ -222,6 +223,20 @@ pub async fn cmd_create_repo(
         &relay_refs,
     )
     .map_err(|e| CliError::Other(format!("build_repo_announcement failed: {e}")))?;
+    let builder = if let Some(channel_id) = channel_id {
+        uuid::Uuid::parse_str(channel_id)
+            .map_err(|error| CliError::Usage(format!("invalid channel UUID: {error}")))?;
+        let provisional = builder.sign_with_keys(client.keys()).map_err(|error| {
+            CliError::Other(format!("building repository tags failed: {error}"))
+        })?;
+        let mut tags: Vec<Tag> = provisional.tags.iter().cloned().collect();
+        tags.push(Tag::parse(["buzz-channel", channel_id]).map_err(tag_error)?);
+        buzz_sdk::build_repo_announcement_with_tags(repo_id, "", tags).map_err(|error| {
+            CliError::Other(format!("build_repo_announcement_with_tags failed: {error}"))
+        })?
+    } else {
+        builder
+    };
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
@@ -356,6 +371,7 @@ pub async fn dispatch(cmd: crate::ReposCmd, client: &BuzzClient) -> Result<(), C
             clone_urls,
             web,
             relays,
+            channel,
         } => {
             cmd_create_repo(
                 client,
@@ -365,6 +381,7 @@ pub async fn dispatch(cmd: crate::ReposCmd, client: &BuzzClient) -> Result<(), C
                 &clone_urls,
                 web.as_deref(),
                 &relays,
+                channel.as_deref(),
             )
             .await
         }

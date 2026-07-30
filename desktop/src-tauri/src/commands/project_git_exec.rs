@@ -16,6 +16,54 @@ use url::Url;
 /// `spawn_blocking` threads indefinitely.
 const LOCAL_GIT_TIMEOUT: Duration = Duration::from_secs(60);
 const REMOTE_GIT_TIMEOUT: Duration = Duration::from_secs(300);
+const MIN_NOSTR_CREDENTIAL_GIT_VERSION: (u32, u32, u32) = (2, 46, 0);
+
+fn parse_git_version(version_output: &str) -> Option<(u32, u32, u32)> {
+    let version = version_output
+        .trim()
+        .strip_prefix("git version ")?
+        .split_whitespace()
+        .next()?;
+    let mut parts = version.split('.');
+    let major = parts.next()?.parse().ok()?;
+    let minor = parts.next()?.parse().ok()?;
+    let patch = parts.next().and_then(|part| part.parse().ok()).unwrap_or(0);
+    Some((major, minor, patch))
+}
+
+fn git_version_supports_nostr_credentials(version_output: &str) -> bool {
+    parse_git_version(version_output)
+        .is_some_and(|version| version >= MIN_NOSTR_CREDENTIAL_GIT_VERSION)
+}
+
+fn git_supports_nostr_credentials(path: &std::path::Path) -> bool {
+    Command::new(path)
+        .arg("--version")
+        .output()
+        .ok()
+        .filter(|output| output.status.success())
+        .and_then(|output| String::from_utf8(output.stdout).ok())
+        .is_some_and(|version| git_version_supports_nostr_credentials(&version))
+}
+
+fn credential_git_candidates(default_git: &std::path::Path) -> Vec<std::path::PathBuf> {
+    let mut candidates = Vec::new();
+    #[cfg(target_os = "macos")]
+    candidates.extend([
+        std::path::PathBuf::from("/opt/homebrew/bin/git"),
+        std::path::PathBuf::from("/usr/local/bin/git"),
+    ]);
+    if !candidates.iter().any(|candidate| candidate == default_git) {
+        candidates.push(default_git.to_path_buf());
+    }
+    candidates
+}
+
+fn resolve_credential_git(default_git: &std::path::Path) -> Option<std::path::PathBuf> {
+    credential_git_candidates(default_git)
+        .into_iter()
+        .find(|candidate| git_supports_nostr_credentials(candidate))
+}
 
 fn git_subcommand<'a>(args: &'a [&str]) -> Option<&'a str> {
     let mut index = 0;
@@ -46,6 +94,7 @@ fn git_needs_credentials(args: &[&str]) -> bool {
 
 pub(crate) struct GitAuthConfig {
     git_path: std::path::PathBuf,
+    credential_git_path: Option<std::path::PathBuf>,
     credential_helper: Option<std::path::PathBuf>,
     nsec: String,
     allow_file_transport: bool,
@@ -65,12 +114,20 @@ pub(crate) fn run_git(
     cwd: Option<&std::path::Path>,
     auth: &GitAuthConfig,
 ) -> Result<String, String> {
-    let mut command = Command::new(&auth.git_path);
+    let needs_credentials = git_needs_credentials(args);
+    let git_path = if needs_credentials {
+        auth.credential_git_path.as_ref().ok_or_else(|| {
+            "Buzz repository access requires Git 2.46 or newer. Install a current Git release and retry."
+                .to_string()
+        })?
+    } else {
+        &auth.git_path
+    };
+    let mut command = Command::new(git_path);
     command.args(args);
     if let Some(cwd) = cwd {
         command.current_dir(cwd);
     }
-    let needs_credentials = git_needs_credentials(args);
     let timeout = if needs_credentials {
         REMOTE_GIT_TIMEOUT
     } else {
@@ -194,6 +251,7 @@ pub(crate) fn build_git_auth_config(state: &AppState) -> Result<GitAuthConfig, S
 
 pub(crate) fn build_git_auth_config_for_keys(keys: &Keys) -> Result<GitAuthConfig, String> {
     let git_path = resolve_command("git").ok_or_else(|| "git was not found on PATH".to_string())?;
+    let credential_git_path = resolve_credential_git(&git_path);
     let credential_helper = resolve_command("git-credential-nostr");
     let nsec = keys
         .secret_key()
@@ -201,6 +259,7 @@ pub(crate) fn build_git_auth_config_for_keys(keys: &Keys) -> Result<GitAuthConfi
         .map_err(|error| format!("encode identity key: {error}"))?;
     Ok(GitAuthConfig {
         git_path,
+        credential_git_path,
         credential_helper,
         nsec,
         allow_file_transport: false,
@@ -316,9 +375,32 @@ fn validate_clone_url_against_relay(clone_url: &str, relay_base: &str) -> Result
 #[cfg(test)]
 mod tests {
     use super::{
-        clean_branch, clean_target_ref, git_needs_credentials, git_subcommand, validate_clone_url,
+        clean_branch, clean_target_ref, git_needs_credentials, git_subcommand,
+        git_version_supports_nostr_credentials, parse_git_version, validate_clone_url,
         validate_clone_url_against_relay,
     };
+
+    #[test]
+    fn nostr_credentials_require_git_2_46_or_newer() {
+        assert!(!git_version_supports_nostr_credentials(
+            "git version 2.39.5 (Apple Git-154)"
+        ));
+        assert!(git_version_supports_nostr_credentials("git version 2.46.0"));
+        assert!(git_version_supports_nostr_credentials("git version 2.53.0"));
+    }
+
+    #[test]
+    fn git_version_parser_accepts_platform_suffixes() {
+        assert_eq!(
+            parse_git_version("git version 2.39.5 (Apple Git-154)"),
+            Some((2, 39, 5))
+        );
+        assert_eq!(
+            parse_git_version("git version 2.53.0.windows.1"),
+            Some((2, 53, 0))
+        );
+        assert_eq!(parse_git_version("not git"), None);
+    }
 
     #[test]
     fn git_subcommand_skips_global_config_options() {
