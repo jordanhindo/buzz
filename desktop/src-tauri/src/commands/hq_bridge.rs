@@ -124,9 +124,7 @@ pub async fn hq_read(verb: String, arg: Option<String>) -> Result<Value, String>
     .await
     .map_err(|error| format!("hq_read: task join error: {error}"))?
     .map_err(|error| {
-        format!(
-            "hq_read: failed to spawn `hq` ({error}); is the HQ CLI installed and on PATH?"
-        )
+        format!("hq_read: failed to spawn `hq` ({error}); is the HQ CLI installed and on PATH?")
     })?;
 
     if !output.status.success() {
@@ -137,9 +135,8 @@ pub async fn hq_read(verb: String, arg: Option<String>) -> Result<Value, String>
     // Node prints its SQLite ExperimentalWarning to stderr, so stdout is the
     // clean JSON document.
     let stdout = String::from_utf8_lossy(&output.stdout);
-    serde_json::from_str::<Value>(stdout.trim()).map_err(|error| {
-        format!("hq_read: `hq {display}` did not return JSON: {error}")
-    })
+    serde_json::from_str::<Value>(stdout.trim())
+        .map_err(|error| format!("hq_read: `hq {display}` did not return JSON: {error}"))
 }
 
 #[cfg(test)]
