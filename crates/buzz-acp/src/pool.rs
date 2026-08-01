@@ -40,6 +40,7 @@ use crate::queue::{
     PromptProfile, PromptProfileLookup, ThreadTags,
 };
 use crate::relay::{ChannelInfo, RestClient};
+use crate::session_binding::{SessionBinding, SessionBindingStore};
 
 /// Window within which agent activity before a hard-cap death qualifies
 /// the turn as "recently active" (eligible for requeue instead of dead-letter).
@@ -107,6 +108,10 @@ pub struct SessionState {
     /// receive Buzz's system prompt at creation, so prompt construction must
     /// carry the current Buzz context in user-message sections.
     pub loaded_session_ids: HashSet<String>,
+    /// Revisions of protected dynamic bindings already consumed by this ACP
+    /// process. This prevents a persistent binding from reloading on every
+    /// message while allowing a replacement binding or process restart to load.
+    pub consumed_binding_revisions: HashSet<Uuid>,
     /// Ensures the configured existing session is consumed at most once per
     /// active state generation. Full invalidation re-arms the attachment.
     pub existing_session_consumed: bool,
@@ -144,6 +149,7 @@ impl SessionState {
         self.core_sections.clear();
         self.canvas_sections.clear();
         self.loaded_session_ids.clear();
+        self.consumed_binding_revisions.clear();
         self.existing_session_consumed = false;
     }
 
@@ -527,6 +533,8 @@ pub struct PromptContext {
     pub session_title: Option<String>,
     /// Existing native ACP session bound to one explicit Buzz channel.
     pub existing_session: Option<ExistingSessionConfig>,
+    /// Protected dynamic bindings registered by `buzz-acp attach-session`.
+    pub session_bindings: SessionBindingStore,
     pub team_instructions: Option<String>,
     pub heartbeat_prompt: Option<String>,
     /// Base prompt content, or `None` if `--no-base-prompt` was passed.
@@ -978,6 +986,37 @@ async fn load_existing_session_and_apply_model(
     Ok(resp.session_id)
 }
 
+/// Load a protected dynamic binding. Unlike the static startup attachment,
+/// this path uses the original working directory captured at registration and
+/// tracks a public revision token so the resident process consumes it once.
+async fn load_session_binding_and_apply_model(
+    agent: &mut OwnedAgent,
+    ctx: &PromptContext,
+    binding: &SessionBinding,
+) -> Result<String, AcpError> {
+    let resp = agent
+        .acp
+        .session_load_full(&binding.session_id, &binding.cwd, ctx.mcp_servers.clone())
+        .await?;
+    configure_open_session(agent, ctx, &resp.session_id, &resp.raw).await?;
+    agent
+        .state
+        .loaded_session_ids
+        .insert(resp.session_id.clone());
+    agent
+        .state
+        .consumed_binding_revisions
+        .insert(binding.revision);
+    agent.acp.observe(
+        "session_binding_loaded",
+        serde_json::json!({
+            "channelId": binding.channel_id,
+            "bindingRevision": binding.revision,
+        }),
+    );
+    Ok(resp.session_id)
+}
+
 async fn configure_open_session(
     agent: &mut OwnedAgent,
     ctx: &PromptContext,
@@ -1345,6 +1384,21 @@ fn with_canvas(prompt: Option<String>, canvas: Option<&str>) -> Option<String> {
     }
 }
 
+fn batch_contains_owner_event(
+    batch: Option<&FlushBatch>,
+    owner: Option<&nostr::PublicKey>,
+) -> bool {
+    batch
+        .zip(owner)
+        .map(|(batch, owner)| {
+            batch
+                .events
+                .iter()
+                .any(|event| &event.event.pubkey == owner)
+        })
+        .unwrap_or(false)
+}
+
 /// Return `agent` to the pool via `result_tx`, clearing any steer receiver first.
 ///
 /// Every path that returns an `OwnedAgent` to the pool via `PromptResult` goes
@@ -1595,25 +1649,71 @@ pub async fn run_prompt_task(
 
     let (session_id, is_new_session, loaded_existing_session) = match &source {
         PromptSource::Channel(cid) => {
+            let owner_triggered =
+                batch_contains_owner_event(batch.as_ref(), ctx.agent_owner_pubkey.as_ref());
+            let dynamic_binding = if owner_triggered {
+                ctx.session_bindings.binding_for_channel(*cid)
+            } else {
+                Ok(None)
+            };
+            let has_unconsumed_binding = dynamic_binding
+                .as_ref()
+                .ok()
+                .and_then(|binding| binding.as_ref())
+                .map(|binding| {
+                    !agent
+                        .state
+                        .consumed_binding_revisions
+                        .contains(&binding.revision)
+                })
+                .unwrap_or(false);
+            if has_unconsumed_binding || dynamic_binding.is_err() {
+                // A replacement binding owns the next turn. Discard any prior
+                // channel session before opening it, and fail closed if the
+                // protected store cannot be read.
+                agent.state.invalidate_channel(cid);
+            }
+
             if let Some(sid) = agent.state.sessions.get(cid) {
                 (sid.clone(), false, false)
             } else {
-                let existing = ctx
-                    .existing_session
-                    .as_ref()
-                    .filter(|existing| {
-                        existing.channel_id == *cid && !agent.state.existing_session_consumed
-                    })
-                    .cloned();
+                let dynamic_binding = match dynamic_binding {
+                    Ok(Some(binding)) if has_unconsumed_binding => Some(binding),
+                    Ok(_) => None,
+                    Err(error) => {
+                        tracing::error!(
+                            channel = %cid,
+                            "failed to read protected session binding: {error}"
+                        );
+                        let outcome = PromptOutcome::Error(AcpError::Protocol(
+                            "failed to read protected session binding".into(),
+                        ));
+                        send_prompt_result(&result_tx, &turn_id, agent, source, outcome, batch);
+                        return;
+                    }
+                };
+                let existing = if dynamic_binding.is_none() {
+                    ctx.existing_session
+                        .as_ref()
+                        .filter(|existing| {
+                            existing.channel_id == *cid && !agent.state.existing_session_consumed
+                        })
+                        .cloned()
+                } else {
+                    None
+                };
                 // The title is channel-qualified (`Agent · #channel`) so one
                 // agent in several channels doesn't produce identical session
                 // rows; `title_channel` comes from the single resolve above and
                 // is `None` for DM, unresolved, and unnamed channels.
-                let opened = match existing.as_ref() {
-                    Some(existing) => {
+                let opened = match (dynamic_binding.as_ref(), existing.as_ref()) {
+                    (Some(binding), _) => {
+                        load_session_binding_and_apply_model(&mut agent, &ctx, binding).await
+                    }
+                    (None, Some(existing)) => {
                         load_existing_session_and_apply_model(&mut agent, &ctx, existing).await
                     }
-                    None => {
+                    (None, None) => {
                         create_session_and_apply_model(
                             &mut agent,
                             &ctx,
@@ -1626,7 +1726,7 @@ pub async fn run_prompt_task(
                 };
                 match opened {
                     Ok(sid) => {
-                        let was_loaded = existing.is_some();
+                        let was_loaded = dynamic_binding.is_some() || existing.is_some();
                         if was_loaded {
                             tracing::info!(
                                 target: "pool::session",
@@ -5422,6 +5522,18 @@ mod tests {
     }
 
     #[test]
+    fn dynamic_binding_waits_for_owner_not_an_agent_or_other_author() {
+        let batch = one_event_batch(Uuid::new_v4());
+        let sender = batch.events[0].event.pubkey;
+        let other = Keys::generate().public_key();
+
+        assert!(batch_contains_owner_event(Some(&batch), Some(&sender)));
+        assert!(!batch_contains_owner_event(Some(&batch), Some(&other)));
+        assert!(!batch_contains_owner_event(Some(&batch), None));
+        assert!(!batch_contains_owner_event(None, Some(&sender)));
+    }
+
+    #[test]
     fn test_requeue_cancelled_batch_maps_control_signal_to_cancel_reason() {
         let cases = [
             (ControlSignal::Steer, Some(CancelReason::Steer)),
@@ -6462,6 +6574,7 @@ mod tests {
             system_prompt: None,
             session_title: None,
             existing_session: None,
+            session_bindings: SessionBindingStore::disabled(),
             team_instructions: None,
             heartbeat_prompt: None,
             base_prompt: None,
@@ -6592,6 +6705,109 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn registered_binding_waits_until_channel_message_then_loads_before_prompt() {
+        let channel_id = Uuid::new_v4();
+        let capture_dir =
+            std::env::temp_dir().join(format!("buzz-acp-dynamic-binding-{}", Uuid::new_v4()));
+        std::fs::create_dir_all(&capture_dir).expect("create capture directory");
+        let load_capture = capture_dir.join("load.json");
+        let prompt_capture = capture_dir.join("prompt.json");
+        let binding_home = capture_dir.join("agent-home");
+        let store = SessionBindingStore::for_agent_home(&binding_home, "agent-pubkey");
+        let binding = store
+            .register(
+                channel_id,
+                "ses_waiting".into(),
+                "/tmp/original-project".into(),
+            )
+            .expect("register waiting binding");
+
+        assert!(
+            !load_capture.exists() && !prompt_capture.exists(),
+            "registration alone must perform no ACP work"
+        );
+
+        let script = format!(
+            r#"
+                read -r _init
+                printf '%s\n' '{{"jsonrpc":"2.0","id":0,"result":{{"protocolVersion":2,"agentInfo":{{"name":"codex-acp"}},"agentCapabilities":{{"loadSession":true}}}}}}'
+                read -r LOAD
+                printf '%s' "$LOAD" > {load_capture}
+                printf '%s\n' '{{"jsonrpc":"2.0","id":1,"result":{{"models":{{"currentModelId":"gpt-5.6","availableModels":[]}}}}}}'
+                read -r PROMPT
+                printf '%s' "$PROMPT" > {prompt_capture}
+                printf '%s\n' '{{"jsonrpc":"2.0","id":2,"result":{{"stopReason":"end_turn"}}}}'
+                sleep 1
+            "#,
+            load_capture = load_capture.display(),
+            prompt_capture = prompt_capture.display(),
+        );
+        let mut acp = AcpClient::spawn("bash", &["-c".into(), script], &[], false)
+            .await
+            .expect("spawn fake ACP agent");
+        acp.initialize().await.expect("initialize fake ACP agent");
+        let agent = OwnedAgent {
+            index: 0,
+            acp,
+            state: SessionState::default(),
+            model_capabilities: None,
+            desired_model: None,
+            model_overridden: false,
+            agent_name: "codex-acp".into(),
+            goose_system_prompt_supported: None,
+            protocol_version: 2,
+        };
+        let batch = one_event_batch(channel_id);
+        let owner_pubkey = batch.events[0].event.pubkey;
+        let mut ctx = make_prompt_context_with_owner(&nostr::Keys::generate(), owner_pubkey);
+        ctx.session_bindings = store;
+        let (result_tx, mut result_rx) = tokio::sync::mpsc::unbounded_channel();
+
+        run_prompt_task(
+            agent,
+            Some(batch),
+            None,
+            Arc::new(ctx),
+            result_tx,
+            None,
+            "turn-dynamic-binding".into(),
+        )
+        .await;
+
+        let mut result = result_rx.recv().await.expect("prompt result");
+        assert!(matches!(
+            result.outcome,
+            PromptOutcome::Ok(StopReason::EndTurn)
+        ));
+        assert_eq!(
+            result.agent.state.sessions.get(&channel_id),
+            Some(&"ses_waiting".to_string())
+        );
+        assert!(result
+            .agent
+            .state
+            .consumed_binding_revisions
+            .contains(&binding.revision));
+
+        let load: serde_json::Value = serde_json::from_str(
+            &std::fs::read_to_string(&load_capture).expect("read load capture"),
+        )
+        .expect("parse load request");
+        assert_eq!(load["method"], "session/load");
+        assert_eq!(load["params"]["sessionId"], "ses_waiting");
+        assert_eq!(load["params"]["cwd"], "/tmp/original-project");
+
+        let prompt: serde_json::Value = serde_json::from_str(
+            &std::fs::read_to_string(&prompt_capture).expect("read prompt capture"),
+        )
+        .expect("parse prompt request");
+        assert_eq!(prompt["method"], "session/prompt");
+
+        result.agent.acp.shutdown().await;
+        std::fs::remove_dir_all(capture_dir).expect("remove capture directory");
+    }
+
+    #[tokio::test]
     async fn different_channel_creates_fresh_session_without_exposing_bound_id() {
         let bound_channel_id = Uuid::new_v4();
         let actual_channel_id = Uuid::new_v4();
@@ -6629,10 +6845,15 @@ mod tests {
         };
         let mut ctx = make_prompt_context_no_owner();
         ctx.cwd = "/tmp".into();
-        ctx.existing_session = Some(crate::config::ExistingSessionConfig {
-            session_id: "ses_private".into(),
-            channel_id: bound_channel_id,
-        });
+        let store = SessionBindingStore::for_agent_home(&capture_dir, "agent-pubkey");
+        store
+            .register(
+                bound_channel_id,
+                "ses_private".into(),
+                "/tmp/original-project".into(),
+            )
+            .expect("register binding for another channel");
+        ctx.session_bindings = store;
         let (result_tx, mut result_rx) = tokio::sync::mpsc::unbounded_channel();
 
         run_prompt_task(
