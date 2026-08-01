@@ -9,6 +9,7 @@ mod pool;
 mod pool_lifecycle;
 mod queue;
 mod relay;
+mod session_binding;
 mod setup_mode;
 mod usage;
 
@@ -19,7 +20,7 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use acp::{AcpClient, EnvVar, McpServer};
-use anyhow::Result;
+use anyhow::{Context, Result};
 use buzz_core::kind::{
     KIND_MEMBER_ADDED_NOTIFICATION, KIND_MEMBER_REMOVED_NOTIFICATION, KIND_STREAM_MESSAGE,
     KIND_STREAM_REMINDER, KIND_WORKFLOW_APPROVAL_REQUESTED,
@@ -30,8 +31,8 @@ use buzz_core::observer::{
 };
 use clap::Parser;
 use config::{
-    AuthAgentArgs, AuthMethodsArgs, AuthenticateArgs, Config, DedupMode, ModelsArgs,
-    MultipleEventHandling, RespondTo, SubscribeMode,
+    AttachSessionArgs, AuthAgentArgs, AuthMethodsArgs, AuthenticateArgs, Config, DedupMode,
+    ModelsArgs, MultipleEventHandling, RespondTo, SubscribeMode,
 };
 use filter::SubscriptionRule;
 use futures_util::FutureExt;
@@ -43,6 +44,7 @@ use pool::{
 use pool_lifecycle::PoolLifecycle;
 use queue::{CancelReason, EventQueue, FlushBatch, QueuedEvent, ThreadTags};
 use relay::{HarnessRelay, RelayEventPublisher};
+use session_binding::SessionBindingStore;
 use tokio::sync::{mpsc, watch};
 use tracing_subscriber::EnvFilter;
 use uuid::Uuid;
@@ -65,6 +67,9 @@ const MODELS_TIMEOUT: Duration = Duration::from_secs(10);
 /// Timeout for `buzz-acp authenticate`. Browser-based vendor auth can require
 /// human interaction, so it must not share the short probe timeout.
 const AUTHENTICATE_TIMEOUT: Duration = Duration::from_secs(10 * 60);
+
+/// Deadline for validating a native session before registering an idle binding.
+const ATTACH_SESSION_SETUP_TIMEOUT: Duration = Duration::from_secs(30);
 
 /// Publish a kind:20001 presence update event via the WebSocket connection.
 ///
@@ -1271,6 +1276,16 @@ async fn tokio_main() -> Result<()> {
         return run_authenticate(args).await;
     }
 
+    if is_subcommand("attach-session") {
+        let filtered: Vec<String> = std::env::args()
+            .enumerate()
+            .filter(|(i, _)| *i != 1)
+            .map(|(_, a)| a)
+            .collect();
+        let args = AttachSessionArgs::parse_from(&filtered);
+        return run_attach_session(args).await;
+    }
+
     tracing_subscriber::fmt()
         .with_env_filter(
             EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("buzz_acp=info")),
@@ -1525,6 +1540,9 @@ async fn tokio_main() -> Result<()> {
     }
 
     let base_prompt_content = config.base_prompt_content.take();
+    let agent_home = std::env::current_dir().unwrap_or_else(|_| std::path::PathBuf::from("/"));
+    let session_bindings =
+        SessionBindingStore::for_agent_home(&agent_home, &config.keys.public_key().to_hex());
     let ctx = Arc::new(PromptContext {
         mcp_servers: build_mcp_servers(&config),
         initial_message: config.initial_message.clone(),
@@ -1535,6 +1553,7 @@ async fn tokio_main() -> Result<()> {
         system_prompt: config.system_prompt.clone(),
         session_title: config.session_title.clone(),
         existing_session: config.existing_session.clone(),
+        session_bindings,
         team_instructions: config.team_instructions.clone(),
         base_prompt: if config.no_base_prompt {
             None
@@ -1544,10 +1563,7 @@ async fn tokio_main() -> Result<()> {
             Some(include_str!("base_prompt.md"))
         },
         heartbeat_prompt: config.heartbeat_prompt.clone(),
-        cwd: std::env::current_dir()
-            .unwrap_or_else(|_| std::path::PathBuf::from("/"))
-            .to_string_lossy()
-            .to_string(),
+        cwd: agent_home.to_string_lossy().to_string(),
         rest_client: relay.rest_client(),
         channel_info: pool::ChannelInfoResolver::new(channel_info_map, relay.rest_client()),
         context_message_limit: config.context_message_limit,
@@ -3972,6 +3988,169 @@ async fn spawn_and_init(
 async fn spawn_auth_client(agent: &AuthAgentArgs) -> Result<AcpClient, acp::AcpError> {
     let agent_args = config::normalize_agent_args(&agent.agent_command, agent.agent_args.clone());
     AcpClient::spawn(&agent.agent_command, &agent_args, &[], false).await
+}
+
+fn resolve_attach_session_id(args: &AttachSessionArgs) -> Result<String> {
+    let raw = if args.session_id_stdin {
+        use std::io::Read;
+
+        let mut input = String::new();
+        std::io::stdin()
+            .read_to_string(&mut input)
+            .map_err(|error| {
+                anyhow::anyhow!("failed to read native session ID from stdin: {error}")
+            })?;
+        input
+    } else {
+        args.session_id.clone().unwrap_or_default()
+    };
+
+    config::sanitize_existing_session_id(&raw)
+        .map_err(|error| anyhow::anyhow!("invalid native session ID: {error}"))
+}
+
+fn resolve_attach_cwd(cwd: Option<&std::path::Path>) -> Result<String> {
+    let cwd = match cwd {
+        Some(path) if path.is_absolute() => path.to_path_buf(),
+        Some(path) => std::env::current_dir()?.join(path),
+        None => std::env::current_dir()?,
+    };
+    anyhow::ensure!(
+        cwd.is_dir(),
+        "native session working directory does not exist or is not a directory"
+    );
+    Ok(cwd.to_string_lossy().to_string())
+}
+
+fn attach_agent_keys() -> Result<nostr::Keys> {
+    let mut private_key = std::env::var("BUZZ_PRIVATE_KEY")
+        .map_err(|_| anyhow::anyhow!("BUZZ_PRIVATE_KEY is required to scope the binding"))?;
+    let parsed = nostr::Keys::parse(&private_key)
+        .map_err(|error| anyhow::anyhow!("BUZZ_PRIVATE_KEY is invalid: {error}"));
+    private_key.replace_range(.., &"0".repeat(private_key.len()));
+    private_key.clear();
+    parsed
+}
+
+async fn validate_native_session(agent: &AuthAgentArgs, session_id: &str, cwd: &str) -> Result<()> {
+    let mut client = spawn_auth_client(agent)
+        .await
+        .map_err(|error| anyhow::anyhow!("failed to spawn ACP adapter: {error}"))?;
+
+    let setup = tokio::time::timeout(ATTACH_SESSION_SETUP_TIMEOUT, async {
+        client.initialize().await?;
+        if !client.load_session_supported() {
+            return Err(acp::AcpError::Protocol(
+                "adapter does not advertise ACP loadSession".into(),
+            ));
+        }
+        client.session_load_full(session_id, cwd, vec![]).await?;
+        Ok::<(), acp::AcpError>(())
+    })
+    .await;
+
+    client.shutdown().await;
+    match setup {
+        Ok(Ok(())) => Ok(()),
+        Ok(Err(error)) => Err(anyhow::anyhow!(
+            "failed to validate native session attachment: {error}"
+        )),
+        Err(_) => Err(anyhow::anyhow!(
+            "native session attachment validation timed out after {ATTACH_SESSION_SETUP_TIMEOUT:?}"
+        )),
+    }
+}
+
+/// `buzz-acp attach-session` — validate and register a native ACP session.
+///
+/// The helper intentionally sends no prompt. The resident harness consumes the
+/// protected binding only after the next accepted human event in that channel.
+async fn run_attach_session(args: AttachSessionArgs) -> Result<()> {
+    let session_id = resolve_attach_session_id(&args)?;
+    let cwd = resolve_attach_cwd(args.cwd.as_deref())?;
+    validate_native_session(&args.agent, &session_id, &cwd).await?;
+
+    let keys = attach_agent_keys()?;
+    let agent_home = std::env::current_dir().context("resolve managed agent home")?;
+    let store = SessionBindingStore::for_agent_home(&agent_home, &keys.public_key().to_hex());
+    store.register(args.channel, session_id, cwd)?;
+
+    let output = serde_json::json!({
+        "status": "attached_waiting",
+        "channel": args.channel,
+        "next_action": "send a message in the bound Buzz channel",
+    });
+    println!("{}", serde_json::to_string(&output)?);
+    Ok(())
+}
+
+#[cfg(test)]
+mod attach_session_tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn attachment_validation_loads_but_never_prompts() {
+        let capture_dir =
+            std::env::temp_dir().join(format!("buzz-acp-attach-idle-{}", Uuid::new_v4()));
+        std::fs::create_dir_all(&capture_dir).expect("create capture directory");
+        let load_capture = capture_dir.join("load.json");
+        let unexpected_capture = capture_dir.join("unexpected.json");
+        let script = format!(
+            r#"
+                read -r _init
+                printf '%s\n' '{{"jsonrpc":"2.0","id":0,"result":{{"protocolVersion":2,"agentInfo":{{"name":"codex-acp"}},"agentCapabilities":{{"loadSession":true}}}}}}'
+                read -r LOAD
+                printf '%s' "$LOAD" > {load_capture}
+                printf '%s\n' '{{"jsonrpc":"2.0","id":1,"result":{{"models":{{"currentModelId":"gpt-5.6","availableModels":[]}}}}}}'
+                if read -r EXTRA; then
+                    printf '%s' "$EXTRA" > {unexpected_capture}
+                fi
+            "#,
+            load_capture = load_capture.display(),
+            unexpected_capture = unexpected_capture.display(),
+        );
+        let agent = AuthAgentArgs {
+            agent_command: "bash".into(),
+            agent_args: vec!["-c".into(), script],
+        };
+
+        validate_native_session(&agent, "native-session", "/tmp")
+            .await
+            .expect("validate native session");
+
+        let load: serde_json::Value = serde_json::from_str(
+            &std::fs::read_to_string(&load_capture).expect("read load capture"),
+        )
+        .expect("parse load request");
+        assert_eq!(load["method"], "session/load");
+        assert_eq!(load["params"]["sessionId"], "native-session");
+        assert!(
+            !unexpected_capture.exists(),
+            "attachment validation must stop after session/load and never send a prompt"
+        );
+
+        std::fs::remove_dir_all(capture_dir).expect("remove capture directory");
+    }
+
+    #[tokio::test]
+    async fn attachment_validation_rejects_adapter_without_load_capability() {
+        let script = r#"
+            read -r _init
+            printf '%s\n' '{"jsonrpc":"2.0","id":0,"result":{"protocolVersion":2,"agentInfo":{"name":"legacy-agent"},"agentCapabilities":{}}}'
+            if read -r _unexpected; then exit 9; fi
+        "#;
+        let agent = AuthAgentArgs {
+            agent_command: "bash".into(),
+            agent_args: vec!["-c".into(), script.into()],
+        };
+
+        let error = validate_native_session(&agent, "native-session", "/tmp")
+            .await
+            .expect_err("unsupported adapter must fail closed");
+        assert!(error
+            .to_string()
+            .contains("does not advertise ACP loadSession"));
+    }
 }
 
 fn extract_auth_methods(init_result: &serde_json::Value) -> Vec<serde_json::Value> {

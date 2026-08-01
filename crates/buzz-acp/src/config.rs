@@ -231,6 +231,43 @@ pub struct AuthenticateArgs {
     pub method_id: String,
 }
 
+/// CLI args for `buzz-acp attach-session` — register an existing native ACP
+/// session for the owner's next message in one Buzz channel.
+///
+/// Registration validates the native session through ACP, persists a protected
+/// channel binding, and exits without sending a prompt. The resident harness
+/// consumes that binding when the next accepted channel event arrives.
+#[derive(Debug, Parser)]
+#[command(
+    name = "buzz-acp attach-session",
+    about = "Attach an existing native ACP session to a Buzz channel and wait",
+    group = clap::ArgGroup::new("session_source")
+        .required(true)
+        .args(["session_id", "session_id_stdin"])
+)]
+pub struct AttachSessionArgs {
+    #[command(flatten)]
+    pub agent: AuthAgentArgs,
+
+    /// Native ACP session ID. Prefer --session-id-stdin so it does not appear
+    /// in process listings or agent tool-call arguments.
+    #[arg(long, hide = true, conflicts_with = "session_id_stdin")]
+    pub session_id: Option<String>,
+
+    /// Read the native ACP session ID from standard input.
+    #[arg(long, conflicts_with = "session_id")]
+    pub session_id_stdin: bool,
+
+    /// Buzz channel UUID whose next accepted message resumes the native session.
+    #[arg(long)]
+    pub channel: Uuid,
+
+    /// Working directory presented to ACP session/load. Defaults to the
+    /// caller's current directory.
+    #[arg(long)]
+    pub cwd: Option<PathBuf>,
+}
+
 #[derive(Debug, Parser)]
 #[command(
     name = "buzz-acp",
@@ -599,7 +636,7 @@ const SESSION_TITLE_MAX_CHARS: usize = 80;
 /// an unbounded JSON-RPC field while remaining adapter-neutral.
 const EXISTING_SESSION_ID_MAX_CHARS: usize = 512;
 
-fn sanitize_existing_session_id(raw: &str) -> Result<String, ConfigError> {
+pub(crate) fn sanitize_existing_session_id(raw: &str) -> Result<String, ConfigError> {
     let session_id = raw.trim();
     if session_id.is_empty() {
         return Err(ConfigError::ConfigFile(
@@ -1506,7 +1543,7 @@ fn rule_applies_to_channel(rule: &SubscriptionRule, channel_id: Uuid) -> bool {
 mod tests {
     use super::*;
     use crate::filter::{ChannelScope, SubscriptionRule};
-    use clap::{Parser, ValueEnum};
+    use clap::{CommandFactory, Parser, ValueEnum};
 
     /// Build a minimal Config for testing without CLI parsing.
     fn test_config(mode: SubscribeMode) -> Config {
@@ -2947,6 +2984,54 @@ channels = "ALL"
 
         assert!(summary.contains("existing_session=true"));
         assert!(!summary.contains("private-session-id"));
+    }
+
+    #[test]
+    fn attach_session_cli_accepts_session_id_from_stdin_without_relay_config() {
+        let args = AttachSessionArgs::try_parse_from([
+            "buzz-acp attach-session",
+            "--session-id-stdin",
+            "--channel",
+            "20c2ab46-8d26-4e48-b5c2-fb7e0ff08830",
+            "--cwd",
+            "/tmp/original-project",
+        ])
+        .expect("agent-invoked attachment should not require relay credentials");
+
+        assert!(args.session_id_stdin);
+        assert_eq!(
+            args.channel,
+            Uuid::parse_str("20c2ab46-8d26-4e48-b5c2-fb7e0ff08830").unwrap()
+        );
+    }
+
+    #[test]
+    fn attach_session_cli_requires_exactly_one_private_session_source() {
+        let missing = AttachSessionArgs::try_parse_from([
+            "buzz-acp attach-session",
+            "--channel",
+            "20c2ab46-8d26-4e48-b5c2-fb7e0ff08830",
+        ]);
+        assert!(missing.is_err());
+
+        let both = AttachSessionArgs::try_parse_from([
+            "buzz-acp attach-session",
+            "--session-id",
+            "private-native-session",
+            "--session-id-stdin",
+            "--channel",
+            "20c2ab46-8d26-4e48-b5c2-fb7e0ff08830",
+        ]);
+        assert!(both.is_err());
+    }
+
+    #[test]
+    fn attach_session_cli_has_no_autonomous_prompt_controls() {
+        let help = AttachSessionArgs::command().render_long_help().to_string();
+        assert!(!help.contains("--prompt"));
+        assert!(!help.contains("--reply-to"));
+        assert!(!help.contains("--idle-timeout"));
+        assert!(!help.contains("--max-turn-duration"));
     }
 
     // --- max_turn_duration ceiling gate ---

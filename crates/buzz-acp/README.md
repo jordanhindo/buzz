@@ -123,7 +123,27 @@ All configuration is via environment variables (or CLI flags — every env var h
 
 ### Load an existing agent session
 
-Buzz can attach one native ACP session to one explicit channel:
+For an agent-invoked attachment, use `attach-session`. This validates the native
+session through ACP, writes a protected per-agent channel binding, and exits
+without sending a prompt. Pass the private native session ID on stdin so it
+does not appear in command arguments:
+
+```bash
+printf '%s\n' "$NATIVE_SESSION_ID" | buzz-acp attach-session \
+  --session-id-stdin \
+  --channel 00000000-0000-0000-0000-000000000000 \
+  --cwd /absolute/path/to/the/original/project
+```
+
+Successful output reports `"status":"attached_waiting"`. Registration itself
+does no work. When the owner's next accepted message arrives in the bound channel,
+the resident harness loads the native session before forwarding that message as
+the prompt. Later messages reuse the loaded session normally. The protected
+binding survives a harness restart and can be replaced by attaching another
+native session to the same channel.
+
+For a persistent harness-level binding, Buzz can instead attach one native ACP
+session to one explicit channel at process startup:
 
 ```bash
 export BUZZ_ACP_EXISTING_SESSION_ID="session-id-from-the-agent-runtime"

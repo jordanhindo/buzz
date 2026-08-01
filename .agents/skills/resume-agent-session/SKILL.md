@@ -1,64 +1,76 @@
 ---
 name: resume-agent-session
-description: Safely attach an existing native Codex, Claude, Goose, or other ACP agent session to one Buzz channel. Use when asked to resume, import, attach, or move an agent thread from a terminal or IDE into Buzz, preserve its transcript and working context, or verify that a previously attached session resumed without leaking into another channel.
+description: Safely attach an existing native Codex, Claude, Goose, or other ACP session to one Buzz channel and leave it idle until the owner's next message. Use when asked to resume, import, attach, surface, or move an agent thread from a terminal or IDE into Buzz without leaking its private session identifier or starting work autonomously.
 ---
 
 # Resume Agent Session
 
-Attach one existing native ACP session to one explicit Buzz channel. Preserve the native session as the continuity authority and use Buzz as the collaboration surface.
+Attach one native ACP session to one explicit Buzz channel. The native session remains the continuity authority; Buzz becomes the conversation surface. Attachment means **load on the owner's next accepted message**, never “continue now.”
 
 ## Preconditions
 
-1. Confirm the agent adapter advertises ACP `agentCapabilities.loadSession: true`. Treat absence as unsupported; never probe by sending `session/load` anyway.
-2. Confirm the native session exists locally without printing its transcript or identifier into a shared channel.
-3. Resolve the destination channel UUID with `buzz --format compact channels list` or `buzz --format compact channels get`.
-4. Confirm the installed `buzz-acp` supports `--existing-session-id` and `--existing-session-channel`.
-5. Use one agent subprocess. Existing-session attachment requires `BUZZ_ACP_AGENTS=1`.
+1. Confirm the native session exists locally without publishing its identifier or transcript.
+2. Resolve the destination channel UUID with `buzz channels list` or `buzz channels get`.
+3. Determine the native session's original absolute working directory from its metadata.
+4. Confirm `buzz-acp attach-session --help` is available in the installed harness.
+5. Reuse or post a short destination marker before attachment so the human has a visible place to reply.
 
-If any precondition fails, stop and report the exact blocker. Do not silently create a fresh native session and call it a resume.
+This binding is channel-scoped because Buzz ACP sessions are channel-scoped. Prefer a dedicated channel when unrelated conversations must retain separate context.
 
-## Attach
+If a precondition fails, report the exact blocker. Never create a fresh native session and call it a resume.
 
-Configure the managed agent through the owner's Buzz Desktop review surface. In the agent editor, open **Advanced → Environment variables** and add:
+## Attach and Wait
 
-```text
-BUZZ_ACP_EXISTING_SESSION_ID=<native-session-id>
-BUZZ_ACP_EXISTING_SESSION_CHANNEL=<buzz-channel-uuid>
-BUZZ_ACP_AGENTS=1
+Pipe the private session ID over stdin so it is absent from process arguments and Activity tool-call text:
+
+```bash
+printf '%s\n' "$NATIVE_SESSION_ID" | buzz-acp attach-session \
+  --session-id-stdin \
+  --channel <buzz-channel-uuid> \
+  --cwd <absolute-original-working-directory>
 ```
 
-Do not publish the session identifier in shared Buzz messages, screenshots, commit messages, or PR text. Generic configuration logs must omit it. The owner's encrypted Activity stream may carry it as the ACP session identity. The channel UUID is safe to show.
+Run this from the managed agent's Buzz Nest so the helper and resident harness resolve the same protected binding store. The helper:
 
-Ask the owner to save and restart the managed agent. Saving or restarting may terminate the current turn, so publish the handoff and direct channel link first.
+1. initializes the configured ACP adapter;
+2. requires advertised `loadSession` support;
+3. validates the native session with `session/load`;
+4. writes a mode-`0600` per-agent binding;
+5. exits with `status: attached_waiting`.
 
-## Resume in Buzz
+It does **not** call `session/prompt`. Do not send a synthetic continuation prompt after attachment. Do not post another agent-authored message into the destination merely to prove it is attached.
 
-1. Send one short continuation prompt in the bound channel after the agent restarts.
-2. Expect `buzz-acp` to call `session/load` once for that channel before sending the new Buzz event as the current prompt.
-3. Open **channel members → agent → Activity** to inspect the replayed native transcript and ACP activity.
-4. Read the agent's reply in the channel timeline. Transcript replay belongs in Activity; the continuation reply belongs in the channel.
-5. Use a direct link when the owner asked to surface the destination:
+## Surface the Conversation
+
+Give the human the destination and a direct link to the pre-existing marker:
 
 ```text
-buzz://message?channel=<channel-uuid>&id=<event-id>
+buzz://message?channel=<channel-uuid>&id=<marker-event-id>
 ```
 
-## Verify Allowed and Forbidden Paths
+The owner now replies normally. The resident harness sees the protected binding, loads the native session, supplies the current Buzz Base/system/team/memory/canvas framing, and forwards that owner message as the first continuation prompt. Agent-authored or other-author messages do not consume a waiting binding. Subsequent channel messages reuse the loaded session.
 
-Prove all of these before declaring continuity:
+Buzz does not duplicate the historical native transcript into the channel timeline. The imported continuity remains in the native ACP session; new conversation appears in Buzz.
 
-- The adapter received `session/load` with the configured session ID and absolute working directory.
-- The loaded session received the current Buzz Base, persona, team, memory, and canvas framing in prompt blocks, because ACP `session/load` has no system-prompt field.
-- The bound channel maps to the loaded session for later turns in the same process.
-- An unrelated channel creates a fresh session and its ACP traffic does not contain the bound session ID.
-- An adapter without `loadSession` fails startup before any load request is written.
-- Configuration summaries and generic logs do not disclose the session ID; any owner-only Activity exposure remains inside the existing encrypted observer boundary.
-- The real installed app shows replayed Activity and a successful channel reply after restart.
+## Verification Gate
 
-Use the project's verification skill for the installed-app and negative-path proof. Unit tests alone do not prove the desktop handoff.
+Prove all of these before declaring the attachment ready:
 
-## Detach or Keep
+- Registration emits `session/load` but no `session/prompt`.
+- The helper reports `attached_waiting` without the private session ID.
+- The protected file is not group/world accessible.
+- No agent turn begins until an accepted owner event arrives in the bound channel.
+- Agent-authored and other-author events do not consume the waiting binding.
+- That first owner event loads the native session before `session/prompt`.
+- An unrelated channel creates or reuses its own session and never sends the bound ID over ACP.
+- An adapter without `loadSession` fails before the binding is written.
+- Reattaching another native session to the same channel replaces the binding without deleting either native session.
+- The installed app and running managed harness use the verified build.
 
-Keep the three environment values when the native thread should remain the agent's restart anchor. For a one-time migration, remove `BUZZ_ACP_EXISTING_SESSION_ID` and `BUZZ_ACP_EXISTING_SESSION_CHANNEL` after continuity is verified, then restart; future Buzz channels and sessions will use the normal fresh-session path.
+Use the project's verification skill for installed-app and real-adapter proof. Unit tests alone do not prove the handoff.
 
-Never remove or overwrite the original native session file as part of attachment.
+## Privacy and Recovery
+
+Never publish the session identifier in Buzz messages, screenshots, logs, commit messages, PR text, or command arguments. The owner's encrypted Activity stream may carry it only as normal ACP session identity.
+
+The binding survives a harness restart. Re-running `attach-session` for the same channel safely replaces it. Never delete or modify the original native session file as part of attachment.
