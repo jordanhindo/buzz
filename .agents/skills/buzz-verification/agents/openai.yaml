@@ -1,0 +1,4 @@
+interface:
+  display_name: "Buzz Verification"
+  short_description: "Prove Buzz and Buzz HQ work end to end"
+  default_prompt: "Use $buzz-verification to verify this Buzz or Buzz HQ change against the real app, transport, authority, and release contracts."
