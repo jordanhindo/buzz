@@ -429,6 +429,24 @@ pub struct CliArgs {
     #[arg(long, env = "BUZZ_ACP_SESSION_TITLE")]
     pub session_title: Option<String>,
 
+    /// Native ACP session to load instead of creating the first session for
+    /// `--existing-session-channel`.
+    #[arg(
+        long,
+        env = "BUZZ_ACP_EXISTING_SESSION_ID",
+        hide_env_values = true,
+        requires = "existing_session_channel"
+    )]
+    pub existing_session_id: Option<String>,
+
+    /// Buzz channel that owns `--existing-session-id`.
+    #[arg(
+        long,
+        env = "BUZZ_ACP_EXISTING_SESSION_CHANNEL",
+        requires = "existing_session_id"
+    )]
+    pub existing_session_channel: Option<Uuid>,
+
     /// Permission mode for agents that support `session/set_config_option`
     /// with `configId: "mode"` (e.g. `claude-agent-acp`).
     ///
@@ -531,6 +549,8 @@ pub struct Config {
     /// Sanitized session title, sent as `_meta.sessionTitle` on `session/new`.
     /// `None` when unset or when the configured value sanitized to empty.
     pub session_title: Option<String>,
+    /// Existing native ACP session bound to one explicit Buzz channel.
+    pub existing_session: Option<ExistingSessionConfig>,
     /// Permission mode to apply after session creation. `Default` = skip.
     pub permission_mode: PermissionMode,
     /// Inbound author gate mode.
@@ -563,8 +583,41 @@ pub struct Config {
     pub base_prompt_content: Option<String>,
 }
 
+/// Existing native ACP session and the Buzz channel allowed to consume it.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ExistingSessionConfig {
+    /// Native session identifier understood by the configured ACP adapter.
+    pub session_id: String,
+    /// Only Buzz channel allowed to consume the native session.
+    pub channel_id: Uuid,
+}
+
 /// Maximum length, in characters, of a session title sent to the adapter.
 const SESSION_TITLE_MAX_CHARS: usize = 80;
+
+/// Generous upper bound that prevents untrusted env/config input from becoming
+/// an unbounded JSON-RPC field while remaining adapter-neutral.
+const EXISTING_SESSION_ID_MAX_CHARS: usize = 512;
+
+fn sanitize_existing_session_id(raw: &str) -> Result<String, ConfigError> {
+    let session_id = raw.trim();
+    if session_id.is_empty() {
+        return Err(ConfigError::ConfigFile(
+            "existing session id must not be empty".into(),
+        ));
+    }
+    if session_id.chars().any(char::is_control) {
+        return Err(ConfigError::ConfigFile(
+            "existing session id must not contain control characters".into(),
+        ));
+    }
+    if session_id.chars().count() > EXISTING_SESSION_ID_MAX_CHARS {
+        return Err(ConfigError::ConfigFile(format!(
+            "existing session id exceeds {EXISTING_SESSION_ID_MAX_CHARS} characters"
+        )));
+    }
+    Ok(session_id.to_owned())
+}
 
 /// Normalize a configured session title into something safe to hand an adapter.
 ///
@@ -1053,6 +1106,30 @@ impl Config {
 
         validate_multiple_event_handling(args.multiple_event_handling, args.dedup)?;
 
+        let existing_session = match (
+            args.existing_session_id.as_deref(),
+            args.existing_session_channel,
+        ) {
+            (Some(session_id), Some(channel_id)) => {
+                if args.agents != 1 {
+                    return Err(ConfigError::ConfigFile(
+                        "loading an existing session requires --agents=1".into(),
+                    ));
+                }
+                Some(ExistingSessionConfig {
+                    session_id: sanitize_existing_session_id(session_id)?,
+                    channel_id,
+                })
+            }
+            (None, None) => None,
+            _ => {
+                return Err(ConfigError::ConfigFile(
+                    "--existing-session-id and --existing-session-channel must be set together"
+                        .into(),
+                ));
+            }
+        };
+
         let config = Config {
             keys,
             relay_url: args.relay_url,
@@ -1091,6 +1168,7 @@ impl Config {
                 .session_title
                 .as_deref()
                 .and_then(sanitize_session_title),
+            existing_session,
             permission_mode: args.permission_mode,
             respond_to: args.respond_to,
             respond_to_allowlist,
@@ -1123,7 +1201,7 @@ impl Config {
             format!(" allowed_respond_to=[{}]", modes.join(","))
         };
         format!(
-            "relay={} pubkey={} agent_cmd={} {} mcp_cmd={} idle_timeout={}s max_turn={}s agents={} heartbeat={}s subscribe={:?} dedup={:?} meh={:?} ignore_self={} context_limit={} max_turns_per_session={} presence={} typing={} memory={} model={} permission_mode={} {}{}",
+            "relay={} pubkey={} agent_cmd={} {} mcp_cmd={} idle_timeout={}s max_turn={}s agents={} heartbeat={}s subscribe={:?} dedup={:?} meh={:?} ignore_self={} context_limit={} max_turns_per_session={} presence={} typing={} memory={} model={} existing_session={} permission_mode={} {}{}",
             self.relay_url,
             self.keys.public_key().to_hex(),
             self.agent_command,
@@ -1143,6 +1221,7 @@ impl Config {
             self.typing_enabled,
             self.memory_enabled,
             self.model.as_deref().unwrap_or("(agent default)"),
+            self.existing_session.is_some(),
             self.permission_mode,
             respond_to_detail,
             allowed_respond_to_detail,
@@ -1461,6 +1540,7 @@ mod tests {
             memory_enabled: true,
             model: None,
             session_title: None,
+            existing_session: None,
             permission_mode: PermissionMode::BypassPermissions,
             respond_to: RespondTo::Anyone,
             respond_to_allowlist: HashSet::new(),
@@ -2785,6 +2865,88 @@ channels = "ALL"
             result.is_ok(),
             "from_args should accept any mode when allowed list is unset: {result:?}"
         );
+    }
+
+    #[test]
+    fn existing_session_config_binds_session_to_explicit_channel() {
+        let channel_id = Uuid::new_v4();
+        let args = CliArgs::try_parse_from([
+            "buzz-acp",
+            "--private-key",
+            TEST_PRIVATE_KEY,
+            "--existing-session-id",
+            "ses_existing",
+            "--existing-session-channel",
+            &channel_id.to_string(),
+            "--agents",
+            "1",
+        ])
+        .expect("clap should parse the paired existing-session flags");
+
+        let config = Config::from_args(args).expect("paired existing-session config is valid");
+        let existing = config
+            .existing_session
+            .as_ref()
+            .expect("existing session should be resolved");
+        assert_eq!(existing.session_id, "ses_existing");
+        assert_eq!(existing.channel_id, channel_id);
+    }
+
+    #[test]
+    fn existing_session_id_requires_explicit_channel() {
+        let error = CliArgs::try_parse_from([
+            "buzz-acp",
+            "--private-key",
+            TEST_PRIVATE_KEY,
+            "--existing-session-id",
+            "ses_existing",
+            "--agents",
+            "1",
+        ])
+        .expect_err("an unbound existing session must be rejected");
+
+        assert!(error.to_string().contains("existing-session-channel"));
+    }
+
+    #[test]
+    fn existing_session_rejects_parallel_agent_pool() {
+        let channel_id = Uuid::new_v4();
+        let args = CliArgs::try_parse_from([
+            "buzz-acp",
+            "--private-key",
+            TEST_PRIVATE_KEY,
+            "--existing-session-id",
+            "ses_existing",
+            "--existing-session-channel",
+            &channel_id.to_string(),
+            "--agents",
+            "2",
+        ])
+        .expect("clap should parse before semantic validation");
+
+        let error = Config::from_args(args).expect_err("parallel load must fail closed");
+        assert!(error.to_string().contains("requires --agents=1"));
+    }
+
+    #[test]
+    fn config_summary_never_exposes_existing_session_id() {
+        let channel_id = Uuid::new_v4();
+        let args = CliArgs::try_parse_from([
+            "buzz-acp",
+            "--private-key",
+            TEST_PRIVATE_KEY,
+            "--existing-session-id",
+            "private-session-id",
+            "--existing-session-channel",
+            &channel_id.to_string(),
+            "--agents",
+            "1",
+        ])
+        .expect("clap should parse");
+        let summary = Config::from_args(args).expect("valid config").summary();
+
+        assert!(summary.contains("existing_session=true"));
+        assert!(!summary.contains("private-session-id"));
     }
 
     // --- max_turn_duration ceiling gate ---

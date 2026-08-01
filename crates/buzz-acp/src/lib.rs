@@ -1534,6 +1534,7 @@ async fn tokio_main() -> Result<()> {
         dedup_mode: config.dedup_mode,
         system_prompt: config.system_prompt.clone(),
         session_title: config.session_title.clone(),
+        existing_session: config.existing_session.clone(),
         team_instructions: config.team_instructions.clone(),
         base_prompt: if config.no_base_prompt {
             None
@@ -1760,10 +1761,20 @@ async fn tokio_main() -> Result<()> {
                 let args = config.agent_args.clone();
                 let env = config.persona_env_vars.clone();
                 let has_codex = config.has_generated_codex_config;
+                let requires_load_session = config.existing_session.is_some();
                 let observer = observer.clone();
                 let guard = RespawnGuard::new(idx, respawn_tx.clone());
                 respawn_tasks.spawn(async move {
-                    let result = spawn_and_init(&cmd, &args, &env, has_codex, idx, observer).await;
+                    let result = spawn_and_init(
+                        &cmd,
+                        &args,
+                        &env,
+                        has_codex,
+                        requires_load_session,
+                        idx,
+                        observer,
+                    )
+                    .await;
                     guard.send(result);
                 });
             }
@@ -3508,12 +3519,22 @@ fn recover_panicked_agent(
     let args = config.agent_args.clone();
     let env = config.persona_env_vars.clone();
     let has_codex = config.has_generated_codex_config;
+    let requires_load_session = config.existing_session.is_some();
     let guard = RespawnGuard::new(i, respawn_tx.clone());
     respawn_tasks.spawn(async move {
         if !delay.is_zero() {
             tokio::time::sleep(delay).await;
         }
-        let result = spawn_and_init(&cmd, &args, &env, has_codex, i, observer).await;
+        let result = spawn_and_init(
+            &cmd,
+            &args,
+            &env,
+            has_codex,
+            requires_load_session,
+            i,
+            observer,
+        )
+        .await;
         guard.send(result);
     });
 }
@@ -3702,6 +3723,7 @@ fn spawn_respawn_task(
     let args = config.agent_args.clone();
     let env = config.persona_env_vars.clone();
     let has_codex = config.has_generated_codex_config;
+    let requires_load_session = config.existing_session.is_some();
     let guard = RespawnGuard::new(index, respawn_tx.clone());
     respawn_tasks.spawn(async move {
         // Shutdown old agent (reap child, prevent zombie).
@@ -3713,7 +3735,16 @@ fn spawn_respawn_task(
             tokio::time::sleep(delay).await;
         }
 
-        let result = spawn_and_init(&cmd, &args, &env, has_codex, index, observer).await;
+        let result = spawn_and_init(
+            &cmd,
+            &args,
+            &env,
+            has_codex,
+            requires_load_session,
+            index,
+            observer,
+        )
+        .await;
         guard.send(result);
     });
 
@@ -3757,6 +3788,7 @@ struct PoolStartup {
     args: Vec<String>,
     extra_env: Vec<(String, String)>,
     has_generated_codex_config: bool,
+    requires_load_session: bool,
     model: Option<String>,
     observer: Option<observer::ObserverHandle>,
 }
@@ -3769,6 +3801,7 @@ impl PoolStartup {
             args: config.agent_args.clone(),
             extra_env: config.persona_env_vars.clone(),
             has_generated_codex_config: config.has_generated_codex_config,
+            requires_load_session: config.existing_session.is_some(),
             model: config.model.clone(),
             observer,
         }
@@ -3808,6 +3841,15 @@ async fn initialize_agent_pool(
                 };
                 match initialize_result {
                     Ok(Ok(init_result)) => {
+                        if startup.requires_load_session && !acp.load_session_supported() {
+                            tracing::error!(
+                                agent = i,
+                                "configured existing session requires an adapter that advertises ACP loadSession"
+                            );
+                            acp.shutdown().await;
+                            agent_slots.push(None);
+                            continue;
+                        }
                         tracing::info!(agent = i, "agent initialized: {init_result}");
                         let protocol_version =
                             init_result["protocolVersion"].as_u64().unwrap_or(1) as u32;
@@ -3888,6 +3930,7 @@ async fn spawn_and_init(
     args: &[String],
     extra_env: &[(String, String)],
     has_generated_codex_config: bool,
+    requires_load_session: bool,
     agent_index: usize,
     observer: Option<observer::ObserverHandle>,
 ) -> Result<(AcpClient, u32, String)> {
@@ -3898,6 +3941,12 @@ async fn spawn_and_init(
 
     match acp.initialize().await {
         Ok(init_result) => {
+            if requires_load_session && !acp.load_session_supported() {
+                acp.shutdown().await;
+                return Err(anyhow::anyhow!(
+                    "configured existing session requires an adapter that advertises ACP loadSession"
+                ));
+            }
             tracing::info!("agent initialized: {init_result}");
             let protocol_version = init_result["protocolVersion"].as_u64().unwrap_or(1) as u32;
             acp.observe(
@@ -4231,6 +4280,40 @@ fn build_mcp_servers(config: &Config) -> Vec<McpServer> {
             env
         },
     }]
+}
+
+#[cfg(test)]
+mod existing_session_startup_tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn startup_rejects_adapter_without_load_session_capability() {
+        let script = r#"
+            read -r _init
+            printf '%s\n' '{"jsonrpc":"2.0","id":0,"result":{"protocolVersion":2,"agentCapabilities":{}}}'
+            sleep 1
+        "#;
+
+        let result = spawn_and_init(
+            "bash",
+            &["-c".into(), script.into()],
+            &[],
+            false,
+            true,
+            0,
+            None,
+        )
+        .await;
+        let error = match result {
+            Err(error) => error,
+            Ok((mut acp, _, _)) => {
+                acp.shutdown().await;
+                panic!("startup must reject an adapter without loadSession")
+            }
+        };
+
+        assert!(error.to_string().contains("advertises ACP loadSession"));
+    }
 }
 
 #[cfg(test)]
@@ -5024,6 +5107,7 @@ mod build_mcp_servers_tests {
             memory_enabled: false,
             model: None,
             session_title: None,
+            existing_session: None,
             permission_mode: config::PermissionMode::BypassPermissions,
             respond_to: config::RespondTo::Anyone,
             respond_to_allowlist: std::collections::HashSet::new(),
@@ -5245,6 +5329,7 @@ mod error_outcome_emission_tests {
             memory_enabled: false,
             model: None,
             session_title: None,
+            existing_session: None,
             permission_mode: config::PermissionMode::BypassPermissions,
             respond_to: config::RespondTo::Anyone,
             respond_to_allowlist: HashSet::new(),
