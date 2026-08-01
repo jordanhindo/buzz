@@ -113,11 +113,31 @@ All configuration is via environment variables (or CLI flags — every env var h
 | `BUZZ_ACP_MCP_COMMAND` | no | `""` (empty) | Path to an optional MCP server binary to provide to the agent subprocess. |
 | `BUZZ_ACP_IDLE_TIMEOUT` | no | `620` | Idle timeout: max seconds of silence before cancelling a turn. Resets on any agent stdout activity. |
 | `BUZZ_ACP_MAX_TURN_DURATION` | no | `7200` | Absolute wall-clock cap per turn (safety valve). |
+| `BUZZ_ACP_EXISTING_SESSION_ID` | no | — | Native ACP session ID to load once for the explicitly bound channel. Requires `BUZZ_ACP_EXISTING_SESSION_CHANNEL` and a single agent subprocess. |
+| `BUZZ_ACP_EXISTING_SESSION_CHANNEL` | no | — | Buzz channel UUID allowed to consume `BUZZ_ACP_EXISTING_SESSION_ID`. |
 | `BUZZ_API_TOKEN` | no | — | API token (required if relay enforces token auth). |
 
 **Note:** `BUZZ_ACP_AGENT_ARGS` splits on commas. For args with values, use: `-c,key="value"`.
 
 **Legacy env vars:** `BUZZ_ACP_PRIVATE_KEY`, `BUZZ_ACP_API_TOKEN`, and `BUZZ_ACP_TURN_TIMEOUT` (replaced by `BUZZ_ACP_IDLE_TIMEOUT`) are still accepted as fallbacks.
+
+### Load an existing agent session
+
+Buzz can attach one native ACP session to one explicit channel:
+
+```bash
+export BUZZ_ACP_EXISTING_SESSION_ID="session-id-from-the-agent-runtime"
+export BUZZ_ACP_EXISTING_SESSION_CHANNEL="00000000-0000-0000-0000-000000000000"
+export BUZZ_ACP_AGENTS=1
+```
+
+The adapter must advertise `agentCapabilities.loadSession: true`; Buzz refuses
+startup instead of silently creating a replacement session when that capability
+is absent. The configured session is loaded only for the bound channel. Other
+channels continue to create fresh sessions, and the bound session ID is never
+sent on their ACP requests. Because standard ACP `session/load` has no system
+prompt field, Buzz carries its current Base, persona, team, memory, and canvas
+sections in user-message prompt blocks for the loaded session.
 
 ### Parallel Agents & Heartbeat
 

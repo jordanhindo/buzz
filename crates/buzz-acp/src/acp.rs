@@ -4,7 +4,7 @@
 //! # Lifecycle
 //! 1. [`AcpClient::spawn`] — launch agent binary as subprocess
 //! 2. [`AcpClient::initialize`] — protocol version negotiation
-//! 3. [`AcpClient::session_new`] — create session with MCP server config
+//! 3. [`AcpClient::session_new`] or [`AcpClient::session_load_full`] — open a session
 //! 4. [`AcpClient::session_prompt_with_idle_timeout`] — send prompt with idle/hard deadline, return stop reason
 //! 5. [`AcpClient::session_cancel`] / [`AcpClient::cancel_with_cleanup`] — cancel in-flight turn
 
@@ -198,6 +198,10 @@ pub struct AcpClient {
     /// a JSON-RPC *success*, not `-32601` — which the main loop would read as
     /// a delivered steer and drop the user's message from the queue.
     steering_supported: bool,
+    /// Whether the agent advertised the standard ACP `loadSession` capability.
+    /// This is the only authority for sending `session/load`; callers must not
+    /// probe unsupported adapters by emitting the request optimistically.
+    load_session_supported: bool,
     /// Per-turn channel for receiving goose-native non-cancelling steer
     /// requests from the main loop. Installed by
     /// [`install_steer_rx`](Self::install_steer_rx) at dispatch and
@@ -548,6 +552,7 @@ impl AcpClient {
             observer_context: ObserverContext::default(),
             active_run_id: None,
             steering_supported: false,
+            load_session_supported: false,
             steer_rx: None,
             goose_usage: UsageTracker::default(),
         })
@@ -572,6 +577,11 @@ impl AcpClient {
     /// Return the pool slot index for this agent process.
     pub(crate) fn observer_agent_index(&self) -> Option<usize> {
         self.observer_agent_index
+    }
+
+    /// Whether the initialized adapter supports standard ACP session loading.
+    pub(crate) fn load_session_supported(&self) -> bool {
+        self.load_session_supported
     }
 
     /// Emit a semantic event to the local observer feed, if enabled.
@@ -602,6 +612,10 @@ impl AcpClient {
         let result = self.send_request("initialize", params).await?;
         self.steering_supported = result
             .pointer("/_meta/steering/supported")
+            .and_then(|v| v.as_bool())
+            .unwrap_or(false);
+        self.load_session_supported = result
+            .pointer("/agentCapabilities/loadSession")
             .and_then(|v| v.as_bool())
             .unwrap_or(false);
         tracing::debug!(target: "acp::init", "initialize response: {result}");
@@ -670,6 +684,42 @@ impl AcpClient {
             .session_new_full(cwd, mcp_servers, system_prompt, session_title)
             .await?
             .session_id)
+    }
+
+    /// Send standard ACP `session/load` for an existing native agent session.
+    ///
+    /// The agent must have advertised `agentCapabilities.loadSession: true`
+    /// during [`initialize`](Self::initialize); otherwise this fails without
+    /// writing a request. `cwd` must be absolute. ACP does not accept a system
+    /// prompt or title on this method, so callers must preserve any harness
+    /// prompt policy outside the load request.
+    pub async fn session_load_full(
+        &mut self,
+        session_id: &str,
+        cwd: &str,
+        mcp_servers: Vec<McpServer>,
+    ) -> Result<SessionLoadResponse, AcpError> {
+        if !self.load_session_supported {
+            return Err(AcpError::Protocol(
+                "agent does not advertise ACP session/load support".into(),
+            ));
+        }
+
+        let result = self
+            .send_request(
+                "session/load",
+                serde_json::json!({
+                    "sessionId": session_id,
+                    "cwd": cwd,
+                    "mcpServers": mcp_servers,
+                }),
+            )
+            .await?;
+        tracing::info!(target: "acp::session", "existing session loaded");
+        Ok(SessionLoadResponse {
+            session_id: session_id.to_owned(),
+            raw: result,
+        })
     }
 
     /// Send Goose's custom system-prompt request after `session/new`.
@@ -2038,6 +2088,18 @@ pub struct SessionNewResponse {
     pub raw: serde_json::Value,
 }
 
+/// Full `session/load` response plus the caller-supplied session ID.
+///
+/// ACP load responses do not repeat `sessionId`, so Buzz carries the requested
+/// identifier alongside the raw result for the same downstream handling used
+/// by newly created sessions.
+pub struct SessionLoadResponse {
+    /// The existing session identifier supplied in the load request.
+    pub session_id: String,
+    /// The full `result` value from the JSON-RPC response.
+    pub raw: serde_json::Value,
+}
+
 /// How to switch to a particular model on a session.
 #[derive(Debug, Clone, PartialEq, serde::Serialize)]
 #[serde(tag = "type")]
@@ -3281,6 +3343,74 @@ mod tests {
             received["params"]["systemPrompt"].as_str(),
             Some("Custom system prompt"),
             "systemPrompt should be included in params when Some"
+        );
+    }
+
+    #[tokio::test]
+    async fn session_load_full_sends_existing_session_request_when_supported() {
+        let script = r#"
+            read -t 2 _init
+            echo '{"jsonrpc":"2.0","id":0,"result":{"protocolVersion":2,"agentCapabilities":{"loadSession":true}}}'
+            read -t 2 REQ
+            echo '{"jsonrpc":"2.0","id":1,"result":{"models":{"currentModelId":"gpt-5.6","availableModels":[]},"_receivedRequest":'"$REQ"'}}'
+            sleep 1
+        "#;
+        let mut client = spawn_script(script).await;
+        client
+            .initialize()
+            .await
+            .expect("initialize should succeed");
+
+        let resp = client
+            .session_load_full("ses_existing", "/tmp", vec![])
+            .await
+            .expect("session_load_full should succeed");
+
+        assert_eq!(resp.session_id, "ses_existing");
+        let received = &resp.raw["_receivedRequest"];
+        assert_eq!(received["method"], "session/load");
+        assert_eq!(received["params"]["sessionId"], "ses_existing");
+        assert_eq!(received["params"]["cwd"], "/tmp");
+        assert_eq!(received["params"]["mcpServers"], serde_json::json!([]));
+        assert!(received["params"].get("systemPrompt").is_none());
+    }
+
+    #[tokio::test]
+    async fn session_load_full_writes_nothing_when_capability_is_absent() {
+        let capture = std::env::temp_dir().join(format!(
+            "buzz-acp-unsupported-load-{}.json",
+            uuid::Uuid::new_v4()
+        ));
+        let script = format!(
+            r#"
+                read -t 2 _init
+                echo '{{"jsonrpc":"2.0","id":0,"result":{{"protocolVersion":2,"agentCapabilities":{{}}}}}}'
+                if read -t 1 REQ; then printf '%s' "$REQ" > {capture}; fi
+                sleep 1
+            "#,
+            capture = capture.display()
+        );
+        let mut client = spawn_script(&script).await;
+        client
+            .initialize()
+            .await
+            .expect("initialize should succeed");
+
+        let error = match client
+            .session_load_full("ses_existing", "/tmp", vec![])
+            .await
+        {
+            Err(error) => error,
+            Ok(_) => panic!("unsupported adapters must fail closed"),
+        };
+
+        assert!(error
+            .to_string()
+            .contains("does not advertise ACP session/load support"));
+        tokio::time::sleep(std::time::Duration::from_millis(1100)).await;
+        assert!(
+            !capture.exists(),
+            "unsupported adapters must receive no session/load bytes"
         );
     }
 

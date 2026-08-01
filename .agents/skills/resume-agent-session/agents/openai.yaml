@@ -1,0 +1,4 @@
+interface:
+  display_name: "Resume Agent Session"
+  short_description: "Attach a native agent session to Buzz"
+  default_prompt: "Use $resume-agent-session to attach an existing native agent session to a Buzz channel safely."

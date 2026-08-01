@@ -33,7 +33,7 @@ use crate::acp::{
     extract_model_config_options, extract_model_state, model_in_catalog,
     resolve_model_switch_method, AcpClient, AcpError, McpServer, ModelSwitchMethod, StopReason,
 };
-use crate::config::{compose_session_title, DedupMode, PermissionMode};
+use crate::config::{compose_session_title, DedupMode, ExistingSessionConfig, PermissionMode};
 use crate::observer;
 use crate::queue::{
     CancelReason, ContextMessage, ConversationContext, FlushBatch, PromptChannelInfo,
@@ -68,14 +68,14 @@ pub struct TaskMeta {
     pub steer_tx: Option<tokio::sync::mpsc::Sender<SteerRequest>>,
 }
 
-/// Agent-level model capabilities. Populated on first session creation.
+/// Agent-level model capabilities. Populated on the first session open.
 /// The catalog is the same across all sessions for a given agent process.
 /// Fields are read by the desktop's `get_agent_models` Tauri command (Phase 3).
 #[allow(dead_code)] // Scaffolding for desktop integration — fields read via serde.
 pub struct AgentModelCapabilities {
-    /// Stable: configOptions with category "model" from session/new.
+    /// Stable: configOptions with category "model" from the open response.
     pub config_options_raw: Vec<serde_json::Value>,
-    /// Unstable: SessionModelState from session/new.
+    /// Unstable: SessionModelState from the open response.
     pub available_models_raw: Option<serde_json::Value>,
 }
 
@@ -103,6 +103,13 @@ pub struct SessionState {
     /// fetch fails — all fail open. Cleared on session invalidation alongside
     /// `core_sections` so the next session picks up any canvas change.
     pub canvas_sections: HashMap<Uuid, String>,
+    /// Session IDs opened through `session/load`. These sessions did not
+    /// receive Buzz's system prompt at creation, so prompt construction must
+    /// carry the current Buzz context in user-message sections.
+    pub loaded_session_ids: HashSet<String>,
+    /// Ensures the configured existing session is consumed at most once per
+    /// active state generation. Full invalidation re-arms the attachment.
+    pub existing_session_consumed: bool,
 }
 
 impl SessionState {
@@ -136,6 +143,8 @@ impl SessionState {
         self.heartbeat_turn_count = 0;
         self.core_sections.clear();
         self.canvas_sections.clear();
+        self.loaded_session_ids.clear();
+        self.existing_session_consumed = false;
     }
 
     #[cfg(test)]
@@ -152,9 +161,9 @@ pub struct OwnedAgent {
     pub index: usize,
     pub acp: AcpClient,
     pub state: SessionState,
-    /// Model catalog from first session/new. None until first session created.
+    /// Model catalog from the first session open. None until a session opens.
     pub model_capabilities: Option<AgentModelCapabilities>,
-    /// Desired model ID (from `Config.model`). Applied after every `session_new_full()`.
+    /// Desired model ID (from `Config.model`). Applied after every session open.
     pub desired_model: Option<String>,
     /// Whether `desired_model` was set by a live `SwitchModel` control signal
     /// (as opposed to being derived from config/persona at spawn). Used by the
@@ -202,6 +211,10 @@ impl OwnedAgent {
             &self.agent_name,
             self.goose_system_prompt_supported,
         )
+    }
+
+    fn session_has_system_prompt_support(&self, session_id: &str) -> bool {
+        self.has_system_prompt_support() && !self.state.loaded_session_ids.contains(session_id)
     }
 }
 
@@ -512,6 +525,8 @@ pub struct PromptContext {
     /// Sanitized title for each new ACP session, sent as `_meta.sessionTitle`
     /// on `session/new`. Never part of the prompt.
     pub session_title: Option<String>,
+    /// Existing native ACP session bound to one explicit Buzz channel.
+    pub existing_session: Option<ExistingSessionConfig>,
     pub team_instructions: Option<String>,
     pub heartbeat_prompt: Option<String>,
     /// Base prompt content, or `None` if `--no-base-prompt` was passed.
@@ -933,21 +948,57 @@ async fn create_session_and_apply_model(
         }
     }
 
-    // Populate model capabilities on first session creation.
+    configure_open_session(agent, ctx, &resp.session_id, &resp.raw).await?;
+    Ok(resp.session_id)
+}
+
+/// Load the configured existing session and apply the same model, permission,
+/// and desktop-config handling used for newly created sessions.
+async fn load_existing_session_and_apply_model(
+    agent: &mut OwnedAgent,
+    ctx: &PromptContext,
+    existing: &ExistingSessionConfig,
+) -> Result<String, AcpError> {
+    let resp = agent
+        .acp
+        .session_load_full(&existing.session_id, &ctx.cwd, ctx.mcp_servers.clone())
+        .await?;
+    configure_open_session(agent, ctx, &resp.session_id, &resp.raw).await?;
+    agent
+        .state
+        .loaded_session_ids
+        .insert(resp.session_id.clone());
+    agent.state.existing_session_consumed = true;
+    agent.acp.observe(
+        "existing_session_loaded",
+        serde_json::json!({
+            "channelId": existing.channel_id,
+        }),
+    );
+    Ok(resp.session_id)
+}
+
+async fn configure_open_session(
+    agent: &mut OwnedAgent,
+    ctx: &PromptContext,
+    session_id: &str,
+    response: &serde_json::Value,
+) -> Result<(), AcpError> {
+    // Populate model capabilities on first session open.
     if agent.model_capabilities.is_none() {
         agent.model_capabilities = Some(AgentModelCapabilities {
-            config_options_raw: extract_model_config_options(&resp.raw),
-            available_models_raw: extract_model_state(&resp.raw),
+            config_options_raw: extract_model_config_options(response),
+            available_models_raw: extract_model_state(response),
         });
     }
 
-    // Apply desired_model if set, matching against the fresh session/new response.
+    // Apply desired_model if set, matching against the fresh open response.
     // Track whether the switch succeeded so session_config_captured reflects
     // the post-switch state (not the pre-switch desired state).
     let switch_succeeded = if let Some(ref desired) = agent.desired_model {
-        match resolve_model_switch_method(&resp.raw, desired) {
+        match resolve_model_switch_method(response, desired) {
             Some(method) => {
-                apply_model_switch(&mut agent.acp, &resp.session_id, desired, &method).await?;
+                apply_model_switch(&mut agent.acp, session_id, desired, &method).await?;
                 true
             }
             None => {
@@ -982,9 +1033,9 @@ async fn create_session_and_apply_model(
     agent.acp.observe(
         "session_config_captured",
         serde_json::json!({
-            "configOptions": resp.raw.get("configOptions").cloned().unwrap_or(serde_json::Value::Null),
-            "modes": resp.raw.get("modes").cloned().unwrap_or(serde_json::Value::Null),
-            "models": resp.raw.get("models").cloned().unwrap_or(serde_json::Value::Null),
+            "configOptions": response.get("configOptions").cloned().unwrap_or(serde_json::Value::Null),
+            "modes": response.get("modes").cloned().unwrap_or(serde_json::Value::Null),
+            "models": response.get("models").cloned().unwrap_or(serde_json::Value::Null),
             "modelOverridden": agent.model_overridden && switch_succeeded,
             // Pair identity for the desktop session-config cache, which is
             // keyed by (agent, relay) like the lifecycle frames.
@@ -993,16 +1044,16 @@ async fn create_session_and_apply_model(
     );
 
     // Apply permission mode if not the agent's built-in default AND the agent
-    // advertises the requested mode in session/new. Agents that don't support
+    // advertises the requested mode in its open response. Agents that don't support
     // the mode (e.g., goose crashes on unrecognized set_config_option values)
     // are safely skipped — the harness auto-approves via handle_permission_request.
     if !ctx.permission_mode.is_default()
-        && agent_supports_mode(&resp.raw, ctx.permission_mode.as_wire_str())
+        && agent_supports_mode(response, ctx.permission_mode.as_wire_str())
     {
-        apply_permission_mode(&mut agent.acp, &resp.session_id, &ctx.permission_mode).await?;
+        apply_permission_mode(&mut agent.acp, session_id, &ctx.permission_mode).await?;
     }
 
-    Ok(resp.session_id)
+    Ok(())
 }
 
 /// Send the appropriate ACP model-switch request with a timeout.
@@ -1542,35 +1593,58 @@ pub async fn run_prompt_task(
         PromptSource::Heartbeat => None,
     };
 
-    let (session_id, is_new_session) = match &source {
+    let (session_id, is_new_session, loaded_existing_session) = match &source {
         PromptSource::Channel(cid) => {
             if let Some(sid) = agent.state.sessions.get(cid) {
-                (sid.clone(), false)
+                (sid.clone(), false, false)
             } else {
+                let existing = ctx
+                    .existing_session
+                    .as_ref()
+                    .filter(|existing| {
+                        existing.channel_id == *cid && !agent.state.existing_session_consumed
+                    })
+                    .cloned();
                 // The title is channel-qualified (`Agent · #channel`) so one
                 // agent in several channels doesn't produce identical session
                 // rows; `title_channel` comes from the single resolve above and
                 // is `None` for DM, unresolved, and unnamed channels.
-                match create_session_and_apply_model(
-                    &mut agent,
-                    &ctx,
-                    agent_core.as_deref(),
-                    agent_canvas.as_deref(),
-                    title_channel.as_deref(),
-                )
-                .await
-                {
+                let opened = match existing.as_ref() {
+                    Some(existing) => {
+                        load_existing_session_and_apply_model(&mut agent, &ctx, existing).await
+                    }
+                    None => {
+                        create_session_and_apply_model(
+                            &mut agent,
+                            &ctx,
+                            agent_core.as_deref(),
+                            agent_canvas.as_deref(),
+                            title_channel.as_deref(),
+                        )
+                        .await
+                    }
+                };
+                match opened {
                     Ok(sid) => {
-                        tracing::info!(
-                            target: "pool::session",
-                            "created session {sid} for channel {cid}"
-                        );
+                        let was_loaded = existing.is_some();
+                        if was_loaded {
+                            tracing::info!(
+                                target: "pool::session",
+                                channel = %cid,
+                                "loaded existing session for channel"
+                            );
+                        } else {
+                            tracing::info!(
+                                target: "pool::session",
+                                "created session {sid} for channel {cid}"
+                            );
+                        }
                         agent.state.sessions.insert(*cid, sid.clone());
                         // Commit canvas only after session creation succeeds (I3).
                         if let Some((pending_cid, section)) = pending_canvas.take() {
                             agent.state.canvas_sections.insert(pending_cid, section);
                         }
-                        (sid, true)
+                        (sid, !was_loaded, was_loaded)
                     }
                     Err(AcpError::AgentExited) => {
                         agent.state.invalidate_all();
@@ -1602,7 +1676,7 @@ pub async fn run_prompt_task(
         }
         PromptSource::Heartbeat => {
             if let Some(sid) = &agent.state.heartbeat_session {
-                (sid.clone(), false)
+                (sid.clone(), false, false)
             } else {
                 match create_session_and_apply_model(&mut agent, &ctx, None, None, None).await {
                     Ok(sid) => {
@@ -1612,7 +1686,7 @@ pub async fn run_prompt_task(
                             agent.index
                         );
                         agent.state.heartbeat_session = Some(sid.clone());
-                        (sid, true)
+                        (sid, true, false)
                     }
                     Err(AcpError::AgentExited) => {
                         agent.state.invalidate_all();
@@ -1655,6 +1729,7 @@ pub async fn run_prompt_task(
         serde_json::json!({
             "sessionId": session_id,
             "isNewSession": is_new_session,
+            "loadedExistingSession": loaded_existing_session,
         }),
     );
 
@@ -1810,7 +1885,7 @@ pub async fn run_prompt_task(
         // Heartbeats create their session before this point, so a Goose method-not-found
         // probe has already selected the correct framing for this process.
         let text = prepend_base_for_legacy(
-            if agent.has_system_prompt_support() {
+            if agent.session_has_system_prompt_support(&session_id) {
                 2
             } else {
                 1
@@ -1856,7 +1931,7 @@ pub async fn run_prompt_task(
                 channel_info: channel_info.as_ref(),
                 conversation_context: conversation_context.as_ref(),
                 profile_lookup: profile_lookup.as_ref(),
-                has_system_prompt_support: agent.has_system_prompt_support(),
+                has_system_prompt_support: agent.session_has_system_prompt_support(&session_id),
                 base_prompt: ctx.base_prompt,
                 system_prompt: ctx.system_prompt.as_deref(),
                 team_instructions: ctx.team_instructions.as_deref(),
@@ -6386,6 +6461,7 @@ mod tests {
             dedup_mode: DedupMode::Drop,
             system_prompt: None,
             session_title: None,
+            existing_session: None,
             team_instructions: None,
             heartbeat_prompt: None,
             base_prompt: None,
@@ -6414,6 +6490,184 @@ mod tests {
             harness_name: "goose".to_string(),
             relay_url: "ws://127.0.0.1:3000".to_string(),
         }
+    }
+
+    #[tokio::test]
+    async fn matching_channel_loads_existing_session_and_frames_current_buzz_context() {
+        let channel_id = Uuid::new_v4();
+        let capture_dir =
+            std::env::temp_dir().join(format!("buzz-acp-existing-session-{}", Uuid::new_v4()));
+        std::fs::create_dir_all(&capture_dir).expect("create capture directory");
+        let load_capture = capture_dir.join("load.json");
+        let prompt_capture = capture_dir.join("prompt.json");
+        let script = format!(
+            r#"
+                read -r _init
+                printf '%s\n' '{{"jsonrpc":"2.0","id":0,"result":{{"protocolVersion":2,"agentInfo":{{"name":"codex-acp"}},"agentCapabilities":{{"loadSession":true}}}}}}'
+                read -r LOAD
+                printf '%s' "$LOAD" > {load_capture}
+                printf '%s\n' '{{"jsonrpc":"2.0","id":1,"result":{{"models":{{"currentModelId":"gpt-5.6","availableModels":[]}}}}}}'
+                read -r PROMPT
+                printf '%s' "$PROMPT" > {prompt_capture}
+                printf '%s\n' '{{"jsonrpc":"2.0","id":2,"result":{{"stopReason":"end_turn"}}}}'
+                sleep 1
+            "#,
+            load_capture = load_capture.display(),
+            prompt_capture = prompt_capture.display(),
+        );
+        let mut acp = AcpClient::spawn("bash", &["-c".into(), script], &[], false)
+            .await
+            .expect("spawn fake ACP agent");
+        acp.initialize().await.expect("initialize fake ACP agent");
+        let agent = OwnedAgent {
+            index: 0,
+            acp,
+            state: SessionState::default(),
+            model_capabilities: None,
+            desired_model: None,
+            model_overridden: false,
+            agent_name: "codex-acp".into(),
+            goose_system_prompt_supported: None,
+            protocol_version: 2,
+        };
+        let mut ctx = make_prompt_context_no_owner();
+        ctx.cwd = "/tmp".into();
+        ctx.base_prompt = Some("Buzz base contract");
+        ctx.system_prompt = Some("Fizz system contract".into());
+        ctx.existing_session = Some(crate::config::ExistingSessionConfig {
+            session_id: "ses_existing".into(),
+            channel_id,
+        });
+        let (result_tx, mut result_rx) = tokio::sync::mpsc::unbounded_channel();
+
+        run_prompt_task(
+            agent,
+            Some(one_event_batch(channel_id)),
+            None,
+            Arc::new(ctx),
+            result_tx,
+            None,
+            "turn-load-existing".into(),
+        )
+        .await;
+
+        let mut result = result_rx.recv().await.expect("prompt result");
+        assert!(matches!(
+            result.outcome,
+            PromptOutcome::Ok(StopReason::EndTurn)
+        ));
+        assert_eq!(
+            result.agent.state.sessions.get(&channel_id),
+            Some(&"ses_existing".to_string())
+        );
+        assert!(result
+            .agent
+            .state
+            .loaded_session_ids
+            .contains("ses_existing"));
+
+        let load: serde_json::Value = serde_json::from_str(
+            &std::fs::read_to_string(&load_capture).expect("read load capture"),
+        )
+        .expect("parse load request");
+        assert_eq!(load["method"], "session/load");
+        assert_eq!(load["params"]["sessionId"], "ses_existing");
+
+        let prompt: serde_json::Value = serde_json::from_str(
+            &std::fs::read_to_string(&prompt_capture).expect("read prompt capture"),
+        )
+        .expect("parse prompt request");
+        let prompt_text = prompt["params"]["prompt"]
+            .as_array()
+            .expect("prompt blocks")
+            .iter()
+            .map(|block| block["text"].as_str().expect("text prompt"))
+            .collect::<Vec<_>>()
+            .join("\n\n");
+        assert!(prompt_text.contains("[Base]\nBuzz base contract"));
+        assert!(prompt_text.contains("[System]\nFizz system contract"));
+
+        result.agent.acp.shutdown().await;
+        std::fs::remove_dir_all(capture_dir).expect("remove capture directory");
+    }
+
+    #[tokio::test]
+    async fn different_channel_creates_fresh_session_without_exposing_bound_id() {
+        let bound_channel_id = Uuid::new_v4();
+        let actual_channel_id = Uuid::new_v4();
+        let capture_dir =
+            std::env::temp_dir().join(format!("buzz-acp-wrong-channel-{}", Uuid::new_v4()));
+        std::fs::create_dir_all(&capture_dir).expect("create capture directory");
+        let open_capture = capture_dir.join("open.json");
+        let script = format!(
+            r#"
+                read -r _init
+                printf '%s\n' '{{"jsonrpc":"2.0","id":0,"result":{{"protocolVersion":2,"agentInfo":{{"name":"codex-acp"}},"agentCapabilities":{{"loadSession":true}}}}}}'
+                read -r OPEN
+                printf '%s' "$OPEN" > {open_capture}
+                printf '%s\n' '{{"jsonrpc":"2.0","id":1,"result":{{"sessionId":"ses_created"}}}}'
+                read -r _prompt
+                printf '%s\n' '{{"jsonrpc":"2.0","id":2,"result":{{"stopReason":"end_turn"}}}}'
+                sleep 1
+            "#,
+            open_capture = open_capture.display(),
+        );
+        let mut acp = AcpClient::spawn("bash", &["-c".into(), script], &[], false)
+            .await
+            .expect("spawn fake ACP agent");
+        acp.initialize().await.expect("initialize fake ACP agent");
+        let agent = OwnedAgent {
+            index: 0,
+            acp,
+            state: SessionState::default(),
+            model_capabilities: None,
+            desired_model: None,
+            model_overridden: false,
+            agent_name: "codex-acp".into(),
+            goose_system_prompt_supported: None,
+            protocol_version: 2,
+        };
+        let mut ctx = make_prompt_context_no_owner();
+        ctx.cwd = "/tmp".into();
+        ctx.existing_session = Some(crate::config::ExistingSessionConfig {
+            session_id: "ses_private".into(),
+            channel_id: bound_channel_id,
+        });
+        let (result_tx, mut result_rx) = tokio::sync::mpsc::unbounded_channel();
+
+        run_prompt_task(
+            agent,
+            Some(one_event_batch(actual_channel_id)),
+            None,
+            Arc::new(ctx),
+            result_tx,
+            None,
+            "turn-wrong-channel".into(),
+        )
+        .await;
+
+        let mut result = result_rx.recv().await.expect("prompt result");
+        assert!(matches!(
+            result.outcome,
+            PromptOutcome::Ok(StopReason::EndTurn)
+        ));
+        assert_eq!(
+            result.agent.state.sessions.get(&actual_channel_id),
+            Some(&"ses_created".to_string())
+        );
+        assert!(result.agent.state.loaded_session_ids.is_empty());
+        assert!(!result.agent.state.existing_session_consumed);
+
+        let open_raw = std::fs::read_to_string(&open_capture).expect("read open capture");
+        let open: serde_json::Value = serde_json::from_str(&open_raw).expect("parse open request");
+        assert_eq!(open["method"], "session/new");
+        assert!(
+            !open_raw.contains("ses_private"),
+            "the session ID bound to another channel must not cross the ACP wire"
+        );
+
+        result.agent.acp.shutdown().await;
+        std::fs::remove_dir_all(capture_dir).expect("remove capture directory");
     }
 
     // ── render_canvas_section ────────────────────────────────────────────────
